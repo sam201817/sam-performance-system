@@ -1,4 +1,5 @@
 import { Card } from '../Card'
+import { EmptyState } from '../ui/EmptyState'
 import { useTranslation } from '../../hooks/useTranslation'
 import type { WeeklyTrainingSummary } from '../../types/dashboard'
 import { formatVolumeKg } from '../../utils/workoutHistoryCalculations'
@@ -16,9 +17,12 @@ export function TrainingSummaryCard({ summary, hasWorkoutHistory }: TrainingSumm
     return (
       <Card className="training-summary-card" delay={0.14} aria-label={t('dashboard.thisWeek')}>
         <h2 className="training-summary-card__title">{t('dashboard.thisWeek')}</h2>
-        <p className="training-summary-card__empty" role="status">
-          {t('dashboard.onboarding')}
-        </p>
+        <EmptyState
+          icon="workout"
+          title={t('emptyStates.weekTitle')}
+          description={t('emptyStates.weekDescription')}
+          compact
+        />
       </Card>
     )
   }

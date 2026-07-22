@@ -13,14 +13,14 @@
 
 .weekly-consistency__title {
   margin: 0;
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--text);
+  font-size: var(--font-body-size);
+  font-weight: var(--font-title-weight);
+  color: var(--text-primary);
 }
 
 .weekly-consistency__summary {
   margin: 0;
-  font-size: 13px;
+  font-size: var(--font-compact-size);
   color: var(--text-secondary);
 }
 
@@ -39,8 +39,8 @@
 }
 
 .weekly-consistency__day-label {
-  font-size: 11px;
-  font-weight: 500;
+  font-size: var(--font-overline-size);
+  font-weight: var(--font-caption-weight);
   color: var(--text-muted);
 }
 
@@ -48,16 +48,16 @@
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background: var(--bg-elevated);
+  background: var(--surface-elevated);
   border: 1px solid var(--border);
 }
 
 .weekly-consistency__day--today .weekly-consistency__day-label {
-  color: var(--accent);
-  font-weight: 600;
+  color: var(--primary);
+  font-weight: var(--font-title-weight);
 }
 
 .weekly-consistency__day--today .weekly-consistency__day-dot {
-  background: var(--accent-dim);
+  background: var(--primary-dim);
   border-color: var(--primary-border);
 }

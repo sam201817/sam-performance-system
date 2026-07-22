@@ -4,6 +4,8 @@ import { BodyMetricForm } from '../components/body/BodyMetricForm'
 import { BodyMetricHistoryCard } from '../components/body/BodyMetricHistoryCard'
 import { BodyMetricSummaryCard } from '../components/body/BodyMetricSummaryCard'
 import { MetricTrend } from '../components/body/MetricTrend'
+import { EmptyState } from '../components/ui/EmptyState'
+import { SuccessBanner } from '../components/ui/SuccessBanner'
 import { useTranslation } from '../hooks/useTranslation'
 import type { BodyCompositionProps } from '../types/workout'
 import { buildBodyMetricSummary, buildMetricTrendData } from '../utils/bodyMetricCalculations'
@@ -18,6 +20,7 @@ export function BodyComposition({
   onDeleteEntry,
 }: BodyCompositionProps) {
   const { t } = useTranslation()
+  const [saveFeedback, setSaveFeedback] = useState<string | null>(null)
   const [selectedMetric, setSelectedMetric] = useState<
     'weightKg' | 'bodyFatPercent' | 'muscleMassKg' | 'waistCm'
   >('weightKg')
@@ -56,6 +59,7 @@ export function BodyComposition({
   function handleSave(values: Parameters<typeof onSaveEntry>[0]) {
     onSaveEntry(values, formState?.entryId ?? null)
     closeForm()
+    setSaveFeedback(t('messages.bodySaved'))
   }
 
   const editingEntry = formState
@@ -68,14 +72,24 @@ export function BodyComposition({
     <>
       <main className="body-composition screen-shell">
         <header className="body-composition__header">
-          <h1 className="body-composition__title">{t('bodyComposition.title')}</h1>
-          <p className="body-composition__subtitle">{t('bodyComposition.subtitle')}</p>
+          <h1 className="body-composition__title sps-h1">{t('bodyComposition.title')}</h1>
+          <p className="body-composition__subtitle sps-body-small sps-text-secondary">
+            {t('bodyComposition.subtitle')}
+          </p>
         </header>
 
+        {saveFeedback && (
+          <SuccessBanner message={saveFeedback} onDismiss={() => setSaveFeedback(null)} />
+        )}
+
         {history.entries.length === 0 ? (
-          <p className="body-composition__empty" role="status">
-            {t('bodyComposition.empty')}
-          </p>
+          <EmptyState
+            icon="body"
+            title={t('emptyStates.bodyTitle')}
+            description={t('emptyStates.bodyDescription')}
+            actionLabel={t('emptyStates.bodyAction')}
+            onAction={openTodayForm}
+          />
         ) : (
           <BodyMetricSummaryCard summary={summary} />
         )}
@@ -95,11 +109,14 @@ export function BodyComposition({
         />
 
         <section className="body-composition__history" aria-label={t('bodyComposition.recentCheckIns')}>
-          <h2 className="body-composition__section-title">{t('bodyComposition.recentCheckIns')}</h2>
+          <h2 className="body-composition__section-title sps-title">{t('bodyComposition.recentCheckIns')}</h2>
           {history.entries.length === 0 ? (
-            <p className="body-composition__empty" role="status">
-              {t('bodyComposition.empty')}
-            </p>
+            <EmptyState
+              icon="body"
+              title={t('emptyStates.bodyTitle')}
+              description={t('emptyStates.bodyDescription')}
+              compact
+            />
           ) : (
             <div className="body-composition__history-list">
               {history.entries.map((entry) => (
@@ -119,8 +136,8 @@ export function BodyComposition({
 
       {formState && (
         <BodyMetricForm
-          entry={editingEntry}
           title={formState.title}
+          entry={editingEntry}
           onSave={handleSave}
           onCancel={closeForm}
         />

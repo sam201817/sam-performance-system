@@ -40,7 +40,7 @@
   flex-shrink: 0;
   min-width: 3ch;
   font-size: var(--font-h3-size);
-  font-weight: 650;
+  font-weight: var(--font-display-weight);
   color: var(--text-primary);
   font-variant-numeric: tabular-nums;
   text-align: right;

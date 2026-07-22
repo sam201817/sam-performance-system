@@ -132,8 +132,8 @@ export function Settings({
           <button type="button" className="settings__back" onClick={onBack}>
             {t('buttons.back')}
           </button>
-          <h1 className="settings__title">{t('settings.title')}</h1>
-          <p className="settings__subtitle">{t('settings.subtitle')}</p>
+          <h1 className="settings__title sps-h1">{t('settings.title')}</h1>
+          <p className="settings__subtitle sps-body-small sps-text-secondary">{t('settings.subtitle')}</p>
         </header>
 
         {feedback ? (
@@ -149,10 +149,10 @@ export function Settings({
               <span className="settings-row__label">{t('settings.language')}</span>
               <span className="settings-row__hint">{t('settings.languageHint')}</span>
             </div>
-            <div className="settings-row__control settings-row__control--segmented">
+            <div className="settings-row__control settings-row__control--segmented sps-segment-group">
               <button
                 type="button"
-                className={`settings-segment${preferences.language === 'zh-TW' ? ' settings-segment--active' : ''}`}
+                className={`sps-segment${preferences.language === 'zh-TW' ? ' sps-segment--active' : ''}`}
                 aria-pressed={preferences.language === 'zh-TW'}
                 onClick={() => handleLanguageChange('zh-TW')}
               >
@@ -160,7 +160,7 @@ export function Settings({
               </button>
               <button
                 type="button"
-                className={`settings-segment${preferences.language === 'en' ? ' settings-segment--active' : ''}`}
+                className={`sps-segment${preferences.language === 'en' ? ' sps-segment--active' : ''}`}
                 aria-pressed={preferences.language === 'en'}
                 onClick={() => handleLanguageChange('en')}
               >
@@ -174,10 +174,10 @@ export function Settings({
               <span className="settings-row__label">{t('settings.units')}</span>
               <span className="settings-row__hint">{t('settings.unitsHint')}</span>
             </div>
-            <div className="settings-row__control settings-row__control--segmented">
+            <div className="settings-row__control settings-row__control--segmented sps-segment-group">
               <button
                 type="button"
-                className={`settings-segment${preferences.weightUnit === 'metric' ? ' settings-segment--active' : ''}`}
+                className={`sps-segment${preferences.weightUnit === 'metric' ? ' sps-segment--active' : ''}`}
                 aria-pressed={preferences.weightUnit === 'metric'}
                 onClick={() => handleWeightUnitChange('metric')}
               >
@@ -185,7 +185,7 @@ export function Settings({
               </button>
               <button
                 type="button"
-                className={`settings-segment${preferences.weightUnit === 'imperial' ? ' settings-segment--active' : ''}`}
+                className={`sps-segment${preferences.weightUnit === 'imperial' ? ' sps-segment--active' : ''}`}
                 aria-pressed={preferences.weightUnit === 'imperial'}
                 onClick={() => handleWeightUnitChange('imperial')}
               >

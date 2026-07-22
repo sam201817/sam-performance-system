@@ -189,6 +189,17 @@
   --font-overline-weight: 600;
   --font-overline-line-height: 1.3;
   --font-overline-spacing: 0.06em;
+  --font-micro-size: 10px;
+  --font-compact-size: 13px;
+  --font-subtitle-size: 17px;
+  --font-stat-size: 20px;
+  --font-hero-size: 24px;
+  --font-weight-bold: 700;
+
+  /* Icons */
+  --icon-size-sm: 18px;
+  --icon-size-md: 22px;
+  --icon-size-lg: 44px;
 
   /* Motion */
   --duration-fast: 0.15s;

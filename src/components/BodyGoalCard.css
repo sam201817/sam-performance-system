@@ -1,8 +1,8 @@
 .body-goal-card__title {
   margin: 0 0 var(--space-md);
-  font-size: 17px;
-  font-weight: 600;
-  color: var(--text);
+  font-size: var(--font-subtitle-size);
+  font-weight: var(--font-title-weight);
+  color: var(--text-primary);
 }
 
 .body-goal-card__direction {
@@ -11,7 +11,7 @@
   gap: var(--space-sm);
   margin-bottom: var(--space-lg);
   padding: var(--space-md) var(--space-sm);
-  background: var(--bg-elevated);
+  background: var(--surface-elevated);
   border-radius: var(--radius-md);
   border: 1px solid var(--border);
 }
@@ -33,13 +33,13 @@
 }
 
 .body-goal-card__dot--goal {
-  background: var(--accent);
+  background: var(--primary);
   border-color: var(--primary-border-strong);
 }
 
 .body-goal-card__endpoint-label {
-  font-size: 13px;
-  font-weight: 600;
+  font-size: var(--font-compact-size);
+  font-weight: var(--font-title-weight);
   color: var(--text-muted);
 }
 
@@ -62,8 +62,8 @@
 }
 
 .body-goal-card__line-arrow {
-  font-size: 14px;
-  color: var(--accent);
+  font-size: var(--font-body-small-size);
+  color: var(--primary);
   opacity: 0.7;
   flex-shrink: 0;
 }
@@ -87,36 +87,36 @@
 
 .body-goal-card__stat--remaining {
   border-color: var(--primary-border-subtle);
-  background: var(--accent-dim);
+  background: var(--primary-dim);
 }
 
 .body-goal-card__stat-label {
-  font-size: 11px;
+  font-size: var(--font-overline-size);
   color: var(--text-muted);
   letter-spacing: 0.02em;
 }
 
 .body-goal-card__stat-value {
-  font-size: 18px;
-  font-weight: 600;
+  font-size: var(--font-h3-size);
+  font-weight: var(--font-title-weight);
   letter-spacing: -0.02em;
-  color: var(--text);
+  color: var(--text-primary);
   line-height: 1.2;
 }
 
 .body-goal-card__stat-value--accent {
-  color: var(--accent);
+  color: var(--primary);
 }
 
 .body-goal-card__unit {
-  font-size: 12px;
-  font-weight: 500;
+  font-size: var(--font-caption-size);
+  font-weight: var(--font-caption-weight);
   opacity: 0.75;
 }
 
 .body-goal-card__note {
   margin: 0 0 var(--space-md);
-  font-size: 13px;
+  font-size: var(--font-compact-size);
   color: var(--text-muted);
   line-height: 1.5;
 }
@@ -131,10 +131,10 @@
 }
 
 .body-goal-card__stat-change {
-  font-size: 11px;
+  font-size: var(--font-overline-size);
   color: var(--text-secondary);
 }
 
 .body-goal-card__stat-value--small {
-  font-size: 15px;
+  font-size: var(--font-title-size);
 }

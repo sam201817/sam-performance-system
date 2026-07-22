@@ -15,19 +15,19 @@
 }
 
 .body-metric-summary-card__label {
-  font-size: 11px;
+  font-size: var(--font-overline-size);
   color: var(--text-muted);
 }
 
 .body-metric-summary-card__value {
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--text);
+  font-size: var(--font-h3-size);
+  font-weight: var(--font-title-weight);
+  color: var(--text-primary);
   font-variant-numeric: tabular-nums;
 }
 
 .body-metric-summary-card__change {
-  font-size: 12px;
+  font-size: var(--font-caption-size);
   color: var(--text-secondary);
 }
 

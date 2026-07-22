@@ -29,16 +29,16 @@
 .hero-workout-card__title {
   margin: 0;
   font-size: clamp(30px, 8vw, 36px);
-  font-weight: 650;
+  font-weight: var(--font-display-weight);
   letter-spacing: -0.03em;
   line-height: 1.1;
-  color: var(--text);
+  color: var(--text-primary);
 }
 
 .hero-workout-card__meta {
   margin: 0;
-  font-size: 14px;
-  font-weight: 500;
+  font-size: var(--font-body-small-size);
+  font-weight: var(--font-caption-weight);
   letter-spacing: 0.01em;
   color: var(--text-secondary);
 }
@@ -46,7 +46,7 @@
 .hero-workout-card__onboarding {
   margin: 0;
   padding: var(--space-sm) var(--space-md);
-  font-size: 13px;
+  font-size: var(--font-compact-size);
   line-height: 1.45;
   color: var(--text-secondary);
   background: var(--surface-muted);
@@ -63,8 +63,8 @@
 .hero-workout-card__button {
   width: 100%;
   padding: 18px var(--space-lg);
-  font-size: 17px;
-  font-weight: 600;
+  font-size: var(--font-subtitle-size);
+  font-weight: var(--font-title-weight);
   letter-spacing: 0.01em;
   box-shadow: 0 10px 28px var(--primary-border-subtle);
 }
@@ -75,8 +75,8 @@
 
 .hero-workout-card__status {
   margin: 0;
-  font-size: 12px;
-  font-weight: 500;
+  font-size: var(--font-caption-size);
+  font-weight: var(--font-caption-weight);
   text-align: center;
   color: var(--text-muted);
 }

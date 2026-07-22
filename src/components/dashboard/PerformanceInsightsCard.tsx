@@ -1,3 +1,4 @@
+import { EmptyState } from '../ui/EmptyState'
 import { useTranslation } from '../../hooks/useTranslation'
 import type { PerformanceInsight } from '../../types/insights'
 import { DashboardSection } from './DashboardSection'
@@ -26,9 +27,12 @@ export function PerformanceInsightsCard({ insights }: PerformanceInsightsCardPro
   if (insights.length === 0) {
     return (
       <DashboardSection title={t('insights.title')}>
-        <p className="performance-insights-card__empty" role="status">
-          {t('insights.empty')}
-        </p>
+        <EmptyState
+          icon="insights"
+          title={t('emptyStates.insightsTitle')}
+          description={t('emptyStates.insightsDescription')}
+          compact
+        />
       </DashboardSection>
     )
   }

@@ -1,4 +1,6 @@
+import { useTranslation } from '../../hooks/useTranslation'
 import type { ChartPoint } from '../../types/bodyMetrics'
+import { EmptyState } from '../ui/EmptyState'
 import './MetricTrendChart.css'
 
 type MetricTrendChartProps = {
@@ -7,10 +9,17 @@ type MetricTrendChartProps = {
 }
 
 export function MetricTrendChart({ label, points }: MetricTrendChartProps) {
+  const { t } = useTranslation()
+
   if (points.length === 0) {
     return (
-      <div className="metric-trend-chart metric-trend-chart--empty" role="img" aria-label={`${label} trend unavailable`}>
-        <p className="metric-trend-chart__empty">Not enough data to show a trend yet.</p>
+      <div className="metric-trend-chart metric-trend-chart--empty">
+        <EmptyState
+          icon="chart"
+          title={t('emptyStates.trendTitle')}
+          description={t('emptyStates.trendDescription')}
+          compact
+        />
       </div>
     )
   }
@@ -27,7 +36,10 @@ export function MetricTrendChart({ label, points }: MetricTrendChartProps) {
   }))
 
   const polyline = coordinates.map((point) => `${point.x},${point.y}`).join(' ')
-  const description = `${label} trend with ${points.length} readings`
+  const description = t('bodyComposition.trendReadings', {
+    metric: label,
+    count: points.length,
+  })
 
   return (
     <div className="metric-trend-chart" role="img" aria-label={description}>

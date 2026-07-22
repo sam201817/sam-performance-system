@@ -1,7 +1,7 @@
 .performance-insights-card__empty {
   margin: 0;
   padding: var(--space-md);
-  font-size: 13px;
+  font-size: var(--font-compact-size);
   line-height: 1.45;
   color: var(--text-secondary);
   border: 1px solid var(--border);
@@ -49,35 +49,35 @@
 
 .performance-insights-card__title {
   margin: 0;
-  font-size: 15px;
-  font-weight: 650;
+  font-size: var(--font-title-size);
+  font-weight: var(--font-display-weight);
   letter-spacing: -0.01em;
-  color: var(--text);
+  color: var(--text-primary);
 }
 
 .performance-insights-card__category {
   flex-shrink: 0;
   padding: 3px 8px;
-  font-size: 10px;
-  font-weight: 600;
+  font-size: var(--font-micro-size);
+  font-weight: var(--font-title-weight);
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--text-muted);
   border: 1px solid var(--border);
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
 }
 
 .performance-insights-card__description {
   margin: 0;
-  font-size: 13px;
+  font-size: var(--font-compact-size);
   line-height: 1.45;
   color: var(--text-secondary);
 }
 
 .performance-insights-card__severity {
   align-self: flex-start;
-  font-size: 10px;
-  font-weight: 600;
+  font-size: var(--font-micro-size);
+  font-weight: var(--font-title-weight);
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--text-muted);

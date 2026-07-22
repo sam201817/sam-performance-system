@@ -38,7 +38,7 @@
 
 .streak-card__hero-value {
   font-size: clamp(44px, 10vw, 52px);
-  font-weight: 650;
+  font-weight: var(--font-display-weight);
   letter-spacing: -0.04em;
   line-height: 1;
   color: var(--primary);

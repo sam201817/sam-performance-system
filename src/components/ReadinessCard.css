@@ -26,7 +26,7 @@
 
 .readiness-card__ring-progress {
   fill: none;
-  stroke: var(--accent);
+  stroke: var(--primary);
   stroke-width: 7;
   stroke-linecap: round;
   transition: stroke-dashoffset 0.08s linear;
@@ -44,15 +44,15 @@
 
 .readiness-card__score {
   font-size: 32px;
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
   letter-spacing: -0.03em;
   line-height: 1;
-  color: var(--text);
+  color: var(--text-primary);
 }
 
 .readiness-card__score-label {
-  font-size: 11px;
-  font-weight: 500;
+  font-size: var(--font-overline-size);
+  font-weight: var(--font-caption-weight);
   color: var(--text-muted);
   letter-spacing: 0.04em;
 }
@@ -67,21 +67,21 @@
 
 .readiness-card__title {
   margin: 0;
-  font-size: 17px;
-  font-weight: 600;
-  color: var(--text);
+  font-size: var(--font-subtitle-size);
+  font-weight: var(--font-title-weight);
+  color: var(--text-primary);
 }
 
 .readiness-card__status {
   align-self: flex-start;
-  font-size: 11px;
-  font-weight: 600;
+  font-size: var(--font-overline-size);
+  font-weight: var(--font-title-weight);
   letter-spacing: 0.03em;
-  color: var(--accent);
-  background: var(--accent-dim);
+  color: var(--primary);
+  background: var(--primary-dim);
   border: 1px solid var(--primary-border-subtle);
   padding: 5px 11px;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
 }
 
 .readiness-card__metrics {
@@ -106,7 +106,7 @@
 }
 
 .readiness-card__note-indicator {
-  font-size: 12px;
+  font-size: var(--font-caption-size);
   color: var(--text-muted);
 }
 
@@ -114,8 +114,8 @@
   width: 100%;
   margin-top: var(--space-md);
   padding: 12px var(--space-md);
-  font-size: 14px;
-  font-weight: 600;
+  font-size: var(--font-body-small-size);
+  font-weight: var(--font-title-weight);
   color: var(--text-secondary);
   background: var(--surface-muted);
   border: 1px solid var(--border);
@@ -129,21 +129,21 @@
 @media (hover: hover) {
   .readiness-card__edit:hover {
     border-color: var(--border-strong);
-    color: var(--text);
+    color: var(--text-primary);
     background: var(--surface-highlight);
   }
 }
 
 .readiness-card__metric-label {
-  font-size: 14px;
+  font-size: var(--font-body-small-size);
   color: var(--text-secondary);
 }
 
 .readiness-card__metric-value {
-  font-size: 13px;
-  font-weight: 500;
+  font-size: var(--font-compact-size);
+  font-weight: var(--font-caption-weight);
   padding: 3px 10px;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   border: 1px solid transparent;
 }
 

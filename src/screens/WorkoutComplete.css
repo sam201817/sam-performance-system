@@ -32,15 +32,15 @@
 
 .workout-complete__title {
   margin: 0;
-  font-size: 28px;
-  font-weight: 600;
+  font-size: var(--font-h1-size);
+  font-weight: var(--font-title-weight);
   letter-spacing: -0.02em;
-  color: var(--text);
+  color: var(--text-primary);
 }
 
 .workout-complete__message {
   margin: var(--space-xs) 0 0;
-  font-size: 16px;
+  font-size: var(--font-body-size);
   color: var(--text-secondary);
   line-height: 1.5;
 }
@@ -65,27 +65,21 @@
 
 .workout-complete__stat dt {
   margin: 0;
-  font-size: 11px;
+  font-size: var(--font-overline-size);
   color: var(--text-muted);
 }
 
 .workout-complete__stat dd {
   margin: 0;
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--text);
+  font-size: var(--font-h3-size);
+  font-weight: var(--font-title-weight);
+  color: var(--text-primary);
   font-variant-numeric: tabular-nums;
-}
-
-.workout-complete__submessage {
-  margin: 0 0 var(--space-lg);
-  font-size: 14px;
-  color: var(--text-muted);
 }
 
 .workout-complete__button {
   width: 100%;
-  padding: 15px var(--space-lg);
+  padding: var(--space-sm) var(--space-lg);
 }
 
 @media (min-width: 520px) {

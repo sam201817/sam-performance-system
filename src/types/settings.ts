@@ -19,6 +19,7 @@ export type SettingsFeedbackType =
   | 'restore-invalid'
   | 'restore-unsupported'
   | 'reset-success'
+  | 'language-updated'
   | 'error'
 
 export type SettingsFeedback = {

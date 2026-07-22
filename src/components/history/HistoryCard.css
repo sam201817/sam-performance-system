@@ -31,13 +31,13 @@
 
 .history-card__title {
   margin: 0;
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--text);
+  font-size: var(--font-h3-size);
+  font-weight: var(--font-title-weight);
+  color: var(--text-primary);
 }
 
 .history-card__date {
-  font-size: 13px;
+  font-size: var(--font-compact-size);
   color: var(--text-muted);
   white-space: nowrap;
 }
@@ -46,7 +46,7 @@
   display: flex;
   align-items: center;
   gap: var(--space-xs);
-  font-size: 14px;
+  font-size: var(--font-body-small-size);
   color: var(--text-secondary);
   font-variant-numeric: tabular-nums;
 }
@@ -56,9 +56,9 @@
 }
 
 .history-card__status {
-  font-size: 12px;
-  font-weight: 600;
+  font-size: var(--font-caption-size);
+  font-weight: var(--font-title-weight);
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--primary);
 }

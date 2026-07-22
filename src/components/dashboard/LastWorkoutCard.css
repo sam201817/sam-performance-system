@@ -1,7 +1,7 @@
 .last-workout-card__title {
   margin: 0 0 var(--space-lg);
-  font-size: 15px;
-  font-weight: 600;
+  font-size: var(--font-title-size);
+  font-weight: var(--font-title-weight);
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--text-muted);
@@ -9,7 +9,7 @@
 
 .last-workout-card__empty {
   margin: 0;
-  font-size: 13px;
+  font-size: var(--font-compact-size);
   line-height: 1.45;
   color: var(--text-secondary);
 }
@@ -44,26 +44,26 @@
 }
 
 .last-workout-card__name {
-  font-size: 20px;
-  font-weight: 650;
+  font-size: var(--font-stat-size);
+  font-weight: var(--font-display-weight);
   letter-spacing: -0.02em;
   line-height: 1.2;
-  color: var(--text);
+  color: var(--text-primary);
 }
 
 .last-workout-card__badge {
   flex-shrink: 0;
   padding: 4px 10px;
-  font-size: 11px;
-  font-weight: 600;
+  font-size: var(--font-overline-size);
+  font-weight: var(--font-title-weight);
   letter-spacing: 0.02em;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   border: 1px solid transparent;
 }
 
 .last-workout-card__badge--excellent {
-  color: var(--accent);
-  background: var(--accent-dim);
+  color: var(--primary);
+  background: var(--primary-dim);
   border-color: var(--primary-border-subtle);
 }
 
@@ -86,8 +86,8 @@
 }
 
 .last-workout-card__date {
-  font-size: 13px;
-  font-weight: 500;
+  font-size: var(--font-compact-size);
+  font-weight: var(--font-caption-weight);
   color: var(--text-muted);
 }
 
@@ -107,16 +107,16 @@
 }
 
 .last-workout-card__stat-label {
-  font-size: 10px;
-  font-weight: 600;
+  font-size: var(--font-micro-size);
+  font-weight: var(--font-title-weight);
   letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--text-muted);
 }
 
 .last-workout-card__stat-value {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--text);
+  font-size: var(--font-title-size);
+  font-weight: var(--font-title-weight);
+  color: var(--text-primary);
   font-variant-numeric: tabular-nums;
 }

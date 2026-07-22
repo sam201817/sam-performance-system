@@ -20,11 +20,11 @@
 
 .workout-screen__title {
   margin: 0;
-  font-size: 24px;
-  font-weight: 600;
+  font-size: var(--font-hero-size);
+  font-weight: var(--font-title-weight);
   letter-spacing: -0.02em;
   line-height: 1.2;
-  color: var(--text);
+  color: var(--text-primary);
 }
 
 .workout-screen__exercise {
@@ -35,16 +35,16 @@
 
 .workout-screen__exercise-name {
   margin: 0;
-  font-size: 24px;
-  font-weight: 600;
+  font-size: var(--font-hero-size);
+  font-weight: var(--font-title-weight);
   letter-spacing: -0.025em;
   line-height: 1.25;
-  color: var(--text);
+  color: var(--text-primary);
 }
 
 .workout-screen__exercise-notes {
   margin: var(--space-xs) 0 0;
-  font-size: 14px;
+  font-size: var(--font-body-small-size);
   line-height: 1.55;
   color: var(--text-secondary);
   padding-left: var(--space-sm);
@@ -59,7 +59,7 @@
 
 .workout-screen__empty {
   margin: 0;
-  font-size: 15px;
+  font-size: var(--font-title-size);
   color: var(--text-secondary);
   line-height: 1.5;
 }

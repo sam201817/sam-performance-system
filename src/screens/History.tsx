@@ -2,6 +2,7 @@ import { BottomNav } from '../components/BottomNav'
 import { HistoryCard } from '../components/history/HistoryCard'
 import { HistorySectionHeader } from '../components/history/HistorySectionHeader'
 import { HistoryStat } from '../components/history/HistoryStat'
+import { EmptyState } from '../components/ui/EmptyState'
 import { useTranslation } from '../hooks/useTranslation'
 import type { HistoryProps } from '../types/workout'
 import { formatVolumeKg } from '../utils/workoutHistoryCalculations'
@@ -36,9 +37,13 @@ export function History({
         </section>
 
         {sessions.length === 0 ? (
-          <p className="history__empty" role="status">
-            {t('history.empty')}
-          </p>
+          <EmptyState
+            icon="workout"
+            title={t('emptyStates.workoutsTitle')}
+            description={t('emptyStates.workoutsDescription')}
+            actionLabel={t('emptyStates.workoutsAction')}
+            onAction={() => onNavigate('workout')}
+          />
         ) : (
           <section className="history__list" aria-label={t('history.title')}>
             {sessions.map((session) => (

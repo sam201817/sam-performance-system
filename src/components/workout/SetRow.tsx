@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { useTranslation } from '../../hooks/useTranslation'
 import type { SetLog } from '../../types/workoutProgress'
 import { RpeSelector } from './RpeSelector'
@@ -10,7 +11,12 @@ type SetRowProps = {
   onComplete: () => void
 }
 
-export function SetRow({ set, inputIdPrefix, onChange, onComplete }: SetRowProps) {
+export const SetRow = memo(function SetRow({
+  set,
+  inputIdPrefix,
+  onChange,
+  onComplete,
+}: SetRowProps) {
   const { t } = useTranslation()
   const repsId = `${inputIdPrefix}-reps`
   const weightId = `${inputIdPrefix}-weight`
@@ -39,7 +45,7 @@ export function SetRow({ set, inputIdPrefix, onChange, onComplete }: SetRowProps
           </label>
           <input
             id={repsId}
-            className="set-row__input"
+            className="set-row__input sps-input"
             type="text"
             inputMode="text"
             value={set.actualReps}
@@ -53,7 +59,7 @@ export function SetRow({ set, inputIdPrefix, onChange, onComplete }: SetRowProps
           </label>
           <input
             id={weightId}
-            className="set-row__input"
+            className="set-row__input sps-input"
             type="text"
             inputMode="text"
             value={set.weight}
@@ -78,4 +84,4 @@ export function SetRow({ set, inputIdPrefix, onChange, onComplete }: SetRowProps
       </button>
     </div>
   )
-}
+})

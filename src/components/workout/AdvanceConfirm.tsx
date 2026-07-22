@@ -17,7 +17,7 @@ export function AdvanceConfirm({ onConfirm, onCancel }: AdvanceConfirmProps) {
       <div className="advance-confirm__actions">
         <button
           type="button"
-          className="advance-confirm__button advance-confirm__button--secondary"
+          className="advance-confirm__button sps-action-secondary"
           onClick={onCancel}
         >
           {t('workout.advanceCancel')}

@@ -13,15 +13,15 @@
 
 .daily-check-in__title {
   margin: 0;
-  font-size: 28px;
-  font-weight: 650;
+  font-size: var(--font-h1-size);
+  font-weight: var(--font-display-weight);
   letter-spacing: -0.03em;
-  color: var(--text);
+  color: var(--text-primary);
 }
 
 .daily-check-in__subtitle {
   margin: 0;
-  font-size: 14px;
+  font-size: var(--font-body-small-size);
   line-height: 1.5;
   color: var(--text-secondary);
 }
@@ -29,8 +29,8 @@
 .daily-check-in__cancel {
   width: 100%;
   padding: 12px var(--space-md);
-  font-size: 14px;
-  font-weight: 600;
+  font-size: var(--font-body-small-size);
+  font-weight: var(--font-title-weight);
   color: var(--text-secondary);
   background: transparent;
   border: 1px solid var(--border);

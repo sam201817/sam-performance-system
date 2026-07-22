@@ -16,14 +16,14 @@
 
 .exercise-history-card__title {
   margin: 0;
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--text);
+  font-size: var(--font-h3-size);
+  font-weight: var(--font-title-weight);
+  color: var(--text-primary);
 }
 
 .exercise-history-card__summary {
   margin: 0;
-  font-size: 13px;
+  font-size: var(--font-compact-size);
   color: var(--text-secondary);
 }
 
@@ -42,7 +42,7 @@
   gap: var(--space-xs);
   padding: var(--space-xs) 0;
   border-top: 1px solid var(--border);
-  font-size: 13px;
+  font-size: var(--font-compact-size);
   color: var(--text-secondary);
 }
 
@@ -51,8 +51,8 @@
 }
 
 .exercise-history-card__set-status {
-  color: var(--text);
-  font-weight: 500;
+  color: var(--text-primary);
+  font-weight: var(--font-caption-weight);
 }
 
 @media (max-width: 420px) {

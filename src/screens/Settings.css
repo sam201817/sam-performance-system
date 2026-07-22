@@ -83,38 +83,7 @@
 }
 
 .settings-row__control--segmented {
-  display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--spacing-xs);
-}
-
-.settings-segment {
-  min-height: var(--touch-target-min);
-  padding: var(--spacing-xs) var(--spacing-sm);
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
-  background: var(--surface-subtle);
-  color: var(--text-secondary);
-  font-size: var(--font-body-small-size);
-  font-weight: var(--font-button-weight);
-  cursor: pointer;
-  transition:
-    color var(--transition),
-    border-color var(--transition),
-    background var(--transition);
-}
-
-@media (hover: hover) {
-  .settings-segment:hover:not(.settings-segment--active) {
-    border-color: var(--border-strong);
-    color: var(--text-primary);
-  }
-}
-
-.settings-segment--active {
-  color: var(--text-primary);
-  border-color: var(--primary-border);
-  background: var(--primary-dim);
 }
 
 .settings__footnote {

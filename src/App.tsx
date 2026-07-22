@@ -286,10 +286,18 @@ function App() {
   }, [checkInHistory, persistCheckInHistory])
 
   const handlePreferencesChange = useCallback((nextPreferences: UserPreferences) => {
+    const languageChanged = nextPreferences.language !== preferences.language
     savePreferences(nextPreferences)
     setPreferences(nextPreferences)
     persistLanguage(nextPreferences.language)
-  }, [])
+
+    if (languageChanged) {
+      setSettingsFeedback({
+        type: 'language-updated',
+        message: translate(nextPreferences.language, 'messages.languageUpdated'),
+      })
+    }
+  }, [preferences.language])
 
   const handleExportBackup = useCallback(() => {
     const filename = downloadBackup()

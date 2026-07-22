@@ -14,25 +14,25 @@
 
 .history-detail__title {
   margin: 0;
-  font-size: 28px;
-  font-weight: 600;
+  font-size: var(--font-h1-size);
+  font-weight: var(--font-title-weight);
   letter-spacing: -0.02em;
-  color: var(--text);
+  color: var(--text-primary);
 }
 
 .history-detail__meta {
   margin: 0;
-  font-size: 14px;
+  font-size: var(--font-body-small-size);
   color: var(--text-secondary);
 }
 
 .history-detail__status {
   margin: 0;
-  font-size: 13px;
-  font-weight: 600;
+  font-size: var(--font-compact-size);
+  font-weight: var(--font-title-weight);
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--primary);
 }
 
 .history-detail__stats {
@@ -54,15 +54,15 @@
 
 .history-detail__stats dt {
   margin: 0;
-  font-size: 11px;
+  font-size: var(--font-overline-size);
   color: var(--text-muted);
 }
 
 .history-detail__stats dd {
   margin: 0;
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--text);
+  font-size: var(--font-h3-size);
+  font-weight: var(--font-title-weight);
+  color: var(--text-primary);
   font-variant-numeric: tabular-nums;
 }
 

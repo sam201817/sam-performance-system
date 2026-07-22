@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { useTranslation } from '../hooks/useTranslation'
 import { ENABLED_NAV_TABS, type NavTabId } from '../types/app'
 import type { BottomNavProps } from '../types/workout'
@@ -10,7 +11,7 @@ function isTabEnabled(id: NavTabId): boolean {
 }
 
 function NavIcon({ id, active }: { id: NavTabId; active: boolean }) {
-  const stroke = active ? 'var(--accent)' : 'currentColor'
+  const stroke = active ? 'var(--primary)' : 'currentColor'
 
   switch (id) {
     case 'home':
@@ -82,7 +83,7 @@ function NavIcon({ id, active }: { id: NavTabId; active: boolean }) {
   }
 }
 
-export function BottomNav({ activeTab, onNavigate }: BottomNavProps) {
+export const BottomNav = memo(function BottomNav({ activeTab, onNavigate }: BottomNavProps) {
   const { t } = useTranslation()
 
   function handleTabClick(id: NavTabId) {
@@ -117,4 +118,4 @@ export function BottomNav({ activeTab, onNavigate }: BottomNavProps) {
       </div>
     </nav>
   )
-}
+})

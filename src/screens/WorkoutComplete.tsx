@@ -22,13 +22,13 @@ export function WorkoutComplete({ summary, onReturnHome }: WorkoutCompleteProps)
               cy="24"
               r="22"
               fill="none"
-              stroke="rgba(184,217,38,0.25)"
+              stroke="var(--primary-border-subtle)"
               strokeWidth="1.5"
             />
             <path
               d="M14 24l7 7 13-14"
               fill="none"
-              stroke="var(--accent)"
+              stroke="var(--primary)"
               strokeWidth="2.2"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -36,8 +36,8 @@ export function WorkoutComplete({ summary, onReturnHome }: WorkoutCompleteProps)
           </svg>
         </div>
 
-        <h1 className="workout-complete__title">{t('workout.completeTitle')}</h1>
-        <p className="workout-complete__message">{t('workout.completeSubtitle')}</p>
+        <h1 className="workout-complete__title sps-h1">{t('workout.completeTitle')}</h1>
+        <p className="workout-complete__message sps-body sps-text-secondary">{t('workout.completeSubtitle')}</p>
 
         <dl className="workout-complete__stats">
           <div className="workout-complete__stat">

@@ -9,13 +9,13 @@
 }
 
 .history-stat__label {
-  font-size: 11px;
+  font-size: var(--font-overline-size);
   color: var(--text-muted);
 }
 
 .history-stat__value {
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--text);
+  font-size: var(--font-h3-size);
+  font-weight: var(--font-title-weight);
+  color: var(--text-primary);
   font-variant-numeric: tabular-nums;
 }

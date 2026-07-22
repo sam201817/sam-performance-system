@@ -17,9 +17,9 @@
 
 .body-metric-history-card__date {
   margin: 0;
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--text);
+  font-size: var(--font-body-size);
+  font-weight: var(--font-title-weight);
+  color: var(--text-primary);
 }
 
 .body-metric-history-card__actions {
@@ -31,12 +31,12 @@
 
 .body-metric-history-card__action {
   padding: 6px 10px;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   border: 1px solid var(--border);
   background: var(--surface-muted);
   color: var(--text-secondary);
-  font-size: 12px;
-  font-weight: 600;
+  font-size: var(--font-caption-size);
+  font-weight: var(--font-title-weight);
   cursor: pointer;
 }
 
@@ -50,7 +50,7 @@
   flex-wrap: wrap;
   align-items: center;
   gap: var(--space-xs);
-  font-size: 12px;
+  font-size: var(--font-caption-size);
   color: var(--text-secondary);
 }
 
@@ -61,13 +61,13 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
-  font-size: 14px;
+  font-size: var(--font-body-small-size);
   color: var(--text-secondary);
 }
 
 .body-metric-history-card__notes {
   margin: 0;
-  font-size: 13px;
+  font-size: var(--font-compact-size);
   color: var(--text-muted);
   line-height: 1.5;
 }

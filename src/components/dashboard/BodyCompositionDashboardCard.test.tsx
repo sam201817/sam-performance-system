@@ -33,7 +33,7 @@ describe('BodyCompositionDashboardCard', () => {
       />,
     )
 
-    await user.click(screen.getByRole('button', { name: '新增第一次量測' }))
+    await user.click(screen.getByRole('button', { name: '新增量測' }))
     expect(onOpen).toHaveBeenCalledTimes(1)
   })
 

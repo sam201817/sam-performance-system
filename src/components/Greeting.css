@@ -6,24 +6,24 @@
 
 .greeting__title {
   margin: 0;
-  font-size: 26px;
-  font-weight: 600;
+  font-size: var(--font-hero-size);
+  font-weight: var(--font-title-weight);
   letter-spacing: -0.025em;
   line-height: 1.2;
-  color: var(--text);
+  color: var(--text-primary);
 }
 
 .greeting__date {
   margin: 0;
-  font-size: 13px;
-  font-weight: 500;
+  font-size: var(--font-compact-size);
+  font-weight: var(--font-caption-weight);
   color: var(--text-muted);
   letter-spacing: 0.01em;
 }
 
 .greeting__subtitle {
   margin: 0;
-  font-size: 15px;
+  font-size: var(--font-title-size);
   font-weight: 400;
   color: var(--text-secondary);
   line-height: 1.55;

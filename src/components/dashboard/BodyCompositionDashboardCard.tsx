@@ -1,4 +1,5 @@
 import { Card } from '../Card'
+import { EmptyState } from '../ui/EmptyState'
 import { useTranslation } from '../../hooks/useTranslation'
 import type { BodyCompositionCardProps } from '../../types/workout'
 import {
@@ -35,18 +36,14 @@ export function BodyCompositionDashboardCard({
       </div>
 
       {!hasEntries ? (
-        <>
-          <p className="body-dashboard-card__empty" role="status">
-            {t('dashboard.noBodyData')}
-          </p>
-          <button
-            type="button"
-            className="body-dashboard-card__button sps-action-primary"
-            onClick={onOpenBodyComposition}
-          >
-            {t('dashboard.addFirstCheckIn')}
-          </button>
-        </>
+        <EmptyState
+          icon="body"
+          title={t('emptyStates.bodyTitle')}
+          description={t('emptyStates.bodyDescription')}
+          actionLabel={t('emptyStates.bodyAction')}
+          onAction={onOpenBodyComposition}
+          compact
+        />
       ) : (
         <>
           <div className="body-dashboard-card__layout">
@@ -89,7 +86,7 @@ export function BodyCompositionDashboardCard({
 
           <button
             type="button"
-            className="body-dashboard-card__button body-dashboard-card__button--secondary"
+            className="body-dashboard-card__button sps-action-secondary"
             onClick={onOpenBodyComposition}
           >
             {t('dashboard.openBodyComposition')}

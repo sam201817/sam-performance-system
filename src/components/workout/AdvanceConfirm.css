@@ -10,41 +10,21 @@
 
 .advance-confirm__message {
   margin: 0;
-  font-size: 14px;
-  line-height: 1.5;
+  font-size: var(--font-body-small-size);
+  line-height: var(--font-body-small-line-height);
   color: var(--text-secondary);
 }
 
 .advance-confirm__actions {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--space-xs);
+  gap: var(--spacing-xs);
 }
 
 .advance-confirm__button {
-  padding: 12px var(--space-md);
-  font-size: 14px;
-  font-weight: 600;
-  border-radius: var(--radius-sm);
-}
-
-.advance-confirm__button--secondary {
-  color: var(--text-secondary);
-  background: var(--bg-elevated);
-  border: 1px solid var(--border);
+  width: 100%;
 }
 
 .advance-confirm__button--primary {
   border: 1px solid transparent;
-}
-
-@media (hover: hover) {
-  .advance-confirm__button--secondary:hover {
-    border-color: var(--border-strong);
-    color: var(--text);
-  }
-}
-
-.advance-confirm__button:active {
-  transform: scale(0.97);
 }

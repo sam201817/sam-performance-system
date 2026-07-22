@@ -12,15 +12,15 @@
 }
 
 .brand-header__mark {
-  font-size: 12px;
-  font-weight: 700;
+  font-size: var(--font-caption-size);
+  font-weight: var(--font-weight-bold);
   letter-spacing: 0.18em;
-  color: var(--accent);
+  color: var(--primary);
 }
 
 .brand-header__name {
-  font-size: 10px;
-  font-weight: 500;
+  font-size: var(--font-micro-size);
+  font-weight: var(--font-caption-weight);
   letter-spacing: 0.12em;
   color: var(--text-muted);
 }
@@ -31,9 +31,9 @@
   height: 34px;
   border-radius: 50%;
   border: 1px solid var(--border-strong);
-  background: var(--bg-elevated);
-  font-size: 13px;
-  font-weight: 600;
+  background: var(--surface-elevated);
+  font-size: var(--font-compact-size);
+  font-weight: var(--font-title-weight);
   color: var(--text-secondary);
   display: flex;
   align-items: center;
@@ -47,7 +47,7 @@
 @media (hover: hover) {
   .brand-header__profile:hover {
     border-color: var(--primary-border);
-    color: var(--accent);
+    color: var(--primary);
   }
 }
 

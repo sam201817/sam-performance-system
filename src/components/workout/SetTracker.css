@@ -12,15 +12,15 @@
 }
 
 .set-tracker__label {
-  font-size: 13px;
-  font-weight: 500;
+  font-size: var(--font-compact-size);
+  font-weight: var(--font-caption-weight);
   color: var(--text-secondary);
 }
 
 .set-tracker__count {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--accent);
+  font-size: var(--font-title-size);
+  font-weight: var(--font-title-weight);
+  color: var(--primary);
   font-variant-numeric: tabular-nums;
 }
 

@@ -30,7 +30,7 @@ describe('MetricTrend', () => {
       />,
     )
 
-    expect(screen.getByRole('img', { name: /體重 trend/i })).toBeInTheDocument()
+    expect(screen.getByRole('img', { name: /體重 趨勢，共 1 筆紀錄/i })).toBeInTheDocument()
     expect(screen.getByRole('tab', { name: '體重' })).toHaveAttribute('aria-selected', 'true')
 
     await user.click(screen.getByRole('tab', { name: '體脂' }))
@@ -46,6 +46,6 @@ describe('MetricTrend', () => {
       />,
     )
 
-    expect(screen.getByText(/Not enough data/i)).toBeInTheDocument()
+    expect(screen.getByRole('status')).toHaveTextContent('資料尚不足')
   })
 })

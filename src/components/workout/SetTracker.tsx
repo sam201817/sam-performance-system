@@ -1,4 +1,5 @@
 import { useId } from 'react'
+import { useTranslation } from '../../hooks/useTranslation'
 import type { ExerciseLog } from '../../types/workoutProgress'
 import { countCompletedSets } from '../../utils/workoutProgressFactory'
 import { SetRow } from './SetRow'
@@ -15,6 +16,7 @@ export function SetTracker({
   onExerciseLogChange,
   onSetComplete,
 }: SetTrackerProps) {
+  const { t } = useTranslation()
   const baseId = useId()
   const completedSets = countCompletedSets(exerciseLog)
   const totalSets = exerciseLog.sets.length
@@ -29,9 +31,9 @@ export function SetTracker({
   }
 
   return (
-    <section className="set-tracker" aria-label="組數紀錄">
+    <section className="set-tracker" aria-label={t('workout.setTrackerLabel')}>
       <div className="set-tracker__summary">
-        <span className="set-tracker__label">完成組數</span>
+        <span className="set-tracker__label">{t('workout.setTrackerSummary')}</span>
         <span className="set-tracker__count">
           {completedSets} / {totalSets}
         </span>

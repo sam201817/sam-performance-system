@@ -14,15 +14,15 @@
 
 .profile__title {
   margin: 0;
-  font-size: 28px;
-  font-weight: 600;
+  font-size: var(--font-h1-size);
+  font-weight: var(--font-title-weight);
   letter-spacing: -0.02em;
-  color: var(--text);
+  color: var(--text-primary);
 }
 
 .profile__subtitle {
   margin: 0;
-  font-size: 14px;
+  font-size: var(--font-body-small-size);
   color: var(--text-secondary);
 }
 
@@ -46,13 +46,13 @@
 }
 
 .profile-link__title {
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--text);
+  font-size: var(--font-body-size);
+  font-weight: var(--font-title-weight);
+  color: var(--text-primary);
 }
 
 .profile-link__description {
-  font-size: 13px;
+  font-size: var(--font-compact-size);
   line-height: 1.5;
   color: var(--text-secondary);
 }

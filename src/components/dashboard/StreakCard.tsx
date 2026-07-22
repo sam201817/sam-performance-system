@@ -1,4 +1,5 @@
 import { Card } from '../Card'
+import { EmptyState } from '../ui/EmptyState'
 import { useTranslation } from '../../hooks/useTranslation'
 import type { StreakSummary } from '../../types/dashboard'
 import './StreakCard.css'
@@ -16,9 +17,12 @@ export function StreakCard({ streak, hasWorkoutHistory }: StreakCardProps) {
       <h2 className="streak-card__title">{t('dashboard.streak')}</h2>
 
       {!hasWorkoutHistory ? (
-        <p className="streak-card__empty" role="status">
-          {t('dashboard.onboarding')}
-        </p>
+        <EmptyState
+          icon="streak"
+          title={t('emptyStates.streakTitle')}
+          description={t('emptyStates.streakDescription')}
+          compact
+        />
       ) : (
         <div className="streak-card__layout">
           <div className="streak-card__hero">

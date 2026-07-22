@@ -14,22 +14,22 @@
 
 .body-composition__title {
   margin: 0;
-  font-size: 28px;
-  font-weight: 600;
+  font-size: var(--font-h1-size);
+  font-weight: var(--font-title-weight);
   letter-spacing: -0.02em;
-  color: var(--text);
+  color: var(--text-primary);
 }
 
 .body-composition__subtitle {
   margin: 0;
-  font-size: 14px;
+  font-size: var(--font-body-small-size);
   color: var(--text-secondary);
 }
 
 .body-composition__empty {
   margin: 0;
   padding: var(--space-md);
-  font-size: 14px;
+  font-size: var(--font-body-small-size);
   color: var(--text-secondary);
   background: var(--surface-subtle);
   border: 1px solid var(--border);
@@ -43,9 +43,9 @@
 
 .body-composition__section-title {
   margin: 0 0 var(--space-sm);
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--text);
+  font-size: var(--font-h3-size);
+  font-weight: var(--font-title-weight);
+  color: var(--text-primary);
 }
 
 .body-composition__history-list {

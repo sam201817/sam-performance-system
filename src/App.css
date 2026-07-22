@@ -45,12 +45,6 @@
   gap: var(--space-lg);
 }
 
-.app__cards {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
-}
-
 @media (min-width: 520px) {
   .app-shell {
     padding: var(--space-md) 0;

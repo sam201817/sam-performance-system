@@ -64,6 +64,33 @@ export const typography = {
     lineHeight: 1.3,
     letterSpacing: '0.06em',
   },
+  micro: {
+    fontSize: '10px',
+    fontWeight: 500,
+    lineHeight: 1.3,
+  },
+  compact: {
+    fontSize: '13px',
+    fontWeight: 400,
+    lineHeight: 1.45,
+  },
+  subtitle: {
+    fontSize: '17px',
+    fontWeight: 600,
+    lineHeight: 1.35,
+  },
+  stat: {
+    fontSize: '20px',
+    fontWeight: 650,
+    lineHeight: 1.2,
+    letterSpacing: '-0.02em',
+  },
+  hero: {
+    fontSize: '24px',
+    fontWeight: 600,
+    lineHeight: 1.2,
+    letterSpacing: '-0.02em',
+  },
 } as const satisfies Record<string, TypographyStyle>
 
 export type TypographyToken = keyof typeof typography

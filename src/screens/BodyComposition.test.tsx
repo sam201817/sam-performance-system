@@ -19,7 +19,7 @@ describe('BodyComposition screen', () => {
     )
 
     expect(screen.getByRole('heading', { name: '身體組成' })).toBeInTheDocument()
-    expect(screen.getAllByText(/尚無身體量測紀錄/i).length).toBeGreaterThanOrEqual(1)
+    expect(screen.getAllByText(/尚無量測資料/i).length).toBeGreaterThanOrEqual(1)
 
     await user.click(screen.getByRole('button', { name: '新增今日量測' }))
     expect(screen.getByRole('dialog')).toBeInTheDocument()

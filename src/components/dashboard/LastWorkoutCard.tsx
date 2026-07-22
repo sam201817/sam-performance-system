@@ -1,4 +1,5 @@
 import { Card } from '../Card'
+import { EmptyState } from '../ui/EmptyState'
 import { useTranslation } from '../../hooks/useTranslation'
 import type { LastWorkoutSummary } from '../../types/dashboard'
 import { getSessionRating, type SessionRatingVariant } from '../../utils/sessionRating'
@@ -29,9 +30,12 @@ export function LastWorkoutCard({ lastWorkout, onOpenSession }: LastWorkoutCardP
     return (
       <Card className="last-workout-card" delay={0.16} aria-label={t('dashboard.lastWorkout')}>
         <h2 className="last-workout-card__title">{t('dashboard.lastWorkout')}</h2>
-        <p className="last-workout-card__empty" role="status">
-          {t('history.empty')}
-        </p>
+        <EmptyState
+          icon="workout"
+          title={t('emptyStates.workoutsTitle')}
+          description={t('emptyStates.workoutsDescription')}
+          compact
+        />
       </Card>
     )
   }

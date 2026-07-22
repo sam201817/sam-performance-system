@@ -8,6 +8,7 @@ import { SetTracker } from '../components/workout/SetTracker'
 import { RestTimer } from '../components/workout/RestTimer'
 import { WorkoutControls } from '../components/workout/WorkoutControls'
 import { AdvanceConfirm } from '../components/workout/AdvanceConfirm'
+import { EmptyState } from '../components/ui/EmptyState'
 import { parseRestDuration } from '../utils/parseRestDuration'
 import {
   clampExerciseIndex,
@@ -39,7 +40,11 @@ export function Workout({
     return (
       <main className="workout-screen screen-shell">
         <BackButton onClick={onBack} />
-        <p className="workout-screen__empty">{t('workout.noExercises')}</p>
+        <EmptyState
+          icon="workout"
+          title={t('emptyStates.workoutTitle')}
+          description={t('emptyStates.workoutDescription')}
+        />
       </main>
     )
   }

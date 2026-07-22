@@ -12,19 +12,19 @@
 
 .metric-trend__tab {
   padding: 10px 12px;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   border: 1px solid var(--border);
   background: var(--surface-subtle);
   color: var(--text-secondary);
-  font-size: 13px;
-  font-weight: 600;
+  font-size: var(--font-compact-size);
+  font-weight: var(--font-title-weight);
   cursor: pointer;
 }
 
 .metric-trend__tab--active {
-  color: var(--text);
+  color: var(--text-primary);
   border-color: var(--primary-border);
-  background: var(--accent-dim);
+  background: var(--primary-dim);
 }
 
 .metric-trend__summary {
@@ -35,15 +35,15 @@
 
 .metric-trend__label {
   display: block;
-  font-size: 11px;
+  font-size: var(--font-overline-size);
   color: var(--text-muted);
 }
 
 .metric-trend__value {
   display: block;
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--text);
+  font-size: var(--font-body-size);
+  font-weight: var(--font-title-weight);
+  color: var(--text-primary);
   font-variant-numeric: tabular-nums;
 }
 

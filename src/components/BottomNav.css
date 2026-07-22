@@ -53,13 +53,13 @@
 }
 
 .bottom-nav__icon {
-  width: 22px;
-  height: 22px;
+  width: var(--icon-size-md);
+  height: var(--icon-size-md);
 }
 
 .bottom-nav__label {
-  font-size: 10px;
-  font-weight: 500;
+  font-size: var(--font-micro-size);
+  font-weight: var(--font-caption-weight);
   letter-spacing: 0.02em;
 }
 
