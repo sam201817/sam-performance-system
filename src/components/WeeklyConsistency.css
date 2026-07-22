@@ -59,5 +59,5 @@
 
 .weekly-consistency__day--today .weekly-consistency__day-dot {
   background: var(--accent-dim);
-  border-color: rgba(184, 217, 38, 0.35);
+  border-color: var(--primary-border);
 }

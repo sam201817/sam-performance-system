@@ -10,8 +10,8 @@
 }
 
 .set-row--completed {
-  border-color: rgba(184, 217, 38, 0.22);
-  background: rgba(184, 217, 38, 0.04);
+  border-color: var(--primary-border-subtle);
+  background: var(--primary-dim);
 }
 
 .set-row__header {
@@ -63,7 +63,7 @@
   font-size: 15px;
   font-weight: 500;
   color: var(--text);
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--surface-muted);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   transition: border-color var(--transition);
@@ -72,7 +72,7 @@
 .set-row__input:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 1px;
-  border-color: rgba(184, 217, 38, 0.35);
+  border-color: var(--primary-border);
 }
 
 .set-row__complete {

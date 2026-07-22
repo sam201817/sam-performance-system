@@ -3,7 +3,7 @@
   flex-direction: column;
   gap: var(--space-sm);
   padding: var(--space-md);
-  background: rgba(22, 22, 22, 0.88);
+  background: var(--overlay-surface);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border);
@@ -63,7 +63,7 @@
 
 .rest-timer__button--accent {
   color: var(--accent);
-  border-color: rgba(184, 217, 38, 0.25);
+  border-color: var(--primary-border-subtle);
 }
 
 .rest-timer__button:disabled {

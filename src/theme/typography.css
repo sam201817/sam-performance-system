@@ -1,0 +1,90 @@
+/* Typography utility classes — SPS design system */
+
+.sps-display {
+  font-size: var(--font-display-size);
+  font-weight: var(--font-display-weight);
+  line-height: var(--font-display-line-height);
+  letter-spacing: -0.03em;
+}
+
+.sps-h1 {
+  font-size: var(--font-h1-size);
+  font-weight: var(--font-h1-weight);
+  line-height: var(--font-h1-line-height);
+  letter-spacing: -0.02em;
+}
+
+.sps-h2 {
+  font-size: var(--font-h2-size);
+  font-weight: var(--font-h2-weight);
+  line-height: var(--font-h2-line-height);
+  letter-spacing: -0.01em;
+}
+
+.sps-h3 {
+  font-size: var(--font-h3-size);
+  font-weight: var(--font-h3-weight);
+  line-height: var(--font-h3-line-height);
+}
+
+.sps-title {
+  font-size: var(--font-title-size);
+  font-weight: var(--font-title-weight);
+  line-height: var(--font-title-line-height);
+}
+
+.sps-body {
+  font-size: var(--font-body-size);
+  font-weight: var(--font-body-weight);
+  line-height: var(--font-body-line-height);
+}
+
+.sps-body-small {
+  font-size: var(--font-body-small-size);
+  font-weight: var(--font-body-small-weight);
+  line-height: var(--font-body-small-line-height);
+}
+
+.sps-caption {
+  font-size: var(--font-caption-size);
+  font-weight: var(--font-caption-weight);
+  line-height: var(--font-caption-line-height);
+}
+
+.sps-button-text {
+  font-size: var(--font-button-size);
+  font-weight: var(--font-button-weight);
+  line-height: var(--font-button-line-height);
+}
+
+.sps-overline {
+  font-size: var(--font-overline-size);
+  font-weight: var(--font-overline-weight);
+  line-height: var(--font-overline-line-height);
+  letter-spacing: var(--font-overline-spacing);
+  text-transform: uppercase;
+}
+
+.sps-text-primary {
+  color: var(--text-primary);
+}
+
+.sps-text-secondary {
+  color: var(--text-secondary);
+}
+
+.sps-text-muted {
+  color: var(--text-muted);
+}
+
+.sps-text-danger {
+  color: var(--danger-text);
+}
+
+.sps-text-success {
+  color: var(--success);
+}
+
+.sps-text-warning {
+  color: var(--warning);
+}

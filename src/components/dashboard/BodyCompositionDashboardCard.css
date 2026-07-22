@@ -23,7 +23,7 @@
   letter-spacing: 0.02em;
   color: var(--accent);
   background: var(--accent-dim);
-  border: 1px solid rgba(184, 217, 38, 0.22);
+  border: 1px solid var(--primary-border-subtle);
   border-radius: 999px;
 }
 
@@ -103,7 +103,7 @@
   padding: var(--space-md);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--surface-subtle);
 }
 
 .body-dashboard-card__metric-label {
@@ -130,7 +130,7 @@
 
 .body-dashboard-card__button--secondary {
   border: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--surface-muted);
   color: var(--text-secondary);
 }
 

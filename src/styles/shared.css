@@ -1,17 +1,20 @@
-/* Shared session label used across dashboard and workout screens */
+/* Shared UI patterns — SPS design system */
+
+/* Session / accent label */
 .session-label {
-  font-size: 10px;
-  font-weight: 600;
+  font-size: var(--font-overline-size);
+  font-weight: var(--font-overline-weight);
   letter-spacing: 0.16em;
-  color: var(--accent);
+  color: var(--primary);
 }
 
-/* Shared primary action button surface */
+/* Primary action button */
 .sps-action-primary {
-  font-size: 15px;
-  font-weight: 600;
-  color: #0a0a0a;
-  background: var(--accent);
+  min-height: var(--touch-target-min);
+  font-size: var(--font-button-size);
+  font-weight: var(--font-button-weight);
+  color: var(--primary-on);
+  background: var(--primary);
   border-radius: var(--radius-md);
   transition:
     transform var(--transition),
@@ -20,16 +23,119 @@
 }
 
 @media (hover: hover) {
-  .sps-action-primary:hover {
-    box-shadow: 0 0 20px var(--accent-glow);
+  .sps-action-primary:hover:not(:disabled) {
+    background: var(--primary-hover);
+    box-shadow: var(--shadow-primary-glow);
   }
 }
 
-.sps-action-primary:active {
+.sps-action-primary:active:not(:disabled) {
   transform: scale(0.97);
 }
 
-/* Shared screen shell padding for full-page flows */
+.sps-action-primary:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* Secondary action button */
+.sps-action-secondary {
+  min-height: var(--touch-target-min);
+  font-size: var(--font-button-size);
+  font-weight: var(--font-button-weight);
+  color: var(--text-secondary);
+  background: var(--surface-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  transition:
+    transform var(--transition),
+    border-color var(--transition),
+    color var(--transition),
+    background var(--transition);
+}
+
+@media (hover: hover) {
+  .sps-action-secondary:hover:not(:disabled) {
+    border-color: var(--border-strong);
+    color: var(--text-primary);
+  }
+}
+
+.sps-action-secondary:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.sps-action-secondary:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* Segmented control pattern */
+.sps-segment-group {
+  display: grid;
+  gap: var(--spacing-xs);
+}
+
+.sps-segment {
+  min-height: var(--touch-target-min);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface-subtle);
+  color: var(--text-secondary);
+  font-size: var(--font-body-small-size);
+  font-weight: var(--font-button-weight);
+  transition:
+    color var(--transition),
+    border-color var(--transition),
+    background var(--transition);
+}
+
+.sps-segment--active {
+  color: var(--text-primary);
+  border-color: var(--primary-border);
+  background: var(--primary-dim);
+}
+
+@media (hover: hover) {
+  .sps-segment:hover:not(.sps-segment--active) {
+    border-color: var(--border-strong);
+    color: var(--text-primary);
+  }
+}
+
+/* Input field pattern */
+.sps-input {
+  width: 100%;
+  min-height: var(--touch-target-min);
+  padding: var(--space-sm) var(--space-md);
+  font: inherit;
+  font-size: var(--font-body-size);
+  color: var(--text-primary);
+  background: var(--surface-muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  transition:
+    border-color var(--transition),
+    background var(--transition);
+}
+
+.sps-input:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.sps-input[aria-invalid='true'] {
+  border-color: var(--danger-border);
+}
+
+.sps-field-error {
+  margin: 0;
+  font-size: var(--font-caption-size);
+  color: var(--danger-text);
+}
+
+/* Screen shell padding */
 .screen-shell {
   flex: 1;
   padding-left: var(--space-md);
@@ -42,4 +148,20 @@
     padding-left: var(--space-lg);
     padding-right: var(--space-lg);
   }
+}
+
+/* Nested stat / tile surface */
+.sps-stat-surface {
+  padding: var(--space-md) var(--space-sm);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-subtle);
+}
+
+/* Empty state pattern */
+.sps-empty-state {
+  margin: 0;
+  font-size: var(--font-body-small-size);
+  line-height: var(--font-body-small-line-height);
+  color: var(--text-secondary);
 }

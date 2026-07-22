@@ -6,7 +6,7 @@
   width: 100%;
   max-width: var(--app-max-width);
   z-index: 100;
-  background: rgba(10, 10, 10, 0.88);
+  background: var(--nav-backdrop);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   border-top: 1px solid var(--border);
@@ -24,10 +24,13 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 3px;
+  gap: var(--spacing-xs);
+  min-height: var(--touch-target-min);
   padding: var(--space-xs);
   color: var(--text-muted);
-  transition: color var(--transition), transform var(--transition);
+  transition:
+    color var(--transition),
+    transform var(--transition-fast);
 }
 
 .bottom-nav__item:active {
@@ -35,7 +38,7 @@
 }
 
 .bottom-nav__item--active {
-  color: var(--accent);
+  color: var(--primary);
 }
 
 .bottom-nav__item--disabled,

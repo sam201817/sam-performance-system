@@ -1,30 +1,30 @@
 .daily-check-in-form {
   display: flex;
   flex-direction: column;
-  gap: var(--space-xl);
+  gap: var(--spacing-lg);
 }
 
 .daily-check-in-form__fields {
   display: flex;
   flex-direction: column;
-  gap: var(--space-lg);
+  gap: var(--spacing-md);
 }
 
 .daily-check-in-form__notes {
   display: flex;
   flex-direction: column;
-  gap: var(--space-xs);
+  gap: var(--spacing-xs);
 }
 
 .daily-check-in-form__notes-label {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text);
+  font-size: var(--font-body-small-size);
+  font-weight: var(--font-title-weight);
+  color: var(--text-primary);
 }
 
 .daily-check-in-form__optional {
-  font-size: 12px;
-  font-weight: 500;
+  font-size: var(--font-caption-size);
+  font-weight: var(--font-caption-weight);
   color: var(--text-muted);
 }
 
@@ -32,27 +32,28 @@
   min-height: 88px;
   padding: var(--space-sm) var(--space-md);
   font: inherit;
-  color: var(--text);
-  background: var(--bg-elevated);
+  color: var(--text-primary);
+  background: var(--surface-elevated);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   resize: vertical;
+  transition: border-color var(--transition);
 }
 
 .daily-check-in-form__notes-input:focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--primary);
   outline-offset: 2px;
 }
 
 .daily-check-in-form__notes-error {
   margin: 0;
-  font-size: 12px;
+  font-size: var(--font-caption-size);
   color: var(--state-poor);
 }
 
 .daily-check-in-form__submit {
   width: 100%;
-  padding: 16px var(--space-lg);
-  font-size: 16px;
-  font-weight: 600;
+  padding: var(--space-md) var(--space-lg);
+  font-size: var(--font-body-size);
+  font-weight: var(--font-button-weight);
 }

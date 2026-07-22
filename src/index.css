@@ -1,32 +1,4 @@
-:root {
-  --bg: #0a0a0a;
-  --bg-elevated: #131313;
-  --card: #161616;
-  --card-hover: #1c1c1c;
-  --border: rgba(255, 255, 255, 0.07);
-  --border-strong: rgba(255, 255, 255, 0.12);
-  --text: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.62);
-  --text-muted: rgba(255, 255, 255, 0.38);
-  --accent: #b8d926;
-  --accent-dim: rgba(184, 217, 38, 0.12);
-  --accent-glow: rgba(184, 217, 38, 0.18);
-  --state-good: rgba(184, 217, 38, 0.85);
-  --state-neutral: rgba(255, 255, 255, 0.55);
-  --state-poor: rgba(220, 140, 110, 0.75);
-  --radius-sm: 12px;
-  --radius-md: 20px;
-  --radius-lg: 26px;
-  --space-xs: 8px;
-  --space-sm: 12px;
-  --space-md: 16px;
-  --space-lg: 24px;
-  --space-xl: 32px;
-  --app-max-width: 460px;
-  --nav-height: 68px;
-  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
-  --transition: 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
-}
+@import './theme/tokens.css';
 
 *,
 *::before,
@@ -42,10 +14,11 @@ html {
 body {
   margin: 0;
   font-family: var(--font);
-  font-size: 16px;
-  line-height: 1.5;
-  color: var(--text);
-  background: var(--bg);
+  font-size: var(--font-body-size);
+  font-weight: var(--font-body-weight);
+  line-height: var(--font-body-line-height);
+  color: var(--text-primary);
+  background: var(--background);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -64,7 +37,7 @@ button {
 }
 
 button:focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--primary);
   outline-offset: 2px;
 }
 

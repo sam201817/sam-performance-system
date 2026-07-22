@@ -1,7 +1,7 @@
 .streak-card__title {
   margin: 0 0 var(--space-lg);
-  font-size: 15px;
-  font-weight: 600;
+  font-size: var(--font-title-size);
+  font-weight: var(--font-title-weight);
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--text-muted);
@@ -9,28 +9,28 @@
 
 .streak-card__empty {
   margin: 0;
-  font-size: 13px;
-  line-height: 1.45;
+  font-size: var(--font-body-small-size);
+  line-height: var(--font-body-small-line-height);
   color: var(--text-secondary);
 }
 
 .streak-card__layout {
   display: flex;
   flex-direction: column;
-  gap: var(--space-lg);
+  gap: var(--spacing-md);
 }
 
 .streak-card__hero {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
+  gap: var(--spacing-xs);
   padding: var(--space-md) 0;
 }
 
 .streak-card__hero-label {
-  font-size: 11px;
-  font-weight: 600;
+  font-size: var(--font-overline-size);
+  font-weight: var(--font-overline-weight);
   letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--text-muted);
@@ -41,13 +41,13 @@
   font-weight: 650;
   letter-spacing: -0.04em;
   line-height: 1;
-  color: var(--accent);
+  color: var(--primary);
   font-variant-numeric: tabular-nums;
 }
 
 .streak-card__hero-unit {
-  font-size: 13px;
-  font-weight: 500;
+  font-size: var(--font-body-small-size);
+  font-weight: var(--font-title-weight);
   color: var(--text-secondary);
 }
 
@@ -56,26 +56,26 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-sm);
   padding-top: var(--space-sm);
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--divider);
 }
 
 .streak-card__metric {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: var(--spacing-xs);
 }
 
 .streak-card__metric-label {
-  font-size: 11px;
-  font-weight: 600;
+  font-size: var(--font-overline-size);
+  font-weight: var(--font-overline-weight);
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--text-muted);
 }
 
 .streak-card__metric-value {
-  font-size: 15px;
-  font-weight: 600;
+  font-size: var(--font-title-size);
+  font-weight: var(--font-title-weight);
   color: var(--text-secondary);
   font-variant-numeric: tabular-nums;
 }

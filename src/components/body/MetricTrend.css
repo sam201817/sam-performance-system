@@ -14,7 +14,7 @@
   padding: 10px 12px;
   border-radius: 999px;
   border: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--surface-subtle);
   color: var(--text-secondary);
   font-size: 13px;
   font-weight: 600;
@@ -23,7 +23,7 @@
 
 .metric-trend__tab--active {
   color: var(--text);
-  border-color: rgba(184, 217, 38, 0.35);
+  border-color: var(--primary-border);
   background: var(--accent-dim);
 }
 

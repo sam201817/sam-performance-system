@@ -79,7 +79,7 @@
   letter-spacing: 0.03em;
   color: var(--accent);
   background: var(--accent-dim);
-  border: 1px solid rgba(184, 217, 38, 0.2);
+  border: 1px solid var(--primary-border-subtle);
   padding: 5px 11px;
   border-radius: 999px;
 }
@@ -117,7 +117,7 @@
   font-size: 14px;
   font-weight: 600;
   color: var(--text-secondary);
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--surface-muted);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   transition:
@@ -130,7 +130,7 @@
   .readiness-card__edit:hover {
     border-color: var(--border-strong);
     color: var(--text);
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--surface-highlight);
   }
 }
 
@@ -149,26 +149,26 @@
 
 .readiness-card__metric-value--pending {
   color: var(--text-muted);
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--surface-muted);
   border-color: var(--border);
 }
 
 .readiness-card__metric-value--good {
   color: var(--state-good);
-  background: rgba(184, 217, 38, 0.08);
-  border-color: rgba(184, 217, 38, 0.18);
+  background: var(--state-good-surface);
+  border-color: var(--primary-border-subtle);
 }
 
 .readiness-card__metric-value--neutral {
   color: var(--state-neutral);
-  background: rgba(255, 255, 255, 0.04);
-  border-color: rgba(255, 255, 255, 0.1);
+  background: var(--surface-highlight);
+  border-color: var(--border-strong);
 }
 
 .readiness-card__metric-value--poor {
   color: var(--state-poor);
-  background: rgba(220, 140, 110, 0.08);
-  border-color: rgba(220, 140, 110, 0.18);
+  background: var(--state-poor-surface);
+  border-color: var(--warning-border);
 }
 
 @media (prefers-reduced-motion: reduce) {

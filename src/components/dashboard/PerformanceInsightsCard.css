@@ -6,7 +6,7 @@
   color: var(--text-secondary);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--surface-subtle);
 }
 
 .performance-insights-card__list {
@@ -25,19 +25,19 @@
   padding: var(--space-md);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--surface-subtle);
 }
 
 .performance-insights-card__item--positive {
-  border-color: rgba(184, 217, 38, 0.22);
+  border-color: var(--primary-border-subtle);
 }
 
 .performance-insights-card__item--warning {
-  border-color: rgba(212, 176, 74, 0.28);
+  border-color: var(--warning-border);
 }
 
 .performance-insights-card__item--critical {
-  border-color: rgba(220, 140, 110, 0.32);
+  border-color: var(--warning-border);
 }
 
 .performance-insights-card__header {
@@ -88,7 +88,7 @@
 }
 
 .performance-insights-card__item--warning .performance-insights-card__severity {
-  color: #d4b04a;
+  color: var(--warning);
 }
 
 .performance-insights-card__item--critical .performance-insights-card__severity {

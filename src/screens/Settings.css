@@ -2,38 +2,48 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
-  padding-bottom: calc(var(--nav-height) + var(--space-lg));
+  gap: var(--spacing-sm);
+  padding-bottom: calc(var(--nav-height) + var(--spacing-md));
 }
 
 .settings__header {
   display: flex;
   flex-direction: column;
-  gap: var(--space-xs);
+  gap: var(--spacing-xs);
 }
 
 .settings__back {
   align-self: flex-start;
+  min-height: var(--touch-target-min);
   padding: 0;
   border: none;
   background: transparent;
-  color: var(--accent);
-  font-size: 14px;
-  font-weight: 600;
+  color: var(--primary);
+  font-size: var(--font-body-small-size);
+  font-weight: var(--font-button-weight);
   cursor: pointer;
+  transition: opacity var(--transition-fast);
+}
+
+@media (hover: hover) {
+  .settings__back:hover {
+    opacity: 0.85;
+  }
 }
 
 .settings__title {
   margin: 0;
-  font-size: 28px;
-  font-weight: 600;
+  font-size: var(--font-h1-size);
+  font-weight: var(--font-h1-weight);
   letter-spacing: -0.02em;
-  color: var(--text);
+  line-height: var(--font-h1-line-height);
+  color: var(--text-primary);
 }
 
 .settings__subtitle {
   margin: 0;
-  font-size: 14px;
+  font-size: var(--font-body-small-size);
+  line-height: var(--font-body-small-line-height);
   color: var(--text-secondary);
 }
 
@@ -42,7 +52,7 @@
   flex-direction: column;
   gap: var(--space-sm);
   padding-bottom: var(--space-sm);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid var(--divider);
 }
 
 .settings-row:last-child {
@@ -53,71 +63,99 @@
 .settings-row__content {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: var(--spacing-xs);
 }
 
 .settings-row__label {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--text);
+  font-size: var(--font-title-size);
+  font-weight: var(--font-title-weight);
+  color: var(--text-primary);
 }
 
 .settings-row__hint {
-  font-size: 12px;
+  font-size: var(--font-caption-size);
   color: var(--text-secondary);
 }
 
 .settings-row__value {
-  font-size: 14px;
+  font-size: var(--font-body-small-size);
   color: var(--text-secondary);
 }
 
 .settings-row__control--segmented {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--space-xs);
+  gap: var(--spacing-xs);
 }
 
 .settings-segment {
-  padding: 10px 12px;
+  min-height: var(--touch-target-min);
+  padding: var(--spacing-xs) var(--spacing-sm);
   border-radius: var(--radius-sm);
   border: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--surface-subtle);
   color: var(--text-secondary);
-  font-size: 13px;
-  font-weight: 600;
+  font-size: var(--font-body-small-size);
+  font-weight: var(--font-button-weight);
   cursor: pointer;
+  transition:
+    color var(--transition),
+    border-color var(--transition),
+    background var(--transition);
+}
+
+@media (hover: hover) {
+  .settings-segment:hover:not(.settings-segment--active) {
+    border-color: var(--border-strong);
+    color: var(--text-primary);
+  }
 }
 
 .settings-segment--active {
-  color: var(--text);
-  border-color: rgba(255, 193, 7, 0.45);
-  background: rgba(255, 193, 7, 0.08);
+  color: var(--text-primary);
+  border-color: var(--primary-border);
+  background: var(--primary-dim);
 }
 
 .settings__footnote {
-  margin: var(--space-xs) 0 0;
-  font-size: 12px;
+  margin: var(--spacing-xs) 0 0;
+  font-size: var(--font-caption-size);
   color: var(--text-secondary);
 }
 
 .settings__info {
   margin: 0;
-  font-size: 13px;
-  line-height: 1.5;
+  font-size: var(--font-body-small-size);
+  line-height: var(--font-body-small-line-height);
   color: var(--text-secondary);
 }
 
 .settings-action {
   width: 100%;
-  padding: 14px var(--space-md);
+  min-height: var(--touch-target-min);
+  padding: var(--space-sm) var(--space-md);
   border-radius: var(--radius-md);
   border: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.03);
-  color: var(--text);
-  font-size: 14px;
-  font-weight: 600;
+  background: var(--surface-muted);
+  color: var(--text-primary);
+  font-size: var(--font-body-small-size);
+  font-weight: var(--font-button-weight);
   cursor: pointer;
+  transition:
+    border-color var(--transition),
+    background var(--transition),
+    transform var(--transition-fast);
+}
+
+@media (hover: hover) {
+  .settings-action:hover:not(:disabled) {
+    border-color: var(--border-strong);
+    background: var(--surface-subtle);
+  }
+}
+
+.settings-action:active:not(:disabled) {
+  transform: scale(0.98);
 }
 
 .settings-action--primary {
@@ -125,9 +163,15 @@
 }
 
 .settings-action--danger {
-  color: #ffb4ab;
-  border-color: rgba(180, 35, 24, 0.45);
-  background: rgba(180, 35, 24, 0.08);
+  color: var(--danger-text);
+  border-color: var(--danger-border);
+  background: var(--danger-surface);
+}
+
+@media (hover: hover) {
+  .settings-action--danger:hover:not(:disabled) {
+    border-color: var(--danger);
+  }
 }
 
 .settings__file-input {
@@ -136,41 +180,41 @@
 
 .settings-list {
   margin: 0;
-  padding-left: 18px;
+  padding-left: var(--spacing-sm);
   display: flex;
   flex-direction: column;
-  gap: var(--space-xs);
-  font-size: 13px;
-  line-height: 1.5;
+  gap: var(--spacing-xs);
+  font-size: var(--font-body-small-size);
+  line-height: var(--font-body-small-line-height);
   color: var(--text-secondary);
 }
 
 .settings-about {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: var(--spacing-xs);
 }
 
 .settings-about__name {
   margin: 0;
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--text);
+  font-size: var(--font-h3-size);
+  font-weight: var(--font-h3-weight);
+  color: var(--text-primary);
 }
 
 .settings-about__short,
 .settings-about__version,
 .settings-about__description {
   margin: 0;
-  font-size: 13px;
+  font-size: var(--font-body-small-size);
   color: var(--text-secondary);
 }
 
 .settings-about__badge {
-  margin: var(--space-xs) 0 0;
-  font-size: 12px;
-  font-weight: 600;
+  margin: var(--spacing-xs) 0 0;
+  font-size: var(--font-caption-size);
+  font-weight: var(--font-button-weight);
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--primary);
 }

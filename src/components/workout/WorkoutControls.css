@@ -5,24 +5,30 @@
 }
 
 .workout-controls__button {
-  padding: 15px var(--space-md);
+  min-height: var(--touch-target-min);
+  padding: var(--space-sm) var(--space-md);
   border-radius: var(--radius-md);
   transition:
     background var(--transition),
     border-color var(--transition),
-    opacity var(--transition);
+    opacity var(--transition),
+    transform var(--transition-fast);
+}
+
+.workout-controls__button:active:not(:disabled) {
+  transform: scale(0.97);
 }
 
 .workout-controls__button--secondary {
   color: var(--text-secondary);
-  background: var(--bg-elevated);
+  background: var(--surface-elevated);
   border: 1px solid var(--border);
 }
 
 @media (hover: hover) {
   .workout-controls__button--secondary:not(:disabled):hover {
     border-color: var(--border-strong);
-    color: var(--text);
+    color: var(--text-primary);
   }
 }
 

@@ -46,7 +46,7 @@
 
 @media (hover: hover) {
   .brand-header__profile:hover {
-    border-color: rgba(184, 217, 38, 0.35);
+    border-color: var(--primary-border);
     color: var(--accent);
   }
 }

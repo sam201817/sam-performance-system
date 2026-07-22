@@ -11,7 +11,7 @@
   padding: var(--space-sm);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--surface-subtle);
 }
 
 .body-metric-summary-card__label {

@@ -2,14 +2,18 @@
   align-self: flex-start;
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  padding: 6px 10px 6px 4px;
-  margin-left: -4px;
-  font-size: 14px;
-  font-weight: 500;
+  gap: var(--spacing-xs);
+  min-height: var(--touch-target-min);
+  padding: var(--spacing-xs) var(--space-sm) var(--spacing-xs) var(--spacing-xs);
+  margin-left: calc(var(--spacing-xs) * -1);
+  font-size: var(--font-body-small-size);
+  font-weight: var(--font-title-weight);
   color: var(--text-secondary);
   border-radius: var(--radius-sm);
-  transition: color var(--transition), background var(--transition);
+  transition:
+    color var(--transition),
+    background var(--transition),
+    transform var(--transition-fast);
 }
 
 .back-button__icon {
@@ -19,11 +23,16 @@
 
 @media (hover: hover) {
   .back-button:hover {
-    color: var(--text);
-    background: rgba(255, 255, 255, 0.04);
+    color: var(--text-primary);
+    background: var(--surface-highlight);
   }
 }
 
 .back-button:active {
   transform: scale(0.97);
+}
+
+.back-button:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
 }

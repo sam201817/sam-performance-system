@@ -1,13 +1,13 @@
 .dashboard__stack {
   display: flex;
   flex-direction: column;
-  gap: var(--space-lg);
+  gap: var(--spacing-md);
 }
 
 .dashboard__duo {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-lg);
+  gap: var(--spacing-md);
 }
 
 @media (min-width: 520px) {
@@ -17,5 +17,5 @@
 }
 
 .dashboard .app__top {
-  margin-bottom: var(--space-xs);
+  margin-bottom: var(--spacing-xs);
 }

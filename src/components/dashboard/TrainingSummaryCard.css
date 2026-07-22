@@ -1,7 +1,7 @@
 .training-summary-card__title {
   margin: 0 0 var(--space-lg);
-  font-size: 15px;
-  font-weight: 600;
+  font-size: var(--font-title-size);
+  font-weight: var(--font-title-weight);
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--text-muted);
@@ -9,8 +9,8 @@
 
 .training-summary-card__empty {
   margin: 0;
-  font-size: 13px;
-  line-height: 1.45;
+  font-size: var(--font-body-small-size);
+  line-height: var(--font-body-small-line-height);
   color: var(--text-secondary);
 }
 
@@ -25,23 +25,23 @@
   flex: 1;
   height: 10px;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.06);
-  border-radius: 999px;
+  background: var(--progress-track);
+  border-radius: var(--radius-pill);
 }
 
 .training-summary-card__progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, rgba(184, 217, 38, 0.85), var(--accent));
-  border-radius: 999px;
+  background: linear-gradient(90deg, var(--state-good), var(--primary));
+  border-radius: var(--radius-pill);
   transition: width var(--transition);
 }
 
 .training-summary-card__progress-value {
   flex-shrink: 0;
   min-width: 3ch;
-  font-size: 18px;
+  font-size: var(--font-h3-size);
   font-weight: 650;
-  color: var(--text);
+  color: var(--text-primary);
   font-variant-numeric: tabular-nums;
   text-align: right;
 }
@@ -55,25 +55,25 @@
 .training-summary-card__stat {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: var(--spacing-xs);
   padding: var(--space-md) var(--space-sm);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--surface-subtle);
 }
 
 .training-summary-card__label {
-  font-size: 11px;
-  font-weight: 600;
+  font-size: var(--font-overline-size);
+  font-weight: var(--font-overline-weight);
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--text-muted);
 }
 
 .training-summary-card__value {
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--text);
+  font-size: var(--font-body-size);
+  font-weight: var(--font-title-weight);
+  color: var(--text-primary);
   font-variant-numeric: tabular-nums;
 }
 

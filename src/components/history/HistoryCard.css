@@ -6,7 +6,7 @@
   gap: var(--space-xs);
   padding: var(--space-md);
   text-align: left;
-  background: rgba(22, 22, 22, 0.85);
+  background: var(--overlay-surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   color: inherit;
@@ -16,8 +16,8 @@
 
 .history-card:hover,
 .history-card:focus-visible {
-  border-color: rgba(184, 217, 38, 0.35);
-  background: rgba(28, 28, 28, 0.95);
+  border-color: var(--primary-border);
+  background: var(--surface-hover-strong);
   outline: none;
 }
 

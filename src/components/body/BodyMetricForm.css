@@ -6,7 +6,7 @@
   align-items: flex-end;
   justify-content: center;
   padding: var(--space-md);
-  background: rgba(0, 0, 0, 0.65);
+  background: var(--overlay);
 }
 
 .body-metric-form {
@@ -15,15 +15,16 @@
   overflow-y: auto;
   padding: var(--space-lg);
   border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-  background: rgba(22, 22, 22, 0.98);
+  background: var(--overlay-surface);
   border: 1px solid var(--border);
+  box-shadow: var(--shadow-modal);
 }
 
 .body-metric-form__title {
   margin: 0 0 var(--space-md);
-  font-size: 22px;
-  font-weight: 600;
-  color: var(--text);
+  font-size: var(--font-h2-size);
+  font-weight: var(--font-h2-weight);
+  color: var(--text-primary);
 }
 
 .body-metric-form__fields {
@@ -35,19 +36,25 @@
 .body-metric-form__notes {
   width: 100%;
   min-height: 96px;
-  padding: 12px 14px;
+  padding: var(--space-sm) var(--space-md);
   border-radius: var(--radius-sm);
   border: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.03);
-  color: var(--text);
-  font-size: 14px;
+  background: var(--surface-muted);
+  color: var(--text-primary);
+  font-size: var(--font-body-small-size);
   resize: vertical;
+  transition: border-color var(--transition);
+}
+
+.body-metric-form__notes:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
 }
 
 .body-metric-form__form-error {
   margin: 0;
-  font-size: 13px;
-  color: #ff9f9f;
+  font-size: var(--font-body-small-size);
+  color: var(--danger-text);
 }
 
 .body-metric-form__actions {
@@ -58,17 +65,33 @@
 }
 
 .body-metric-form__button {
-  padding: 14px var(--space-md);
+  min-height: var(--touch-target-min);
+  padding: var(--space-sm) var(--space-md);
   border-radius: var(--radius-sm);
   border: 1px solid var(--border);
-  font-size: 15px;
-  font-weight: 600;
+  font-size: var(--font-title-size);
+  font-weight: var(--font-button-weight);
   cursor: pointer;
+  transition:
+    transform var(--transition-fast),
+    border-color var(--transition),
+    background var(--transition);
+}
+
+.body-metric-form__button:active {
+  transform: scale(0.97);
 }
 
 .body-metric-form__button--secondary {
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--surface-muted);
   color: var(--text-secondary);
+}
+
+@media (hover: hover) {
+  .body-metric-form__button--secondary:hover {
+    border-color: var(--border-strong);
+    color: var(--text-primary);
+  }
 }
 
 .body-metric-form__button--primary {

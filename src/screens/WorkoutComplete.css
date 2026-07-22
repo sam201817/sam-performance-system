@@ -14,7 +14,7 @@
   text-align: center;
   gap: var(--space-sm);
   padding: var(--space-xl) var(--space-lg);
-  background: rgba(22, 22, 22, 0.85);
+  background: var(--overlay-surface);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
@@ -58,7 +58,7 @@
   flex-direction: column;
   gap: 4px;
   padding: var(--space-sm);
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--surface-subtle);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
 }

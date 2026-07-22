@@ -3,7 +3,7 @@
   min-height: 140px;
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--surface-subtle);
   overflow: hidden;
 }
 

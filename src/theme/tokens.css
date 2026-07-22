@@ -1,0 +1,205 @@
+/**
+ * SPS Design System — CSS custom properties
+ * Source of truth mirrors src/theme/*.ts
+ */
+
+:root,
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  /* Semantic colors */
+  --background: #0a0a0a;
+  --surface: #161616;
+  --surface-elevated: #131313;
+  --surface-hover: #1c1c1c;
+  --surface-subtle: rgba(255, 255, 255, 0.02);
+  --surface-muted: rgba(255, 255, 255, 0.03);
+  --primary: #b8d926;
+  --primary-hover: #c9e84a;
+  --primary-dim: rgba(184, 217, 38, 0.12);
+  --primary-glow: rgba(184, 217, 38, 0.18);
+  --primary-border: rgba(184, 217, 38, 0.35);
+  --primary-on: #0a0a0a;
+  --success: #22c55e;
+  --success-surface: rgba(34, 197, 94, 0.08);
+  --success-border: rgba(34, 197, 94, 0.35);
+  --warning: #d4b04a;
+  --warning-surface: rgba(212, 176, 74, 0.12);
+  --warning-border: rgba(212, 176, 74, 0.28);
+  --danger: #b42318;
+  --danger-surface: rgba(180, 35, 24, 0.08);
+  --danger-border: rgba(180, 35, 24, 0.45);
+  --danger-text: #ffb4ab;
+  --border: rgba(255, 255, 255, 0.07);
+  --border-strong: rgba(255, 255, 255, 0.12);
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.62);
+  --text-muted: rgba(255, 255, 255, 0.38);
+  --divider: rgba(255, 255, 255, 0.06);
+  --overlay: rgba(0, 0, 0, 0.65);
+  --overlay-surface: rgba(22, 22, 22, 0.98);
+  --state-good: rgba(184, 217, 38, 0.85);
+  --state-neutral: rgba(255, 255, 255, 0.55);
+  --state-poor: rgba(220, 140, 110, 0.75);
+  --state-good-surface: rgba(184, 217, 38, 0.08);
+  --state-poor-surface: rgba(220, 140, 110, 0.08);
+  --progress-track: rgba(255, 255, 255, 0.06);
+  --shell-backdrop: rgba(10, 10, 10, 0.6);
+  --nav-backdrop: rgba(10, 10, 10, 0.88);
+  --surface-highlight: rgba(255, 255, 255, 0.04);
+  --primary-border-subtle: rgba(184, 217, 38, 0.22);
+  --surface-accent: rgba(28, 32, 18, 0.94);
+  --surface-hover-strong: rgba(28, 28, 28, 0.95);
+  --dot-border: rgba(255, 255, 255, 0.2);
+  --primary-border-strong: rgba(184, 217, 38, 0.4);
+  --state-good-surface-strong: rgba(159, 208, 74, 0.12);
+  --state-good-border: rgba(159, 208, 74, 0.24);
+  --accent-gradient: radial-gradient(
+    ellipse 80% 70% at 50% 0%,
+    rgba(184, 217, 38, 0.07) 0%,
+    transparent 72%
+  );
+
+  /* Legacy aliases — migrate to semantic tokens over time */
+  --bg: var(--background);
+  --bg-elevated: var(--surface-elevated);
+  --card: var(--surface);
+  --card-hover: var(--surface-hover);
+  --text: var(--text-primary);
+  --accent: var(--primary);
+  --accent-dim: var(--primary-dim);
+  --accent-glow: var(--primary-glow);
+}
+
+[data-theme='light'] {
+  color-scheme: light;
+
+  --background: #f5f5f4;
+  --surface: #ffffff;
+  --surface-elevated: #fafaf9;
+  --surface-hover: #f0f0ef;
+  --surface-subtle: rgba(0, 0, 0, 0.02);
+  --surface-muted: rgba(0, 0, 0, 0.04);
+  --primary: #8fb800;
+  --primary-hover: #7aa000;
+  --primary-dim: rgba(143, 184, 0, 0.12);
+  --primary-glow: rgba(143, 184, 0, 0.18);
+  --primary-border: rgba(143, 184, 0, 0.45);
+  --primary-on: #0a0a0a;
+  --success: #16a34a;
+  --success-surface: rgba(22, 163, 74, 0.08);
+  --success-border: rgba(22, 163, 74, 0.35);
+  --warning: #b8860b;
+  --warning-surface: rgba(184, 134, 11, 0.1);
+  --warning-border: rgba(184, 134, 11, 0.3);
+  --danger: #b42318;
+  --danger-surface: rgba(180, 35, 24, 0.08);
+  --danger-border: rgba(180, 35, 24, 0.35);
+  --danger-text: #9a1c12;
+  --border: rgba(0, 0, 0, 0.08);
+  --border-strong: rgba(0, 0, 0, 0.14);
+  --text-primary: #171717;
+  --text-secondary: rgba(23, 23, 23, 0.62);
+  --text-muted: rgba(23, 23, 23, 0.42);
+  --divider: rgba(0, 0, 0, 0.06);
+  --overlay: rgba(0, 0, 0, 0.4);
+  --overlay-surface: #ffffff;
+  --state-good: rgba(143, 184, 0, 0.9);
+  --state-neutral: rgba(23, 23, 23, 0.55);
+  --state-poor: rgba(180, 80, 50, 0.85);
+  --state-good-surface: rgba(143, 184, 0, 0.1);
+  --state-poor-surface: rgba(180, 80, 50, 0.08);
+  --progress-track: rgba(0, 0, 0, 0.06);
+  --shell-backdrop: rgba(255, 255, 255, 0.85);
+  --nav-backdrop: rgba(255, 255, 255, 0.92);
+  --surface-highlight: rgba(0, 0, 0, 0.04);
+  --primary-border-subtle: rgba(143, 184, 0, 0.28);
+  --surface-accent: rgba(240, 244, 232, 0.94);
+  --surface-hover-strong: rgba(240, 240, 239, 0.95);
+  --dot-border: rgba(0, 0, 0, 0.15);
+  --primary-border-strong: rgba(143, 184, 0, 0.5);
+  --state-good-surface-strong: rgba(143, 184, 0, 0.12);
+  --state-good-border: rgba(143, 184, 0, 0.28);
+  --accent-gradient: radial-gradient(
+    ellipse 80% 70% at 50% 0%,
+    rgba(143, 184, 0, 0.08) 0%,
+    transparent 72%
+  );
+}
+
+:root {
+  /* Spacing — 8px scale */
+  --spacing-xs: 8px;
+  --spacing-sm: 16px;
+  --spacing-md: 24px;
+  --spacing-lg: 32px;
+  --spacing-xl: 40px;
+  --spacing-2xl: 48px;
+
+  /* Legacy spacing aliases */
+  --space-xs: var(--spacing-xs);
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: var(--spacing-md);
+  --space-xl: var(--spacing-lg);
+
+  /* Radius */
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 26px;
+  --radius-xl: 32px;
+  --radius-pill: 999px;
+
+  /* Shadows */
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.24), 0 0 0 1px var(--border);
+  --shadow-modal: 0 16px 48px rgba(0, 0, 0, 0.48), 0 0 0 1px var(--border);
+  --shadow-floating: 0 8px 24px rgba(0, 0, 0, 0.32);
+  --shadow-primary-glow: 0 0 20px var(--primary-glow);
+
+  /* Typography */
+  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+  --font-display-size: 32px;
+  --font-display-weight: 650;
+  --font-display-line-height: 1.15;
+  --font-h1-size: 28px;
+  --font-h1-weight: 600;
+  --font-h1-line-height: 1.2;
+  --font-h2-size: 22px;
+  --font-h2-weight: 600;
+  --font-h2-line-height: 1.25;
+  --font-h3-size: 18px;
+  --font-h3-weight: 600;
+  --font-h3-line-height: 1.3;
+  --font-title-size: 15px;
+  --font-title-weight: 600;
+  --font-title-line-height: 1.35;
+  --font-body-size: 16px;
+  --font-body-weight: 400;
+  --font-body-line-height: 1.5;
+  --font-body-small-size: 14px;
+  --font-body-small-weight: 400;
+  --font-body-small-line-height: 1.5;
+  --font-caption-size: 12px;
+  --font-caption-weight: 500;
+  --font-caption-line-height: 1.45;
+  --font-button-size: 15px;
+  --font-button-weight: 600;
+  --font-button-line-height: 1.2;
+  --font-overline-size: 11px;
+  --font-overline-weight: 600;
+  --font-overline-line-height: 1.3;
+  --font-overline-spacing: 0.06em;
+
+  /* Motion */
+  --duration-fast: 0.15s;
+  --duration-base: 0.2s;
+  --duration-slow: 0.35s;
+  --easing: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --transition: var(--duration-base) var(--easing);
+  --transition-fast: var(--duration-fast) var(--easing);
+
+  /* Layout */
+  --app-max-width: 460px;
+  --nav-height: 68px;
+  --touch-target-min: 44px;
+}

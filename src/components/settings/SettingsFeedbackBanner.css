@@ -9,29 +9,38 @@
 }
 
 .settings-feedback--success {
-  background: rgba(34, 197, 94, 0.08);
-  border-color: rgba(34, 197, 94, 0.35);
+  background: var(--success-surface);
+  border-color: var(--success-border);
 }
 
 .settings-feedback--error {
-  background: rgba(239, 68, 68, 0.08);
-  border-color: rgba(239, 68, 68, 0.35);
+  background: var(--danger-surface);
+  border-color: var(--danger-border);
 }
 
 .settings-feedback__message {
   margin: 0;
-  font-size: 14px;
-  line-height: 1.5;
-  color: var(--text);
+  font-size: var(--font-body-small-size);
+  line-height: var(--font-body-small-line-height);
+  color: var(--text-primary);
 }
 
 .settings-feedback__dismiss {
   flex-shrink: 0;
+  min-width: var(--touch-target-min);
+  min-height: var(--touch-target-min);
   padding: 0;
   border: none;
   background: transparent;
   color: var(--text-secondary);
-  font-size: 13px;
-  font-weight: 600;
+  font-size: var(--font-body-small-size);
+  font-weight: var(--font-button-weight);
   cursor: pointer;
+  transition: color var(--transition-fast);
+}
+
+@media (hover: hover) {
+  .settings-feedback__dismiss:hover {
+    color: var(--text-primary);
+  }
 }

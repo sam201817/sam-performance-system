@@ -6,9 +6,9 @@
 
 .dashboard-section__title {
   margin: 0;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
+  font-size: var(--font-overline-size);
+  font-weight: var(--font-overline-weight);
+  letter-spacing: var(--font-overline-spacing);
   text-transform: uppercase;
   color: var(--text-muted);
 }

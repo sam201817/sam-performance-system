@@ -48,7 +48,7 @@
   line-height: 1.55;
   color: var(--text-secondary);
   padding-left: var(--space-sm);
-  border-left: 2px solid rgba(184, 217, 38, 0.35);
+  border-left: 2px solid var(--primary-border);
 }
 
 .workout-screen__exercise-header {
