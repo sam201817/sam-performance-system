@@ -61,7 +61,7 @@ function isWorkoutHistorySession(value: unknown): value is WorkoutHistorySession
   )
 }
 
-function isWorkoutHistory(value: unknown): value is WorkoutHistory {
+export function isWorkoutHistory(value: unknown): value is WorkoutHistory {
   if (!isRecord(value)) return false
   return (
     typeof value.version === 'number' &&

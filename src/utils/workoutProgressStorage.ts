@@ -31,7 +31,7 @@ function isExerciseLog(value: unknown): value is WorkoutProgress['exerciseLogs']
   )
 }
 
-function isWorkoutProgress(value: unknown): value is WorkoutProgress {
+export function isWorkoutProgress(value: unknown): value is WorkoutProgress {
   if (!isRecord(value)) return false
   return (
     typeof value.sessionId === 'string' &&
@@ -43,7 +43,7 @@ function isWorkoutProgress(value: unknown): value is WorkoutProgress {
   )
 }
 
-function isWorkoutSummary(value: unknown): value is WorkoutSummary {
+export function isWorkoutSummary(value: unknown): value is WorkoutSummary {
   if (!isRecord(value)) return false
   return (
     typeof value.totalExercises === 'number' &&
@@ -74,6 +74,17 @@ function sanitizeProgress(raw: WorkoutProgress, session: WorkoutSession): Workou
     ...raw,
     currentExerciseIndex: clampExerciseIndex(raw.currentExerciseIndex, session.exercises.length),
     exerciseLogs: exerciseLogs as WorkoutProgress['exerciseLogs'],
+  }
+}
+
+export function loadRawWorkoutProgress(): WorkoutProgress | null {
+  try {
+    const raw = localStorage.getItem(PROGRESS_KEY)
+    if (!raw) return null
+    const parsed: unknown = JSON.parse(raw)
+    return isWorkoutProgress(parsed) ? parsed : null
+  } catch {
+    return null
   }
 }
 

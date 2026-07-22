@@ -3,12 +3,19 @@ import { BodyComposition } from './screens/BodyComposition'
 import { DailyCheckIn } from './screens/DailyCheckIn'
 import { Dashboard } from './screens/Dashboard'
 import { History } from './screens/History'
+import { Profile } from './screens/Profile'
+import { Settings } from './screens/Settings'
 import { Workout } from './screens/Workout'
 import { WorkoutComplete } from './screens/WorkoutComplete'
 import { WorkoutHistoryDetail } from './screens/WorkoutHistoryDetail'
 import { TODAY_WORKOUT } from './data/todayWorkout'
+import type { SpsBackupPayload } from './types/backup'
 import type { BodyMetricEntry, BodyMetricHistory } from './types/bodyMetrics'
 import type { DailyCheckInEntry, DailyCheckInHistory } from './types/dailyCheckIn'
+import type { SettingsFeedback, UserPreferences } from './types/settings'
+import { downloadBackup } from './utils/backupData'
+import { parseBackupJson } from './utils/backupValidation'
+import { restoreSpsBackup } from './utils/backupRestore'
 import { buildBodyMetricSummary } from './utils/bodyMetricCalculations'
 import { buildDailyCheckInSummary } from './utils/dailyCheckInCalculations'
 import { buildDashboardOverview } from './utils/dashboardCalculations'
@@ -28,6 +35,11 @@ import {
   saveBodyMetricHistory,
   updateBodyMetricEntry,
 } from './utils/bodyMetricStorage'
+import {
+  loadPreferences,
+  savePreferences,
+} from './utils/preferencesStorage'
+import { resetAllSpsData } from './utils/resetSpsData'
 import {
   buildWorkoutSummary,
   createWorkoutProgress,
@@ -77,6 +89,8 @@ function App() {
   const [selectedHistorySessionId, setSelectedHistorySessionId] = useState<string | null>(null)
   const [historyDetailSource, setHistoryDetailSource] = useState<'history' | 'dashboard'>('history')
   const [checkInAllowCancel, setCheckInAllowCancel] = useState(false)
+  const [preferences, setPreferences] = useState<UserPreferences>(() => loadPreferences())
+  const [settingsFeedback, setSettingsFeedback] = useState<SettingsFeedback | null>(null)
 
   const workoutStatus = deriveWorkoutStatus(progress)
   const historyStatistics = useMemo(
@@ -135,6 +149,16 @@ function App() {
     setCheckInHistory(nextHistory)
   }, [])
 
+  const refreshAllAppState = useCallback(() => {
+    setHistory(loadHistory())
+    setBodyHistory(loadBodyMetricHistory())
+    setCheckInHistory(loadDailyCheckInHistory())
+    setPreferences(loadPreferences())
+    setProgress(loadWorkoutProgress(TODAY_WORKOUT))
+    setSummary(loadWorkoutSummary())
+    setSelectedHistorySessionId(null)
+  }, [])
+
   const goToHome = useCallback(() => {
     const nextCheckInHistory = loadDailyCheckInHistory()
     setCheckInHistory(nextCheckInHistory)
@@ -158,6 +182,16 @@ function App() {
 
   const openWorkoutScreen = useCallback(() => {
     setScreen('workout')
+  }, [])
+
+  const openProfile = useCallback(() => {
+    setSettingsFeedback(null)
+    setScreen('profile')
+  }, [])
+
+  const openSettings = useCallback(() => {
+    setSettingsFeedback(null)
+    setScreen('settings')
   }, [])
 
   const openBodyComposition = useCallback(() => {
@@ -247,6 +281,62 @@ function App() {
     setScreen('dashboard')
   }, [checkInHistory, persistCheckInHistory])
 
+  const handlePreferencesChange = useCallback((nextPreferences: UserPreferences) => {
+    savePreferences(nextPreferences)
+    setPreferences(nextPreferences)
+  }, [])
+
+  const handleExportBackup = useCallback(() => {
+    const filename = downloadBackup()
+    setSettingsFeedback({
+      type: 'backup-exported',
+      message: `Backup exported as ${filename}.`,
+    })
+  }, [])
+
+  const handleValidateRestoreFile = useCallback(async (file: File) => {
+    const text = await file.text()
+    const parsed = parseBackupJson(text)
+    if (!parsed.valid) {
+      setSettingsFeedback({
+        type: parsed.code === 'unsupported-version' ? 'restore-unsupported' : 'restore-invalid',
+        message: parsed.error,
+      })
+      return { valid: false as const }
+    }
+
+    return { valid: true as const, backup: parsed.backup }
+  }, [])
+
+  const handleConfirmRestore = useCallback(async (backup: SpsBackupPayload) => {
+    const result = restoreSpsBackup(backup)
+    if (!result.success) {
+      setSettingsFeedback({
+        type: result.code === 'unsupported-version' ? 'restore-unsupported' : 'restore-invalid',
+        message: result.error,
+      })
+      return
+    }
+
+    refreshAllAppState()
+    setCheckInAllowCancel(false)
+    setSettingsFeedback({
+      type: 'restore-success',
+      message: 'Backup restored successfully. Your local SPS data has been replaced.',
+    })
+  }, [refreshAllAppState])
+
+  const handleResetAllData = useCallback(() => {
+    resetAllSpsData()
+    refreshAllAppState()
+    setCheckInAllowCancel(false)
+    setSettingsFeedback({
+      type: 'reset-success',
+      message: 'All SPS data has been reset. The app is back to its first-use state.',
+    })
+    setScreen('daily-check-in')
+  }, [refreshAllAppState])
+
   const handleCancelCheckIn = useCallback(() => {
     setCheckInAllowCancel(false)
     setScreen('dashboard')
@@ -271,9 +361,9 @@ function App() {
     }
 
     if (tab === 'profile') {
-      openBodyComposition()
+      openProfile()
     }
-  }, [goToHome, handleStartWorkout, openBodyComposition, refreshHistory])
+  }, [goToHome, handleStartWorkout, openProfile, refreshHistory])
 
   const activeTab = getActiveNavTab(screen)
 
@@ -340,6 +430,29 @@ function App() {
             onNavigate={handleNavigate}
             onSaveEntry={handleSaveBodyEntry}
             onDeleteEntry={handleDeleteBodyEntry}
+          />
+        )}
+        {screen === 'profile' && (
+          <Profile
+            activeTab={activeTab}
+            onNavigate={handleNavigate}
+            onOpenBodyComposition={openBodyComposition}
+            onOpenSettings={openSettings}
+          />
+        )}
+        {screen === 'settings' && (
+          <Settings
+            preferences={preferences}
+            activeTab={activeTab}
+            feedback={settingsFeedback}
+            onNavigate={handleNavigate}
+            onBack={openProfile}
+            onPreferencesChange={handlePreferencesChange}
+            onExportBackup={handleExportBackup}
+            onValidateRestoreFile={handleValidateRestoreFile}
+            onConfirmRestore={handleConfirmRestore}
+            onResetAllData={handleResetAllData}
+            onDismissFeedback={() => setSettingsFeedback(null)}
           />
         )}
       </div>

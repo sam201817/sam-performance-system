@@ -67,7 +67,7 @@ function isBodyMetricEntry(value: unknown): value is BodyMetricEntry {
   return hasAtLeastOneMetric(normalized)
 }
 
-function isBodyMetricHistory(value: unknown): value is BodyMetricHistory {
+export function isBodyMetricHistory(value: unknown): value is BodyMetricHistory {
   if (!isRecord(value)) return false
   return (
     value.version === BODY_METRIC_VERSION &&

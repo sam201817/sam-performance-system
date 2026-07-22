@@ -49,7 +49,7 @@ function isDailyCheckInEntry(value: unknown): value is DailyCheckInEntry {
   return true
 }
 
-function isDailyCheckInHistory(value: unknown): value is DailyCheckInHistory {
+export function isDailyCheckInHistory(value: unknown): value is DailyCheckInHistory {
   if (!isRecord(value)) return false
   return (
     value.version === DAILY_CHECK_IN_VERSION &&

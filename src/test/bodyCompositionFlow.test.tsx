@@ -13,6 +13,7 @@ describe('body composition integration', () => {
     await completeDailyCheckIn(user)
 
     await user.click(screen.getByRole('button', { name: '我的' }))
+    await user.click(screen.getByRole('button', { name: /Body Composition/i }))
     expect(screen.getByRole('heading', { name: 'Body Composition' })).toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: 'Add Check-in Today' }))
@@ -35,6 +36,7 @@ describe('body composition integration', () => {
     await completeDailyCheckIn(user)
 
     await user.click(screen.getByRole('button', { name: '我的' }))
+    await user.click(screen.getByRole('button', { name: /Body Composition/i }))
     await user.click(screen.getByRole('button', { name: 'Add Check-in Today' }))
 
     let dialog = screen.getByRole('dialog')
