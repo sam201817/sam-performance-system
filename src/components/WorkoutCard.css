@@ -1,0 +1,80 @@
+.workout-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.workout-card__graphic {
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+  width: 72px;
+  height: 72px;
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.workout-card__label {
+  display: block;
+  margin-bottom: var(--space-sm);
+  padding-right: 80px;
+}
+
+.workout-card__title {
+  margin: 0 0 var(--space-xs);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  padding-right: 72px;
+}
+
+.workout-card__details {
+  margin: 0 0 var(--space-md);
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.workout-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-lg);
+}
+
+.workout-card__tag {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  padding: 5px 11px;
+  border-radius: 999px;
+}
+
+.workout-card__button {
+  width: 100%;
+  padding: 15px var(--space-lg);
+}
+
+.workout-card__button:not(:disabled):active {
+  box-shadow: 0 0 14px var(--accent-glow);
+}
+
+.workout-card__button--resume {
+  background: var(--accent-dim);
+  color: var(--accent);
+  box-shadow: none;
+}
+
+.workout-card__button--resume:active {
+  transform: scale(0.97);
+  box-shadow: 0 0 14px var(--accent-glow);
+}
+
+.workout-card__confirmation {
+  margin: var(--space-sm) 0 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+  text-align: center;
+  line-height: 1.5;
+}

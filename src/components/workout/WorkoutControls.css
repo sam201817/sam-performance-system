@@ -1,0 +1,36 @@
+.workout-controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-sm);
+}
+
+.workout-controls__button {
+  padding: 15px var(--space-md);
+  border-radius: var(--radius-md);
+  transition:
+    background var(--transition),
+    border-color var(--transition),
+    opacity var(--transition);
+}
+
+.workout-controls__button--secondary {
+  color: var(--text-secondary);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+}
+
+@media (hover: hover) {
+  .workout-controls__button--secondary:not(:disabled):hover {
+    border-color: var(--border-strong);
+    color: var(--text);
+  }
+}
+
+.workout-controls__button--secondary:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.workout-controls__button--primary {
+  border: 1px solid transparent;
+}

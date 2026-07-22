@@ -1,0 +1,122 @@
+.body-goal-card__title {
+  margin: 0 0 var(--space-md);
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.body-goal-card__direction {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+  padding: var(--space-md) var(--space-sm);
+  background: var(--bg-elevated);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+}
+
+.body-goal-card__endpoint {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.body-goal-card__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--text-secondary);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.body-goal-card__dot--goal {
+  background: var(--accent);
+  border-color: rgba(184, 217, 38, 0.4);
+}
+
+.body-goal-card__endpoint-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.body-goal-card__line {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+
+.body-goal-card__line-track {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.2),
+    rgba(184, 217, 38, 0.45)
+  );
+}
+
+.body-goal-card__line-arrow {
+  font-size: 14px;
+  color: var(--accent);
+  opacity: 0.7;
+  flex-shrink: 0;
+}
+
+.body-goal-card__stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.body-goal-card__stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: var(--space-sm);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.body-goal-card__stat--remaining {
+  border-color: rgba(184, 217, 38, 0.15);
+  background: var(--accent-dim);
+}
+
+.body-goal-card__stat-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+}
+
+.body-goal-card__stat-value {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+.body-goal-card__stat-value--accent {
+  color: var(--accent);
+}
+
+.body-goal-card__unit {
+  font-size: 12px;
+  font-weight: 500;
+  opacity: 0.75;
+}
+
+.body-goal-card__note {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}

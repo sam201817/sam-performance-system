@@ -1,0 +1,160 @@
+.readiness-card__top {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-lg);
+}
+
+.readiness-card__ring-wrap {
+  position: relative;
+  flex-shrink: 0;
+  width: 108px;
+  height: 108px;
+}
+
+.readiness-card__ring {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.readiness-card__ring-track {
+  fill: none;
+  stroke: var(--bg-elevated);
+  stroke-width: 7;
+}
+
+.readiness-card__ring-progress {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 7;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.08s linear;
+}
+
+.readiness-card__ring-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.readiness-card__score {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--text);
+}
+
+.readiness-card__score-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+.readiness-card__info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  min-width: 0;
+}
+
+.readiness-card__title {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.readiness-card__status {
+  align-self: flex-start;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--accent);
+  background: var(--accent-dim);
+  border: 1px solid rgba(184, 217, 38, 0.2);
+  padding: 5px 11px;
+  border-radius: 999px;
+}
+
+.readiness-card__metrics {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-sm);
+}
+
+.readiness-card__metric {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-md);
+  padding: 10px var(--space-xs);
+  border-radius: var(--radius-sm);
+  transition: background var(--transition);
+}
+
+@media (hover: hover) {
+  .readiness-card__metric:hover {
+    background: var(--bg-elevated);
+  }
+}
+
+.readiness-card__metric:active {
+  transform: scale(0.99);
+}
+
+.readiness-card__metric-label {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.readiness-card__metric-value {
+  font-size: 13px;
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+}
+
+.readiness-card__metric-value--pending {
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.03);
+  border-color: var(--border);
+}
+
+.readiness-card__metric-value--good {
+  color: var(--state-good);
+  background: rgba(184, 217, 38, 0.08);
+  border-color: rgba(184, 217, 38, 0.18);
+}
+
+.readiness-card__metric-value--neutral {
+  color: var(--state-neutral);
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.readiness-card__metric-value--poor {
+  color: var(--state-poor);
+  background: rgba(220, 140, 110, 0.08);
+  border-color: rgba(220, 140, 110, 0.18);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .readiness-card__ring-progress {
+    transition: none;
+  }
+}

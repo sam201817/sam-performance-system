@@ -1,0 +1,95 @@
+.workout-complete {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: var(--space-lg);
+}
+
+.workout-complete__card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-sm);
+  padding: var(--space-xl) var(--space-lg);
+  background: rgba(22, 22, 22, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.workout-complete__icon {
+  width: 56px;
+  height: 56px;
+  margin-bottom: var(--space-sm);
+}
+
+.workout-complete__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.workout-complete__title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.workout-complete__message {
+  margin: var(--space-xs) 0 0;
+  font-size: 16px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.workout-complete__stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-sm);
+  width: 100%;
+  margin: var(--space-md) 0 0;
+}
+
+.workout-complete__stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: var(--space-sm);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.workout-complete__stat dt {
+  margin: 0;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.workout-complete__stat dd {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.workout-complete__submessage {
+  margin: 0 0 var(--space-lg);
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.workout-complete__button {
+  width: 100%;
+  padding: 15px var(--space-lg);
+}
+
+@media (min-width: 520px) {
+  .workout-complete {
+    padding-top: var(--space-xl);
+  }
+}

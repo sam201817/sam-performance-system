@@ -1,0 +1,22 @@
+.greeting {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.greeting__title {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  color: var(--text);
+}
+
+.greeting__subtitle {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}

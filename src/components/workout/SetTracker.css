@@ -1,0 +1,31 @@
+.set-tracker {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.set-tracker__summary {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+
+.set-tracker__label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.set-tracker__count {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.set-tracker__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}

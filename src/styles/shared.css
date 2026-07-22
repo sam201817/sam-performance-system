@@ -1,0 +1,45 @@
+/* Shared session label used across dashboard and workout screens */
+.session-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: var(--accent);
+}
+
+/* Shared primary action button surface */
+.sps-action-primary {
+  font-size: 15px;
+  font-weight: 600;
+  color: #0a0a0a;
+  background: var(--accent);
+  border-radius: var(--radius-md);
+  transition:
+    transform var(--transition),
+    box-shadow var(--transition),
+    background var(--transition);
+}
+
+@media (hover: hover) {
+  .sps-action-primary:hover {
+    box-shadow: 0 0 20px var(--accent-glow);
+  }
+}
+
+.sps-action-primary:active {
+  transform: scale(0.97);
+}
+
+/* Shared screen shell padding for full-page flows */
+.screen-shell {
+  flex: 1;
+  padding-left: var(--space-md);
+  padding-right: var(--space-md);
+  padding-bottom: calc(var(--space-xl) + env(safe-area-inset-bottom, 0));
+}
+
+@media (min-width: 520px) {
+  .screen-shell {
+    padding-left: var(--space-lg);
+    padding-right: var(--space-lg);
+  }
+}
