@@ -1,0 +1,14 @@
+.sps-page-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  margin-bottom: var(--space-md);
+}
+
+.sps-page-header__title {
+  margin: 0;
+}
+
+.sps-page-header__subtitle {
+  margin: 0;
+}

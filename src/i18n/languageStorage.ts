@@ -1,10 +1,11 @@
+import { SPS_STORAGE_KEYS } from '../constants/spsStorageKeys'
 import {
   DEFAULT_LANGUAGE,
   isSupportedLanguage,
   type SupportedLanguage,
 } from './index'
 
-const STORED_LANGUAGE_KEY = 'sps.language.v1'
+const STORED_LANGUAGE_KEY = SPS_STORAGE_KEYS.language
 
 function readStoredLanguage(): SupportedLanguage | null {
   try {

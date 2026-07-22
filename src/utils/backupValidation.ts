@@ -10,9 +10,7 @@ import { isUserPreferences } from './preferencesStorage'
 import { isWorkoutHistory } from './workoutHistoryStorage'
 import { isWorkoutProgress, isWorkoutSummary } from './workoutProgressStorage'
 
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === 'object' && value !== null
-}
+import { isRecord } from './guards/isRecord'
 
 export const BACKUP_VALIDATION_ERROR_KEYS = {
   invalidJson: 'errors.invalidBackup',

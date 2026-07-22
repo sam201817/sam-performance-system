@@ -1,8 +1,8 @@
 import { BottomNav } from '../components/BottomNav'
 import { HistoryCard } from '../components/history/HistoryCard'
-import { HistorySectionHeader } from '../components/history/HistorySectionHeader'
-import { HistoryStat } from '../components/history/HistoryStat'
 import { EmptyState } from '../components/ui/EmptyState'
+import { PageHeader } from '../components/ui/PageHeader'
+import { StatTile } from '../components/ui/StatTile'
 import { useTranslation } from '../hooks/useTranslation'
 import type { HistoryProps } from '../types/workout'
 import { formatVolumeKg } from '../utils/workoutHistoryCalculations'
@@ -24,13 +24,13 @@ export function History({
   return (
     <>
       <main className="history screen-shell">
-        <HistorySectionHeader title={t('history.title')} />
+        <PageHeader title={t('history.title')} />
 
         <section className="history__stats" aria-label={t('history.title')}>
-          <HistoryStat label={t('history.totalWorkouts')} value={String(statistics.totalWorkouts)} />
-          <HistoryStat label={t('history.totalVolume')} value={formatVolumeKg(statistics.totalVolume)} />
-          <HistoryStat label={t('history.averageDuration')} value={averageDuration} />
-          <HistoryStat
+          <StatTile label={t('history.totalWorkouts')} value={String(statistics.totalWorkouts)} />
+          <StatTile label={t('history.totalVolume')} value={formatVolumeKg(statistics.totalVolume)} />
+          <StatTile label={t('history.averageDuration')} value={averageDuration} />
+          <StatTile
             label={t('history.currentStreak')}
             value={`${statistics.currentStreak} ${t('dashboard.days')}`}
           />

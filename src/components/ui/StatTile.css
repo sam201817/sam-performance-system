@@ -1,0 +1,46 @@
+.sps-stat-tile {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  padding: var(--space-sm);
+  background: var(--surface-subtle);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.sps-stat-tile--centered {
+  align-items: center;
+  justify-content: center;
+  min-height: 88px;
+  padding: var(--space-md) var(--space-sm);
+  text-align: center;
+  transition:
+    border-color var(--transition),
+    background var(--transition);
+}
+
+@media (hover: hover) {
+  .sps-stat-tile--centered:hover {
+    border-color: var(--border-strong);
+    background: var(--surface-muted);
+  }
+}
+
+.sps-stat-tile__label {
+  font-size: var(--font-overline-size);
+  font-weight: var(--font-overline-weight);
+  letter-spacing: 0.03em;
+  color: var(--text-muted);
+}
+
+.sps-stat-tile__value {
+  font-size: var(--font-h3-size);
+  font-weight: var(--font-title-weight);
+  line-height: 1.1;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.sps-stat-tile--centered .sps-stat-tile__value {
+  font-weight: 650;
+}

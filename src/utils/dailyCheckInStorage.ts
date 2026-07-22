@@ -1,9 +1,12 @@
+import { SPS_STORAGE_KEYS } from '../constants/spsStorageKeys'
 import type { DailyCheckInEntry, DailyCheckInHistory } from '../types/dailyCheckIn'
 import { DAILY_CHECK_IN_VERSION } from '../types/dailyCheckIn'
+import { isRecord } from './guards/isRecord'
+import { readJsonStorage, removeJsonStorage, writeJsonStorage } from './storage/jsonStorage'
 import { CHECK_IN_NOTES_MAX_LENGTH } from './dailyCheckInValidation'
 import { getEntryDateKey, getLocalDateKey } from './bodyMetricCalculations'
 
-const STORAGE_KEY = 'sps.daily-check-in.v1'
+const STORAGE_KEY = SPS_STORAGE_KEYS.dailyCheckIn
 
 function sortCheckInsNewestFirst(
   entries: readonly DailyCheckInEntry[],
@@ -11,10 +14,6 @@ function sortCheckInsNewestFirst(
   return [...entries].sort(
     (left, right) => new Date(right.recordedAt).getTime() - new Date(left.recordedAt).getTime(),
   )
-}
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === 'object' && value !== null
 }
 
 function isValidScaleValue(value: unknown): value is number {
@@ -66,34 +65,18 @@ function createEmptyHistory(): DailyCheckInHistory {
 }
 
 export function loadDailyCheckInHistory(): DailyCheckInHistory {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY)
-    if (!raw) return createEmptyHistory()
-
-    const parsed: unknown = JSON.parse(raw)
-    if (!isDailyCheckInHistory(parsed)) return createEmptyHistory()
-
-    return {
-      version: DAILY_CHECK_IN_VERSION,
-      entries: sortCheckInsNewestFirst(parsed.entries),
-    }
-  } catch {
-    return createEmptyHistory()
+  const loaded = readJsonStorage(STORAGE_KEY, isDailyCheckInHistory, createEmptyHistory())
+  return {
+    version: DAILY_CHECK_IN_VERSION,
+    entries: sortCheckInsNewestFirst(loaded.entries),
   }
 }
 
-export function saveDailyCheckInHistory(history: DailyCheckInHistory): void {
-  try {
-    localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify({
-        version: DAILY_CHECK_IN_VERSION,
-        entries: sortCheckInsNewestFirst(history.entries),
-      }),
-    )
-  } catch {
-    /* storage unavailable */
-  }
+export function saveDailyCheckInHistory(history: DailyCheckInHistory): boolean {
+  return writeJsonStorage(STORAGE_KEY, {
+    version: DAILY_CHECK_IN_VERSION,
+    entries: sortCheckInsNewestFirst(history.entries),
+  })
 }
 
 export function createDailyCheckInEntryId(): string {
@@ -171,11 +154,7 @@ export function updateDailyCheckInEntry(
 }
 
 export function clearDailyCheckInHistory(): void {
-  try {
-    localStorage.removeItem(STORAGE_KEY)
-  } catch {
-    /* storage unavailable */
-  }
+  removeJsonStorage(STORAGE_KEY)
 }
 
 export function hasTodayCheckIn(history: DailyCheckInHistory, date: Date = new Date()): boolean {

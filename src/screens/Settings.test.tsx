@@ -1,8 +1,8 @@
-import { render, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import type { ComponentProps } from 'react'
 import { describe, expect, it, vi } from 'vitest'
-import { I18nProvider } from '../i18n/I18nProvider'
+import { renderWithI18n } from '../test/renderWithI18n'
 import { Settings } from './Settings'
 import { createDefaultPreferences } from '../utils/preferencesStorage'
 import { createValidBackup } from '../test/backupFixtures'
@@ -12,23 +12,22 @@ function renderSettings(
   overrides: Partial<ComponentProps<typeof Settings>> = {},
 ) {
   const backup = createValidBackup()
-  return render(
-    <I18nProvider language={language}>
-      <Settings
-        preferences={{ ...createDefaultPreferences(), language }}
-        activeTab="profile"
-        feedback={null}
-        onNavigate={vi.fn()}
-        onBack={vi.fn()}
-        onPreferencesChange={vi.fn()}
-        onExportBackup={vi.fn()}
-        onValidateRestoreFile={vi.fn().mockResolvedValue({ valid: true, backup })}
-        onConfirmRestore={vi.fn().mockResolvedValue(undefined)}
-        onResetAllData={vi.fn()}
-        onDismissFeedback={vi.fn()}
-        {...overrides}
-      />
-    </I18nProvider>,
+  return renderWithI18n(
+    <Settings
+      preferences={{ ...createDefaultPreferences(), language }}
+      activeTab="profile"
+      feedback={null}
+      onNavigate={vi.fn()}
+      onBack={vi.fn()}
+      onPreferencesChange={vi.fn()}
+      onExportBackup={vi.fn()}
+      onValidateRestoreFile={vi.fn().mockResolvedValue({ valid: true, backup })}
+      onConfirmRestore={vi.fn().mockResolvedValue(undefined)}
+      onResetAllData={vi.fn()}
+      onDismissFeedback={vi.fn()}
+      {...overrides}
+    />,
+    { language },
   )
 }
 

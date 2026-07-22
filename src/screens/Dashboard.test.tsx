@@ -2,24 +2,9 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 import { TODAY_WORKOUT } from '../data/todayWorkout'
+import { emptyBodyMetricSummary } from '../test/fixtures/bodySummary'
 import { buildDashboardOverview } from '../utils/dashboardCalculations'
 import { Dashboard } from './Dashboard'
-
-const emptyBodySummary = {
-  latestWeightKg: null,
-  previousWeightKg: null,
-  weightChangeKg: null,
-  latestBodyFatPercent: null,
-  previousBodyFatPercent: null,
-  bodyFatChangePercent: null,
-  latestMuscleMassKg: null,
-  previousMuscleMassKg: null,
-  muscleMassChangeKg: null,
-  latestWaistCm: null,
-  previousWaistCm: null,
-  waistChangeCm: null,
-  lastUpdatedAt: null,
-}
 
 const checkInSummary = {
   score: 82,
@@ -34,7 +19,7 @@ const checkInSummary = {
 describe('Dashboard', () => {
   it('renders performance overview sections', () => {
     const now = new Date('2026-07-22T10:00:00.000Z')
-    const overview = buildDashboardOverview([], emptyBodySummary, now)
+    const overview = buildDashboardOverview([], emptyBodyMetricSummary, now)
 
     render(
       <Dashboard
@@ -44,7 +29,7 @@ describe('Dashboard', () => {
         activeTab="home"
         onNavigate={vi.fn()}
         overview={overview}
-        bodySummary={emptyBodySummary}
+        bodySummary={emptyBodyMetricSummary}
         hasBodyEntries={false}
         onOpenBodyComposition={vi.fn()}
         onOpenHistorySession={vi.fn()}
@@ -66,7 +51,7 @@ describe('Dashboard', () => {
   it('starts workout from hero card', async () => {
     const user = userEvent.setup()
     const onStartWorkout = vi.fn()
-    const overview = buildDashboardOverview([], emptyBodySummary)
+    const overview = buildDashboardOverview([], emptyBodyMetricSummary)
 
     render(
       <Dashboard
@@ -76,7 +61,7 @@ describe('Dashboard', () => {
         activeTab="home"
         onNavigate={vi.fn()}
         overview={overview}
-        bodySummary={emptyBodySummary}
+        bodySummary={emptyBodyMetricSummary}
         hasBodyEntries={false}
         onOpenBodyComposition={vi.fn()}
         onOpenHistorySession={vi.fn()}

@@ -1,4 +1,4 @@
-.settings-feedback {
+.sps-info-banner {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -8,24 +8,24 @@
   border: 1px solid var(--border);
 }
 
-.settings-feedback--success {
+.sps-info-banner--success {
   background: var(--success-surface);
   border-color: var(--success-border);
 }
 
-.settings-feedback--error {
+.sps-info-banner--error {
   background: var(--danger-surface);
   border-color: var(--danger-border);
 }
 
-.settings-feedback__message {
+.sps-info-banner__message {
   margin: 0;
   font-size: var(--font-body-small-size);
   line-height: var(--font-body-small-line-height);
   color: var(--text-primary);
 }
 
-.settings-feedback__dismiss {
+.sps-info-banner__dismiss {
   flex-shrink: 0;
   min-width: var(--touch-target-min);
   min-height: var(--touch-target-min);
@@ -40,7 +40,7 @@
 }
 
 @media (hover: hover) {
-  .settings-feedback__dismiss:hover {
+  .sps-info-banner__dismiss:hover {
     color: var(--text-primary);
   }
 }

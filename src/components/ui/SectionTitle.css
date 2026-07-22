@@ -1,0 +1,14 @@
+.sps-section-title {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.sps-section-title__heading {
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.sps-section-title__description {
+  margin: 0;
+}

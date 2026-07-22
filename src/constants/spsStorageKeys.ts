@@ -5,6 +5,7 @@ export const SPS_STORAGE_KEYS = {
   bodyMetrics: 'sps.body-metrics.v1',
   dailyCheckIn: 'sps.daily-check-in.v1',
   preferences: 'sps.preferences.v1',
+  language: 'sps.language.v1',
   legacyReadiness: 'sps-readiness-metrics',
 } as const
 

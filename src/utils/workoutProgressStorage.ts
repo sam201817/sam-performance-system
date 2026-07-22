@@ -1,13 +1,12 @@
+import { SPS_STORAGE_KEYS } from '../constants/spsStorageKeys'
 import type { WorkoutSession } from '../data/todayWorkout'
 import type { WorkoutProgress, WorkoutSummary } from '../types/workoutProgress'
+import { isRecord } from './guards/isRecord'
+import { readJsonStorage, removeJsonStorage, writeJsonStorage } from './storage/jsonStorage'
 import { clampExerciseIndex } from './workoutProgressFactory'
 
-const PROGRESS_KEY = 'sps.workout-progress.v1'
-const SUMMARY_KEY = 'sps.workout-summary.v1'
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === 'object' && value !== null
-}
+const PROGRESS_KEY = SPS_STORAGE_KEYS.workoutProgress
+const SUMMARY_KEY = SPS_STORAGE_KEYS.workoutSummary
 
 function isSetLog(value: unknown): value is WorkoutProgress['exerciseLogs'][number]['sets'][number] {
   if (!isRecord(value)) return false
@@ -78,69 +77,33 @@ function sanitizeProgress(raw: WorkoutProgress, session: WorkoutSession): Workou
 }
 
 export function loadRawWorkoutProgress(): WorkoutProgress | null {
-  try {
-    const raw = localStorage.getItem(PROGRESS_KEY)
-    if (!raw) return null
-    const parsed: unknown = JSON.parse(raw)
-    return isWorkoutProgress(parsed) ? parsed : null
-  } catch {
-    return null
-  }
+  return readJsonStorage(PROGRESS_KEY, isWorkoutProgress, null as WorkoutProgress | null)
 }
 
 export function loadWorkoutProgress(session: WorkoutSession): WorkoutProgress | null {
-  try {
-    const raw = localStorage.getItem(PROGRESS_KEY)
-    if (!raw) return null
-    const parsed: unknown = JSON.parse(raw)
-    if (!isWorkoutProgress(parsed)) return null
-    return sanitizeProgress(parsed, session)
-  } catch {
-    return null
-  }
+  const parsed = loadRawWorkoutProgress()
+  if (!parsed) return null
+  return sanitizeProgress(parsed, session)
 }
 
-export function saveWorkoutProgress(progress: WorkoutProgress): void {
-  try {
-    localStorage.setItem(PROGRESS_KEY, JSON.stringify(progress))
-  } catch {
-    /* storage unavailable */
-  }
+export function saveWorkoutProgress(progress: WorkoutProgress): boolean {
+  return writeJsonStorage(PROGRESS_KEY, progress)
 }
 
 export function clearWorkoutProgress(): void {
-  try {
-    localStorage.removeItem(PROGRESS_KEY)
-  } catch {
-    /* storage unavailable */
-  }
+  removeJsonStorage(PROGRESS_KEY)
 }
 
 export function loadWorkoutSummary(): WorkoutSummary | null {
-  try {
-    const raw = localStorage.getItem(SUMMARY_KEY)
-    if (!raw) return null
-    const parsed: unknown = JSON.parse(raw)
-    return isWorkoutSummary(parsed) ? parsed : null
-  } catch {
-    return null
-  }
+  return readJsonStorage(SUMMARY_KEY, isWorkoutSummary, null as WorkoutSummary | null)
 }
 
-export function saveWorkoutSummary(summary: WorkoutSummary): void {
-  try {
-    localStorage.setItem(SUMMARY_KEY, JSON.stringify(summary))
-  } catch {
-    /* storage unavailable */
-  }
+export function saveWorkoutSummary(summary: WorkoutSummary): boolean {
+  return writeJsonStorage(SUMMARY_KEY, summary)
 }
 
 export function clearWorkoutSummary(): void {
-  try {
-    localStorage.removeItem(SUMMARY_KEY)
-  } catch {
-    /* storage unavailable */
-  }
+  removeJsonStorage(SUMMARY_KEY)
 }
 
 export function deriveWorkoutStatus(progress: WorkoutProgress | null): 'idle' | 'active' {

@@ -5,7 +5,8 @@ import { BodyMetricHistoryCard } from '../components/body/BodyMetricHistoryCard'
 import { BodyMetricSummaryCard } from '../components/body/BodyMetricSummaryCard'
 import { MetricTrend } from '../components/body/MetricTrend'
 import { EmptyState } from '../components/ui/EmptyState'
-import { SuccessBanner } from '../components/ui/SuccessBanner'
+import { InfoBanner } from '../components/ui/InfoBanner'
+import { PageHeader } from '../components/ui/PageHeader'
 import { useTranslation } from '../hooks/useTranslation'
 import type { BodyCompositionProps } from '../types/workout'
 import { buildBodyMetricSummary, buildMetricTrendData } from '../utils/bodyMetricCalculations'
@@ -71,16 +72,14 @@ export function BodyComposition({
   return (
     <>
       <main className="body-composition screen-shell">
-        <header className="body-composition__header">
-          <h1 className="body-composition__title sps-h1">{t('bodyComposition.title')}</h1>
-          <p className="body-composition__subtitle sps-body-small sps-text-secondary">
-            {t('bodyComposition.subtitle')}
-          </p>
-        </header>
+        <PageHeader
+          title={t('bodyComposition.title')}
+          subtitle={t('bodyComposition.subtitle')}
+        />
 
-        {saveFeedback && (
-          <SuccessBanner message={saveFeedback} onDismiss={() => setSaveFeedback(null)} />
-        )}
+        {saveFeedback ? (
+          <InfoBanner message={saveFeedback} onDismiss={() => setSaveFeedback(null)} />
+        ) : null}
 
         {history.entries.length === 0 ? (
           <EmptyState

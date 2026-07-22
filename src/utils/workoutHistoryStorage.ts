@@ -1,12 +1,11 @@
+import { SPS_STORAGE_KEYS } from '../constants/spsStorageKeys'
 import type { WorkoutHistory, WorkoutHistorySession } from '../types/workoutHistory'
 import { WORKOUT_HISTORY_VERSION } from '../types/workoutHistory'
+import { isRecord } from './guards/isRecord'
+import { readJsonStorage, removeJsonStorage, writeJsonStorage } from './storage/jsonStorage'
 import { sortSessionsNewestFirst } from './workoutHistoryCalculations'
 
-const HISTORY_KEY = 'sps.workout-history.v1'
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === 'object' && value !== null
-}
+const HISTORY_KEY = SPS_STORAGE_KEYS.workoutHistory
 
 function isSetHistory(value: unknown): value is WorkoutHistorySession['exercises'][number]['sets'][number] {
   if (!isRecord(value)) return false
@@ -89,26 +88,12 @@ function normalizeHistory(raw: WorkoutHistory): WorkoutHistory {
 }
 
 export function loadHistory(): WorkoutHistory {
-  try {
-    const stored = localStorage.getItem(HISTORY_KEY)
-    if (!stored) return createEmptyHistory()
-
-    const parsed: unknown = JSON.parse(stored)
-    if (!isWorkoutHistory(parsed)) return createEmptyHistory()
-
-    return normalizeHistory(parsed)
-  } catch {
-    return createEmptyHistory()
-  }
+  const loaded = readJsonStorage(HISTORY_KEY, isWorkoutHistory, createEmptyHistory())
+  return normalizeHistory(loaded)
 }
 
-export function saveHistory(history: WorkoutHistory): void {
-  try {
-    const normalized = normalizeHistory(history)
-    localStorage.setItem(HISTORY_KEY, JSON.stringify(normalized))
-  } catch {
-    /* storage unavailable */
-  }
+export function saveHistory(history: WorkoutHistory): boolean {
+  return writeJsonStorage(HISTORY_KEY, normalizeHistory(history))
 }
 
 export function appendSession(session: WorkoutHistorySession): boolean {
@@ -136,11 +121,7 @@ export function deleteSession(sessionId: string): boolean {
 }
 
 export function clearHistory(): void {
-  try {
-    localStorage.removeItem(HISTORY_KEY)
-  } catch {
-    /* storage unavailable */
-  }
+  removeJsonStorage(HISTORY_KEY)
 }
 
 export function findHistorySession(sessionId: string): WorkoutHistorySession | null {

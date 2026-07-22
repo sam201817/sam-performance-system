@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { SectionTitle } from '../ui/SectionTitle'
 import './DashboardSection.css'
 
 type DashboardSectionProps = {
@@ -10,7 +11,7 @@ type DashboardSectionProps = {
 export function DashboardSection({ title, children, className = '' }: DashboardSectionProps) {
   return (
     <section className={`dashboard-section ${className}`.trim()} aria-label={title}>
-      <h2 className="dashboard-section__title">{title}</h2>
+      <SectionTitle as="h2" title={title} />
       {children}
     </section>
   )

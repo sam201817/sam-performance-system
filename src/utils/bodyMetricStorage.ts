@@ -1,13 +1,12 @@
+import { SPS_STORAGE_KEYS } from '../constants/spsStorageKeys'
 import type { BodyMetricEntry, BodyMetricHistory } from '../types/bodyMetrics'
 import { BODY_METRIC_VERSION } from '../types/bodyMetrics'
+import { isRecord } from './guards/isRecord'
+import { readJsonStorage, removeJsonStorage, writeJsonStorage } from './storage/jsonStorage'
 import { BODY_METRIC_LIMITS, NOTES_MAX_LENGTH } from './bodyMetricValidation'
 import { getEntryDateKey, getLocalDateKey, sortEntriesNewestFirst } from './bodyMetricCalculations'
 
-const STORAGE_KEY = 'sps.body-metrics.v1'
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === 'object' && value !== null
-}
+const STORAGE_KEY = SPS_STORAGE_KEYS.bodyMetrics
 
 function isValidMetricValue(
   field: keyof typeof BODY_METRIC_LIMITS,
@@ -84,34 +83,18 @@ function createEmptyHistory(): BodyMetricHistory {
 }
 
 export function loadBodyMetricHistory(): BodyMetricHistory {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY)
-    if (!raw) return createEmptyHistory()
-
-    const parsed: unknown = JSON.parse(raw)
-    if (!isBodyMetricHistory(parsed)) return createEmptyHistory()
-
-    return {
-      version: BODY_METRIC_VERSION,
-      entries: sortEntriesNewestFirst(parsed.entries),
-    }
-  } catch {
-    return createEmptyHistory()
+  const loaded = readJsonStorage(STORAGE_KEY, isBodyMetricHistory, createEmptyHistory())
+  return {
+    version: BODY_METRIC_VERSION,
+    entries: sortEntriesNewestFirst(loaded.entries),
   }
 }
 
-export function saveBodyMetricHistory(history: BodyMetricHistory): void {
-  try {
-    localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify({
-        version: BODY_METRIC_VERSION,
-        entries: sortEntriesNewestFirst(history.entries),
-      }),
-    )
-  } catch {
-    /* storage unavailable */
-  }
+export function saveBodyMetricHistory(history: BodyMetricHistory): boolean {
+  return writeJsonStorage(STORAGE_KEY, {
+    version: BODY_METRIC_VERSION,
+    entries: sortEntriesNewestFirst(history.entries),
+  })
 }
 
 export function createBodyMetricEntryId(): string {
@@ -202,9 +185,5 @@ export function deleteBodyMetricEntry(
 }
 
 export function clearBodyMetricHistory(): void {
-  try {
-    localStorage.removeItem(STORAGE_KEY)
-  } catch {
-    /* storage unavailable */
-  }
+  removeJsonStorage(STORAGE_KEY)
 }

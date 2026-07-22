@@ -1,4 +1,5 @@
 import { BottomNav } from '../components/BottomNav'
+import { PageHeader } from '../components/ui/PageHeader'
 import { useTranslation } from '../hooks/useTranslation'
 import type { NavTabHandler, NavTabId } from '../types/app'
 import './Profile.css'
@@ -21,10 +22,7 @@ export function Profile({
   return (
     <>
       <main className="profile screen-shell">
-        <header className="profile__header">
-          <h1 className="profile__title">{t('profile.title')}</h1>
-          <p className="profile__subtitle">{t('profile.subtitle')}</p>
-        </header>
+        <PageHeader title={t('profile.title')} subtitle={t('profile.subtitle')} />
 
         <div className="profile__links">
           <button

@@ -1,8 +1,8 @@
 import { useRef, useState } from 'react'
 import { BottomNav } from '../components/BottomNav'
 import { ConfirmDialog } from '../components/settings/ConfirmDialog'
-import { SettingsFeedbackBanner } from '../components/settings/SettingsFeedbackBanner'
 import { SettingsSection } from '../components/settings/SettingsSection'
+import { InfoBanner, type InfoBannerTone } from '../components/ui/InfoBanner'
 import { APP_METADATA } from '../data/appMetadata'
 import { useTranslation } from '../hooks/useTranslation'
 import { getLocaleArray } from '../i18n'
@@ -36,6 +36,18 @@ export type SettingsProps = {
 
 type ResetStep = 'none' | 'first' | 'final'
 type RestoreStep = 'none' | 'confirm'
+
+function getFeedbackTone(feedback: SettingsFeedback): InfoBannerTone {
+  if (
+    feedback.type === 'restore-invalid' ||
+    feedback.type === 'restore-unsupported' ||
+    feedback.type === 'error'
+  ) {
+    return 'error'
+  }
+
+  return 'success'
+}
 
 export function Settings({
   preferences,
@@ -137,7 +149,11 @@ export function Settings({
         </header>
 
         {feedback ? (
-          <SettingsFeedbackBanner feedback={feedback} onDismiss={onDismissFeedback} />
+          <InfoBanner
+            message={feedback.message}
+            tone={getFeedbackTone(feedback)}
+            onDismiss={onDismissFeedback}
+          />
         ) : null}
 
         <SettingsSection

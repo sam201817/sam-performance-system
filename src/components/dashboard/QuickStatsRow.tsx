@@ -2,8 +2,8 @@ import { useTranslation } from '../../hooks/useTranslation'
 import type { QuickStatsSummary } from '../../types/dashboard'
 import { formatMetricValue } from '../../utils/bodyMetricCalculations'
 import { formatQuickStatVolume } from '../../utils/dashboardCalculations'
+import { StatTile } from '../ui/StatTile'
 import { DashboardSection } from './DashboardSection'
-import { QuickMetricTile } from './QuickMetricTile'
 import './QuickStatsRow.css'
 
 type QuickStatsRowProps = {
@@ -26,10 +26,11 @@ export function QuickStatsRow({ stats, hasWorkoutHistory }: QuickStatsRowProps) 
   return (
     <DashboardSection title={t('dashboard.quickStats')}>
       <div className="quick-stats-row">
-        <QuickMetricTile label={t('dashboard.totalWorkouts')} value={String(stats.totalWorkouts)} />
-        <QuickMetricTile label={t('dashboard.totalVolume')} value={formatQuickStatVolume(stats.totalVolume)} />
-        <QuickMetricTile label={t('dashboard.avgDuration')} value={averageDuration} />
-        <QuickMetricTile
+        <StatTile variant="centered" label={t('dashboard.totalWorkouts')} value={String(stats.totalWorkouts)} />
+        <StatTile variant="centered" label={t('dashboard.totalVolume')} value={formatQuickStatVolume(stats.totalVolume)} />
+        <StatTile variant="centered" label={t('dashboard.avgDuration')} value={averageDuration} />
+        <StatTile
+          variant="centered"
           label={t('dashboard.latestBodyFat')}
           value={
             stats.latestBodyFatPercent === null
@@ -37,7 +38,8 @@ export function QuickStatsRow({ stats, hasWorkoutHistory }: QuickStatsRowProps) 
               : formatMetricValue('bodyFatPercent', stats.latestBodyFatPercent)
           }
         />
-        <QuickMetricTile
+        <StatTile
+          variant="centered"
           label={t('dashboard.latestWeight')}
           value={
             stats.latestWeightKg === null

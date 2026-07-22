@@ -1,6 +1,8 @@
 import { SPS_STORAGE_KEYS } from '../constants/spsStorageKeys'
 import { translate, type SupportedLanguage } from '../i18n'
 import { resolveLanguage } from '../i18n/languageStorage'
+import { isRecord } from './guards/isRecord'
+import { readJsonStorage, writeJsonStorage } from './storage/jsonStorage'
 import {
   PREFERENCES_VERSION,
   type AppLanguage,
@@ -8,10 +10,6 @@ import {
   type UserPreferences,
   type WeightUnit,
 } from '../types/settings'
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === 'object' && value !== null
-}
 
 function isWeightUnit(value: unknown): value is WeightUnit {
   return value === 'metric' || value === 'imperial'
@@ -54,26 +52,17 @@ export function createDefaultPreferences(): UserPreferences {
 }
 
 export function loadPreferences(): UserPreferences {
-  try {
-    const raw = localStorage.getItem(SPS_STORAGE_KEYS.preferences)
-    if (!raw) return createDefaultPreferences()
-
-    const parsed: unknown = JSON.parse(raw)
-    if (!isUserPreferences(parsed)) return createDefaultPreferences()
-
-    return normalizePreferences(parsed)
-  } catch {
-    return createDefaultPreferences()
-  }
+  const parsed = readJsonStorage(
+    SPS_STORAGE_KEYS.preferences,
+    isUserPreferences,
+    createDefaultPreferences(),
+  )
+  return normalizePreferences(parsed)
 }
 
-export function savePreferences(preferences: UserPreferences): void {
-  try {
-    const normalized = normalizePreferences(preferences)
-    localStorage.setItem(SPS_STORAGE_KEYS.preferences, JSON.stringify(normalized))
-  } catch {
-    /* storage unavailable */
-  }
+export function savePreferences(preferences: UserPreferences): boolean {
+  const normalized = normalizePreferences(preferences)
+  return writeJsonStorage(SPS_STORAGE_KEYS.preferences, normalized)
 }
 
 export function formatWeightUnitLabel(unit: WeightUnit, language: SupportedLanguage): string {
