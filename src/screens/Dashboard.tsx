@@ -1,11 +1,16 @@
 import { BrandHeader } from '../components/BrandHeader'
 import { Greeting } from '../components/Greeting'
 import { ReadinessCard } from '../components/ReadinessCard'
-import { WorkoutCard } from '../components/WorkoutCard'
-import { BodyGoalCard } from '../components/BodyGoalCard'
-import { WeeklyConsistency } from '../components/WeeklyConsistency'
 import { BottomNav } from '../components/BottomNav'
+import { HeroWorkoutCard } from '../components/dashboard/HeroWorkoutCard'
+import { BodyCompositionDashboardCard } from '../components/dashboard/BodyCompositionDashboardCard'
+import { TrainingSummaryCard } from '../components/dashboard/TrainingSummaryCard'
+import { LastWorkoutCard } from '../components/dashboard/LastWorkoutCard'
+import { StreakCard } from '../components/dashboard/StreakCard'
+import { PerformanceInsightsCard } from '../components/dashboard/PerformanceInsightsCard'
+import { QuickStatsRow } from '../components/dashboard/QuickStatsRow'
 import type { DashboardProps } from '../types/workout'
+import './Dashboard.css'
 
 export function Dashboard({
   session,
@@ -13,31 +18,62 @@ export function Dashboard({
   onStartWorkout,
   activeTab,
   onNavigate,
+  overview,
   bodySummary,
   hasBodyEntries,
   onOpenBodyComposition,
+  onOpenHistorySession,
+  checkInSummary,
+  onEditCheckIn,
+  insights,
 }: DashboardProps) {
   return (
     <>
-      <main className="app__main">
+      <main className="app__main dashboard">
         <div className="app__top">
           <BrandHeader />
           <Greeting />
         </div>
 
-        <div className="app__cards">
-          <ReadinessCard />
-          <WorkoutCard
+        <div className="dashboard__stack">
+          <HeroWorkoutCard
             session={session}
             workoutStatus={workoutStatus}
+            hasWorkoutHistory={overview.hasWorkoutHistory}
             onStartWorkout={onStartWorkout}
           />
-          <BodyGoalCard
+
+          <ReadinessCard summary={checkInSummary} onEditCheckIn={onEditCheckIn} />
+
+          <PerformanceInsightsCard insights={insights} />
+
+          <QuickStatsRow
+            stats={overview.quickStats}
+            hasWorkoutHistory={overview.hasWorkoutHistory}
+          />
+
+          <BodyCompositionDashboardCard
             summary={bodySummary}
             hasEntries={hasBodyEntries}
+            daysSinceUpdate={overview.daysSinceBodyUpdate}
             onOpenBodyComposition={onOpenBodyComposition}
           />
-          <WeeklyConsistency />
+
+          <TrainingSummaryCard
+            summary={overview.weeklyTraining}
+            hasWorkoutHistory={overview.hasWorkoutHistory}
+          />
+
+          <div className="dashboard__duo">
+            <LastWorkoutCard
+              lastWorkout={overview.lastWorkout}
+              onOpenSession={onOpenHistorySession}
+            />
+            <StreakCard
+              streak={overview.streak}
+              hasWorkoutHistory={overview.hasWorkoutHistory}
+            />
+          </div>
         </div>
       </main>
 

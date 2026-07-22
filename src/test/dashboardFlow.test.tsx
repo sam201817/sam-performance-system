@@ -3,10 +3,9 @@ import userEvent from '@testing-library/user-event'
 import { describe, expect, it } from 'vitest'
 import App from '../App'
 import { completeDailyCheckIn } from './checkInHelpers'
-import { loadHistory } from '../utils/workoutHistoryStorage'
 
-describe('workout history integration', () => {
-  it('opens history from progress tab after completing a workout', async () => {
+describe('dashboard flow integration', () => {
+  it('opens last workout detail from dashboard and returns to dashboard', async () => {
     const user = userEvent.setup()
 
     render(<App />)
@@ -26,17 +25,15 @@ describe('workout history integration', () => {
       await user.click(screen.getByRole('button', { name: '仍要繼續' }))
     }
 
-    expect(screen.getByRole('heading', { name: '訓練完成' })).toBeInTheDocument()
-    expect(loadHistory().sessions).toHaveLength(1)
-
     await user.click(screen.getByRole('button', { name: '返回首頁' }))
-    await user.click(screen.getByRole('button', { name: '進度' }))
 
-    expect(screen.getByRole('heading', { name: 'Workout History' })).toBeInTheDocument()
-    expect(screen.getByText('Total Workouts')).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: /全身基礎重建/i })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Last Workout' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Quick Stats' })).toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: /全身基礎重建/i }))
     expect(screen.getByRole('heading', { level: 1, name: '全身基礎重建' })).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: '返回訓練紀錄' }))
+    expect(screen.getByRole('button', { name: 'Start Workout' })).toBeInTheDocument()
   })
 })

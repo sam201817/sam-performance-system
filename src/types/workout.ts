@@ -1,6 +1,9 @@
 import type { NavigationHandler, NavTabHandler, NavTabId } from './app'
 import type { Exercise, WorkoutSession } from '../data/todayWorkout'
 import type { BodyMetricEntry, BodyMetricHistory, BodyMetricSummary } from './bodyMetrics'
+import type { DailyCheckInSummary } from './dailyCheckIn'
+import type { PerformanceInsight } from './insights'
+import type { DashboardOverview } from './dashboard'
 import type { WorkoutProgress, WorkoutStatus, WorkoutSummary } from './workoutProgress'
 import type { HistoryStatistics, WorkoutHistorySession } from './workoutHistory'
 
@@ -8,6 +11,9 @@ export type { Exercise, WorkoutSession }
 export type { WorkoutProgress, WorkoutStatus, WorkoutSummary }
 export type { HistoryStatistics, WorkoutHistorySession }
 export type { BodyMetricEntry, BodyMetricHistory, BodyMetricSummary }
+export type { DailyCheckInSummary, DailyCheckInProps } from './dailyCheckIn'
+export type { PerformanceInsight } from './insights'
+export type { DashboardOverview }
 
 export type DashboardProps = {
   session: WorkoutSession
@@ -15,9 +21,14 @@ export type DashboardProps = {
   onStartWorkout: () => void
   activeTab: NavTabId
   onNavigate: NavTabHandler
+  overview: DashboardOverview
   bodySummary: BodyMetricSummary
   hasBodyEntries: boolean
   onOpenBodyComposition: () => void
+  onOpenHistorySession: (sessionId: string) => void
+  checkInSummary: DailyCheckInSummary
+  onEditCheckIn: () => void
+  insights: PerformanceInsight[]
 }
 
 export type WorkoutProps = {

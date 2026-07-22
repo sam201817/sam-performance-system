@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event'
 import { describe, expect, it } from 'vitest'
 import App from '../App'
 import { TODAY_WORKOUT } from '../data/todayWorkout'
+import { completeDailyCheckIn } from './checkInHelpers'
 import { loadWorkoutProgress } from '../utils/workoutProgressStorage'
 
 describe('workout flow integration', () => {
@@ -10,10 +11,11 @@ describe('workout flow integration', () => {
     const user = userEvent.setup()
 
     render(<App />)
+    await completeDailyCheckIn(user)
 
-    expect(screen.getByRole('button', { name: '開始今日訓練' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Start Workout' })).toBeInTheDocument()
 
-    await user.click(screen.getByRole('button', { name: '開始今日訓練' }))
+    await user.click(screen.getByRole('button', { name: 'Start Workout' }))
 
     expect(screen.getByRole('heading', { name: 'Goblet Squat' })).toBeInTheDocument()
     expect(screen.getByText('1 / 7')).toBeInTheDocument()
@@ -30,10 +32,10 @@ describe('workout flow integration', () => {
     expect(within(restTimer).getByText('休息進行中')).toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: '返回首頁' }))
-    expect(screen.getByRole('button', { name: '繼續訓練' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Resume Workout' })).toBeInTheDocument()
     expect(loadWorkoutProgress(TODAY_WORKOUT)).not.toBeNull()
 
-    await user.click(screen.getByRole('button', { name: '繼續訓練' }))
+    await user.click(screen.getByRole('button', { name: 'Resume Workout' }))
     expect(screen.getByRole('heading', { name: 'Goblet Squat' })).toBeInTheDocument()
     expect(screen.getAllByLabelText('實際次數')[0]).toHaveValue('11')
     expect(screen.getByLabelText('已完成')).toBeInTheDocument()
@@ -70,12 +72,14 @@ describe('workout flow integration', () => {
     expect(within(stats).getByText('完成組數')).toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: '返回首頁' }))
-    expect(screen.getByRole('button', { name: '開始今日訓練' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Start Workout' })).toBeInTheDocument()
     expect(loadWorkoutProgress(TODAY_WORKOUT)).toBeNull()
   })
 
-  it('does not duplicate exercise heading ids across rerenders', () => {
+  it('does not duplicate exercise heading ids across rerenders', async () => {
+    const user = userEvent.setup()
     render(<App />)
+    await completeDailyCheckIn(user)
     const ids = screen.queryAllByRole('heading', { level: 2 }).map((node) => node.id)
     const uniqueIds = new Set(ids.filter(Boolean))
     expect(uniqueIds.size).toBe(ids.filter(Boolean).length)

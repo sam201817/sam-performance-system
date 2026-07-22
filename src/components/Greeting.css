@@ -13,6 +13,14 @@
   color: var(--text);
 }
 
+.greeting__date {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.01em;
+}
+
 .greeting__subtitle {
   margin: 0;
   font-size: 15px;

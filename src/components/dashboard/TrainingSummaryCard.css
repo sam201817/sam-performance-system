@@ -1,0 +1,84 @@
+.training-summary-card__title {
+  margin: 0 0 var(--space-lg);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.training-summary-card__empty {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--text-secondary);
+}
+
+.training-summary-card__progress {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.training-summary-card__progress-track {
+  flex: 1;
+  height: 10px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 999px;
+}
+
+.training-summary-card__progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, rgba(184, 217, 38, 0.85), var(--accent));
+  border-radius: 999px;
+  transition: width var(--transition);
+}
+
+.training-summary-card__progress-value {
+  flex-shrink: 0;
+  min-width: 3ch;
+  font-size: 18px;
+  font-weight: 650;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.training-summary-card__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-sm);
+}
+
+.training-summary-card__stat {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: var(--space-md) var(--space-sm);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.training-summary-card__label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.training-summary-card__value {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 420px) {
+  .training-summary-card__grid {
+    grid-template-columns: 1fr;
+  }
+}

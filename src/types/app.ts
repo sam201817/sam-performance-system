@@ -1,5 +1,6 @@
 export type AppScreen =
   | 'dashboard'
+  | 'daily-check-in'
   | 'workout'
   | 'complete'
   | 'history'
@@ -18,5 +19,6 @@ export function getActiveNavTab(screen: AppScreen): NavTabId {
   if (screen === 'workout') return 'workout'
   if (screen === 'history' || screen === 'history-detail') return 'progress'
   if (screen === 'body-composition') return 'profile'
+  if (screen === 'daily-check-in') return 'home'
   return 'home'
 }

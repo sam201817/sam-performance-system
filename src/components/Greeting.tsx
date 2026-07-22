@@ -1,13 +1,20 @@
-import { getDailyMessage } from '../utils/dailyMessage'
+import {
+  formatDashboardDate,
+  getDailyMessage,
+  getGreetingTitle,
+} from '../utils/dailyMessage'
 import './Greeting.css'
 
-const dailyMessage = getDailyMessage()
+type GreetingProps = {
+  now?: Date
+}
 
-export function Greeting() {
+export function Greeting({ now = new Date() }: GreetingProps) {
   return (
-    <section className="greeting">
-      <h1 className="greeting__title">早安，Sam</h1>
-      <p className="greeting__subtitle">{dailyMessage}</p>
+    <section className="greeting" aria-label="Dashboard greeting">
+      <h1 className="greeting__title">{getGreetingTitle(now)}</h1>
+      <p className="greeting__date">{formatDashboardDate(now)}</p>
+      <p className="greeting__subtitle">{getDailyMessage(now)}</p>
     </section>
   )
 }

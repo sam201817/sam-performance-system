@@ -1,12 +1,27 @@
 const MESSAGES = [
-  '今天，把身體再找回來一點。',
-  '穩定累積，比一次做到極限更重要。',
-  '今天的訓練，是明天球場上的底氣。',
+  'Ready to improve.',
+  'Consistency beats intensity.',
+  'One workout at a time.',
 ] as const
 
-export function getDailyMessage(): string {
-  const now = new Date()
+export function getDailyMessage(date: Date = new Date()): string {
   const dayKey =
-    now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate()
+    date.getFullYear() * 10000 + (date.getMonth() + 1) * 100 + date.getDate()
   return MESSAGES[dayKey % MESSAGES.length]
+}
+
+export function getGreetingTitle(date: Date = new Date()): string {
+  const hour = date.getHours()
+  if (hour < 12) return 'Good morning, Sam'
+  if (hour < 18) return 'Good afternoon, Sam'
+  return 'Good evening, Sam'
+}
+
+export function formatDashboardDate(date: Date = new Date()): string {
+  return date.toLocaleDateString('en-US', {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  })
 }

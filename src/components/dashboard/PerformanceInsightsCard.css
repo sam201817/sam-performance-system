@@ -1,0 +1,96 @@
+.performance-insights-card__empty {
+  margin: 0;
+  padding: var(--space-md);
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.performance-insights-card__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.performance-insights-card__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding: var(--space-md);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.performance-insights-card__item--positive {
+  border-color: rgba(184, 217, 38, 0.22);
+}
+
+.performance-insights-card__item--warning {
+  border-color: rgba(212, 176, 74, 0.28);
+}
+
+.performance-insights-card__item--critical {
+  border-color: rgba(220, 140, 110, 0.32);
+}
+
+.performance-insights-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+
+.performance-insights-card__title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.performance-insights-card__category {
+  flex-shrink: 0;
+  padding: 3px 8px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+}
+
+.performance-insights-card__description {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--text-secondary);
+}
+
+.performance-insights-card__severity {
+  align-self: flex-start;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.performance-insights-card__item--positive .performance-insights-card__severity {
+  color: var(--state-good);
+}
+
+.performance-insights-card__item--warning .performance-insights-card__severity {
+  color: #d4b04a;
+}
+
+.performance-insights-card__item--critical .performance-insights-card__severity {
+  color: var(--state-poor);
+}

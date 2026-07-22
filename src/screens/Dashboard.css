@@ -1,0 +1,21 @@
+.dashboard__stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.dashboard__duo {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+}
+
+@media (min-width: 520px) {
+  .dashboard__duo {
+    grid-template-columns: 1.25fr 0.75fr;
+  }
+}
+
+.dashboard .app__top {
+  margin-bottom: var(--space-xs);
+}

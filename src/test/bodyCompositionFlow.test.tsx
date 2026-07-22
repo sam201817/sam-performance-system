@@ -2,6 +2,7 @@ import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it } from 'vitest'
 import App from '../App'
+import { completeDailyCheckIn } from './checkInHelpers'
 import { loadBodyMetricHistory } from '../utils/bodyMetricStorage'
 
 describe('body composition integration', () => {
@@ -9,6 +10,7 @@ describe('body composition integration', () => {
     const user = userEvent.setup()
 
     render(<App />)
+    await completeDailyCheckIn(user)
 
     await user.click(screen.getByRole('button', { name: '我的' }))
     expect(screen.getByRole('heading', { name: 'Body Composition' })).toBeInTheDocument()
@@ -30,6 +32,7 @@ describe('body composition integration', () => {
     const user = userEvent.setup()
 
     render(<App />)
+    await completeDailyCheckIn(user)
 
     await user.click(screen.getByRole('button', { name: '我的' }))
     await user.click(screen.getByRole('button', { name: 'Add Check-in Today' }))

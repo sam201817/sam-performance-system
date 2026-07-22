@@ -1,51 +1,38 @@
 import { useEffect, useState } from 'react'
 import { Card } from './Card'
-import {
-  cycleMetricState,
-  loadReadinessMetrics,
-  saveReadinessMetrics,
-  type MetricKey,
-  type MetricState,
-  type ReadinessMetrics,
-} from '../utils/readinessStorage'
+import type { DailyCheckInSummary } from '../types/dailyCheckIn'
+import { getMetricDisplayClass } from '../utils/dailyCheckInCalculations'
 import './ReadinessCard.css'
 
-const SCORE = 82
+const METRIC_ROWS = [
+  { key: 'sleepQuality' as const, label: 'Sleep' },
+  { key: 'motivation' as const, label: 'Motivation' },
+  { key: 'fatigue' as const, label: 'Fatigue' },
+  { key: 'muscleSoreness' as const, label: 'Soreness' },
+]
+
 const RING_RADIUS = 52
 const RING_CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS
 
-const METRIC_ROWS: { key: MetricKey; label: string }[] = [
-  { key: 'sleep', label: '睡眠' },
-  { key: 'energy', label: '精神' },
-  { key: 'stomach', label: '胃部狀況' },
-]
-
-function stateClassName(state: MetricState): string {
-  switch (state) {
-    case '良好':
-      return 'readiness-card__metric-value--good'
-    case '普通':
-      return 'readiness-card__metric-value--neutral'
-    case '不佳':
-      return 'readiness-card__metric-value--poor'
-    default:
-      return 'readiness-card__metric-value--pending'
-  }
+type ReadinessCardProps = {
+  summary: DailyCheckInSummary
+  onEditCheckIn: () => void
 }
 
-function getInitialProgress(): number {
-  if (typeof window === 'undefined') return 0
-  return window.matchMedia('(prefers-reduced-motion: reduce)').matches ? SCORE : 0
+function getInitialProgress(score: number): number {
+  if (typeof window === 'undefined') return score
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches ? score : 0
 }
 
-export function ReadinessCard() {
-  const [metrics, setMetrics] = useState<ReadinessMetrics>(loadReadinessMetrics)
-  const [progress, setProgress] = useState(getInitialProgress)
+export function ReadinessCard({ summary, onEditCheckIn }: ReadinessCardProps) {
+  const [progress, setProgress] = useState(() => getInitialProgress(summary.score))
 
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return
+    }
 
-    const duration = 1100
+    const duration = 900
     const start = performance.now()
     let frame = 0
 
@@ -53,27 +40,19 @@ export function ReadinessCard() {
       const elapsed = now - start
       const t = Math.min(elapsed / duration, 1)
       const eased = 1 - Math.pow(1 - t, 3)
-      setProgress(Math.round(eased * SCORE))
+      setProgress(Math.round(eased * summary.score))
       if (t < 1) frame = requestAnimationFrame(tick)
     }
 
     frame = requestAnimationFrame(tick)
     return () => cancelAnimationFrame(frame)
-  }, [])
-
-  function handleMetricClick(key: MetricKey) {
-    setMetrics((prev) => {
-      const next = { ...prev, [key]: cycleMetricState(prev[key]) }
-      saveReadinessMetrics(next)
-      return next
-    })
-  }
+  }, [summary.score])
 
   const strokeOffset =
     RING_CIRCUMFERENCE - (progress / 100) * RING_CIRCUMFERENCE
 
   return (
-    <Card className="readiness-card" delay={0.05}>
+    <Card className="readiness-card" delay={0.08} aria-label="Daily readiness">
       <div className="readiness-card__top">
         <div className="readiness-card__ring-wrap">
           <svg
@@ -98,34 +77,41 @@ export function ReadinessCard() {
           </svg>
           <div className="readiness-card__ring-center">
             <span className="readiness-card__score">{progress}</span>
-            <span className="readiness-card__score-label">準備度</span>
+            <span className="readiness-card__score-label">Readiness</span>
           </div>
         </div>
 
         <div className="readiness-card__info">
-          <h2 className="readiness-card__title">今日狀態</h2>
-          <span className="readiness-card__status">狀態良好</span>
+          <h2 className="readiness-card__title">Today&apos;s Check-in</h2>
+          <span className="readiness-card__status">{summary.statusLabel}</span>
+          {summary.hasNote && (
+            <span className="readiness-card__note-indicator">Note saved</span>
+          )}
         </div>
       </div>
 
       <ul className="readiness-card__metrics">
         {METRIC_ROWS.map(({ key, label }) => (
           <li key={key}>
-            <button
-              type="button"
-              className="readiness-card__metric"
-              onClick={() => handleMetricClick(key)}
-            >
+            <div className="readiness-card__metric">
               <span className="readiness-card__metric-label">{label}</span>
               <span
-                className={`readiness-card__metric-value ${stateClassName(metrics[key])}`}
+                className={`readiness-card__metric-value ${getMetricDisplayClass(key, summary[key])}`}
               >
-                {metrics[key]}
+                {summary[key]}/5
               </span>
-            </button>
+            </div>
           </li>
         ))}
       </ul>
+
+      <button
+        type="button"
+        className="readiness-card__edit"
+        onClick={onEditCheckIn}
+      >
+        Update Check-in
+      </button>
     </Card>
   )
 }
