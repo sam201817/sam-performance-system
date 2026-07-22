@@ -18,8 +18,8 @@ describe('settings flow', () => {
   async function openSettings(user: ReturnType<typeof userEvent.setup>) {
     await completeDailyCheckIn(user)
     await user.click(screen.getByRole('button', { name: '我的' }))
-    await user.click(screen.getByRole('button', { name: /Settings/i }))
-    expect(screen.getByRole('heading', { name: 'Settings' })).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: /設定/i }))
+    expect(screen.getByRole('heading', { name: '設定' })).toBeInTheDocument()
   }
 
   it('refreshes app state after restore', async () => {
@@ -59,15 +59,15 @@ describe('settings flow', () => {
     })
 
     await user.upload(fileInput, file)
-    await user.click(screen.getByRole('button', { name: 'Restore Backup' }))
+    await user.click(screen.getByRole('button', { name: '還原備份' }))
 
     await waitFor(() => {
-      expect(screen.getByRole('status')).toHaveTextContent(/restored successfully/i)
+      expect(screen.getByRole('status')).toHaveTextContent(/備份還原成功/i)
     })
 
-    await user.click(screen.getByRole('button', { name: 'Back' }))
-    await user.click(screen.getByRole('button', { name: /Body Composition/i }))
-    expect(screen.getByText('Weight: 75 kg')).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: '返回' }))
+    await user.click(screen.getByRole('button', { name: /身體組成/i }))
+    expect(screen.getByText('體重: 75 kg')).toBeInTheDocument()
   })
 
   it('returns to first-use state after reset', async () => {
@@ -76,12 +76,12 @@ describe('settings flow', () => {
     render(<App />)
     await openSettings(user)
 
-    await user.click(screen.getByRole('button', { name: 'Reset All Data' }))
-    await user.click(screen.getByRole('button', { name: 'Continue' }))
-    await user.click(screen.getByRole('button', { name: 'Yes, delete everything' }))
+    await user.click(screen.getByRole('button', { name: '重設所有資料' }))
+    await user.click(screen.getByRole('button', { name: '繼續' }))
+    await user.click(screen.getByRole('button', { name: '是的，刪除所有資料' }))
 
     await waitFor(() => {
-      expect(screen.getByRole('heading', { name: /Daily Check-in/i })).toBeInTheDocument()
+      expect(screen.getByRole('heading', { name: /每日狀態/i })).toBeInTheDocument()
     })
 
     expect(loadHistory().sessions).toHaveLength(0)
@@ -94,9 +94,9 @@ describe('settings flow', () => {
 
     render(<App />)
     await openSettings(user)
-    await user.click(screen.getByRole('button', { name: 'Export Full Backup' }))
+    await user.click(screen.getByRole('button', { name: '匯出完整備份' }))
 
-    expect(screen.getByText(/Backup exported as sps-backup-/i)).toBeInTheDocument()
+    expect(screen.getByText(/已匯出備份 sps-backup-/i)).toBeInTheDocument()
     expect(click).toHaveBeenCalled()
 
     click.mockRestore()
@@ -138,12 +138,12 @@ describe('settings flow', () => {
       type: 'application/json',
     }))
 
-    await user.click(screen.getByRole('button', { name: 'Cancel' }))
-    expect(screen.queryByRole('dialog', { name: 'Restore backup?' })).not.toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: '取消' }))
+    expect(screen.queryByRole('dialog', { name: '還原備份？' })).not.toBeInTheDocument()
 
-    await user.click(screen.getByRole('button', { name: 'Back' }))
-    await user.click(screen.getByRole('button', { name: /Body Composition/i }))
-    expect(screen.getByText('Weight: 88 kg')).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: '返回' }))
+    await user.click(screen.getByRole('button', { name: /身體組成/i }))
+    expect(screen.getByText('體重: 88 kg')).toBeInTheDocument()
   })
 
   it('shows invalid backup feedback without changing data', async () => {
@@ -178,7 +178,7 @@ describe('settings flow', () => {
     await user.upload(fileInput, file)
 
     await waitFor(() => {
-      expect(screen.getByRole('alert')).toHaveTextContent(/not valid JSON/i)
+      expect(screen.getByRole('alert')).toHaveTextContent(/不是有效的 JSON/i)
     })
 
     expect(loadHistory().sessions[0]?.id).toBe('keep-me')

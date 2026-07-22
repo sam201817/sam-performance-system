@@ -74,9 +74,10 @@ describe('backupData', () => {
       }],
     })
     savePreferences({
-      version: 1,
+      version: 2,
       weightUnit: 'imperial',
       theme: 'system',
+      language: 'zh-TW',
     })
     saveWorkoutSummary({
       totalExercises: 7,

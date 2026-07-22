@@ -34,11 +34,11 @@ describe('History screen', () => {
       />,
     )
 
-    expect(screen.getByRole('heading', { name: 'Workout History' })).toBeInTheDocument()
-    expect(screen.getByText('Total Workouts')).toBeInTheDocument()
-    expect(screen.getByText('Total Volume')).toBeInTheDocument()
-    expect(screen.getByText('Average Duration')).toBeInTheDocument()
-    expect(screen.getByText('Current Streak')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: '訓練紀錄' })).toBeInTheDocument()
+    expect(screen.getByText('總訓練次數')).toBeInTheDocument()
+    expect(screen.getByText('總訓練量')).toBeInTheDocument()
+    expect(screen.getByText('平均時長')).toBeInTheDocument()
+    expect(screen.getByText('連續訓練天數')).toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: /全身基礎重建/i }))
     expect(onOpenSession).toHaveBeenCalledWith('history-screen-1')
@@ -60,6 +60,6 @@ describe('History screen', () => {
       />,
     )
 
-    expect(screen.getByRole('status')).toHaveTextContent('No completed workouts yet')
+    expect(screen.getByRole('status')).toHaveTextContent('尚無訓練紀錄')
   })
 })

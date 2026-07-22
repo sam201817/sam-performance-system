@@ -17,13 +17,13 @@ describe('DailyCheckIn screen', () => {
       />,
     )
 
-    expect(screen.getByRole('heading', { name: 'Daily Check-in' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: '每日狀態' })).toBeInTheDocument()
 
-    await user.click(screen.getByRole('button', { name: 'Fatigue 3' }))
-    await user.click(screen.getByRole('button', { name: 'Sleep quality 4' }))
-    await user.click(screen.getByRole('button', { name: 'Motivation 5' }))
-    await user.click(screen.getByRole('button', { name: 'Muscle soreness 2' }))
-    await user.click(screen.getByRole('button', { name: 'Save & Continue' }))
+    await user.click(screen.getByRole('button', { name: '疲勞 3' }))
+    await user.click(screen.getByRole('button', { name: '睡眠品質 4' }))
+    await user.click(screen.getByRole('button', { name: '動機 5' }))
+    await user.click(screen.getByRole('button', { name: '肌肉酸痛 2' }))
+    await user.click(screen.getByRole('button', { name: '儲存並繼續' }))
 
     expect(onSaveEntry).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -61,7 +61,7 @@ describe('DailyCheckIn screen', () => {
       />,
     )
 
-    await user.click(screen.getByRole('button', { name: 'Cancel' }))
+    await user.click(screen.getByRole('button', { name: '取消' }))
     expect(onCancel).toHaveBeenCalledTimes(1)
   })
 })

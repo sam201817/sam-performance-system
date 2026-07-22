@@ -23,7 +23,7 @@ describe('HistoryCard', () => {
 
     const card = screen.getByRole('button', { name: /全身基礎重建/i })
     expect(card).toHaveAccessibleName()
-    expect(screen.getByText('Completed')).toBeInTheDocument()
+    expect(screen.getByText('已完成')).toBeInTheDocument()
 
     await user.click(card)
     expect(onOpen).toHaveBeenCalledWith('history-card-1')

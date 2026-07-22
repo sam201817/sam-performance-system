@@ -94,6 +94,7 @@ describe('performanceInsightsEngine', () => {
         muscleSoreness: 2,
         hasNote: false,
       },
+      language: 'en',
       now,
     })
 
@@ -119,6 +120,7 @@ describe('performanceInsightsEngine', () => {
         muscleSoreness: 4,
         hasNote: false,
       },
+      language: 'en',
     })
 
     expect(snapshot.topInsights[0]?.id).toBe('recovery-high-fatigue')

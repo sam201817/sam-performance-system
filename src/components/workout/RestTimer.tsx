@@ -1,3 +1,4 @@
+import { useTranslation } from '../../hooks/useTranslation'
 import './RestTimer.css'
 
 type RestTimerProps = {
@@ -21,18 +22,20 @@ export function RestTimer({
   onSkip,
   onRestart,
 }: RestTimerProps) {
+  const { t } = useTranslation()
+
   const statusText = isComplete
-    ? '休息完成'
+    ? t('workout.restComplete')
     : isPaused
-      ? '休息已暫停'
+      ? t('workout.restPaused')
       : isRunning
-        ? '休息進行中'
-        : '休息計時'
+        ? t('workout.restRunning')
+        : t('workout.restTimer')
 
   return (
-    <section className="rest-timer" aria-label="休息計時">
+    <section className="rest-timer" aria-label={t('workout.restTimer')}>
       <div className="rest-timer__header">
-        <span className="rest-timer__label">Rest</span>
+        <span className="rest-timer__label">{t('workout.restLabel')}</span>
         <span
           className="rest-timer__status"
           aria-live="polite"
@@ -49,7 +52,7 @@ export function RestTimer({
       <div className="rest-timer__controls">
         {isRunning ? (
           <button type="button" className="rest-timer__button" onClick={onPause}>
-            暫停
+            {t('workout.pause')}
           </button>
         ) : (
           <button
@@ -58,14 +61,14 @@ export function RestTimer({
             onClick={onResume}
             disabled={isComplete}
           >
-            繼續
+            {t('workout.resume')}
           </button>
         )}
         <button type="button" className="rest-timer__button" onClick={onRestart}>
-          重來
+          {t('workout.restart')}
         </button>
         <button type="button" className="rest-timer__button rest-timer__button--accent" onClick={onSkip}>
-          跳過
+          {t('workout.skip')}
         </button>
       </div>
     </section>

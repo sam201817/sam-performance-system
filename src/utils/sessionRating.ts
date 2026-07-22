@@ -1,10 +1,31 @@
-export type SessionRatingLabel = 'Excellent' | 'Good' | 'Fair' | 'Needs Improvement'
+import { translate, type SupportedLanguage } from '../i18n'
+
+export type SessionRatingLabelKey =
+  | 'sessionRating.excellent'
+  | 'sessionRating.good'
+  | 'sessionRating.fair'
+  | 'sessionRating.needsImprovement'
 
 export type SessionRatingVariant = 'excellent' | 'good' | 'fair' | 'needs-improvement'
 
 export type SessionRating = {
-  label: SessionRatingLabel
+  labelKey: SessionRatingLabelKey
   variant: SessionRatingVariant
+}
+
+const SESSION_RATING_LABEL_KEYS: Record<SessionRatingVariant, SessionRatingLabelKey> = {
+  excellent: 'sessionRating.excellent',
+  good: 'sessionRating.good',
+  fair: 'sessionRating.fair',
+  'needs-improvement': 'sessionRating.needsImprovement',
+}
+
+export function getSessionRatingLabel(
+  rating: SessionRating | SessionRatingVariant,
+  language: SupportedLanguage,
+): string {
+  const variant = typeof rating === 'string' ? rating : rating.variant
+  return translate(language, SESSION_RATING_LABEL_KEYS[variant])
 }
 
 export function getSessionRating(
@@ -15,16 +36,16 @@ export function getSessionRating(
     averageRpe !== null && averageRpe >= 7 && averageRpe <= 9
 
   if (completionPercentage >= 95 && hasExcellentRpe) {
-    return { label: 'Excellent', variant: 'excellent' }
+    return { labelKey: 'sessionRating.excellent', variant: 'excellent' }
   }
 
   if (completionPercentage >= 85) {
-    return { label: 'Good', variant: 'good' }
+    return { labelKey: 'sessionRating.good', variant: 'good' }
   }
 
   if (completionPercentage >= 70) {
-    return { label: 'Fair', variant: 'fair' }
+    return { labelKey: 'sessionRating.fair', variant: 'fair' }
   }
 
-  return { label: 'Needs Improvement', variant: 'needs-improvement' }
+  return { labelKey: 'sessionRating.needsImprovement', variant: 'needs-improvement' }
 }

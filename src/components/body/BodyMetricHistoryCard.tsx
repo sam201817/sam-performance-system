@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import type { BodyMetricEntry } from '../../types/bodyMetrics'
+import { useTranslation } from '../../hooks/useTranslation'
+import type { BodyMetricEntry, BodyMetricField } from '../../types/bodyMetrics'
 import {
   formatMetricValue,
   formatRelativeBodyDate,
-  getMetricLabel,
 } from '../../utils/bodyMetricCalculations'
 import './BodyMetricHistoryCard.css'
 
@@ -13,38 +13,28 @@ type BodyMetricHistoryCardProps = {
   onDelete: (entryId: string) => void
 }
 
-function buildMetricLines(entry: BodyMetricEntry): string[] {
-  const lines: string[] = []
-
-  if (entry.weightKg !== null) {
-    lines.push(`${getMetricLabel('weightKg')}: ${formatMetricValue('weightKg', entry.weightKg)}`)
-  }
-  if (entry.bodyFatPercent !== null) {
-    lines.push(
-      `${getMetricLabel('bodyFatPercent')}: ${formatMetricValue('bodyFatPercent', entry.bodyFatPercent)}`,
-    )
-  }
-  if (entry.muscleMassKg !== null) {
-    lines.push(
-      `${getMetricLabel('muscleMassKg')}: ${formatMetricValue('muscleMassKg', entry.muscleMassKg)}`,
-    )
-  }
-  if (entry.waistCm !== null) {
-    lines.push(`${getMetricLabel('waistCm')}: ${formatMetricValue('waistCm', entry.waistCm)}`)
-  }
-
-  return lines
-}
+const METRIC_FIELDS: BodyMetricField[] = [
+  'weightKg',
+  'bodyFatPercent',
+  'muscleMassKg',
+  'waistCm',
+]
 
 export function BodyMetricHistoryCard({ entry, onEdit, onDelete }: BodyMetricHistoryCardProps) {
+  const { t, language } = useTranslation()
   const [confirmDelete, setConfirmDelete] = useState(false)
-  const metricLines = buildMetricLines(entry)
+
+  const metricLines = METRIC_FIELDS.flatMap((field) => {
+    const value = entry[field]
+    if (value === null) return []
+    return [`${t(`metrics.${field}`)}: ${formatMetricValue(field, value)}`]
+  })
 
   return (
     <article className="body-metric-history-card">
       <div className="body-metric-history-card__header">
         <h3 className="body-metric-history-card__date">
-          {formatRelativeBodyDate(entry.recordedAt)}
+          {formatRelativeBodyDate(entry.recordedAt, language)}
         </h3>
         <div className="body-metric-history-card__actions">
           <button
@@ -52,7 +42,7 @@ export function BodyMetricHistoryCard({ entry, onEdit, onDelete }: BodyMetricHis
             className="body-metric-history-card__action"
             onClick={() => onEdit(entry.id)}
           >
-            Edit
+            {t('bodyComposition.edit')}
           </button>
           {!confirmDelete ? (
             <button
@@ -60,24 +50,24 @@ export function BodyMetricHistoryCard({ entry, onEdit, onDelete }: BodyMetricHis
               className="body-metric-history-card__action body-metric-history-card__action--danger"
               onClick={() => setConfirmDelete(true)}
             >
-              Delete
+              {t('bodyComposition.delete')}
             </button>
           ) : (
             <div className="body-metric-history-card__confirm" role="status">
-              <span>Delete this check-in?</span>
+              <span>{t('bodyComposition.deleteConfirm')}</span>
               <button
                 type="button"
                 className="body-metric-history-card__action"
                 onClick={() => setConfirmDelete(false)}
               >
-                Cancel
+                {t('buttons.cancel')}
               </button>
               <button
                 type="button"
                 className="body-metric-history-card__action body-metric-history-card__action--danger"
                 onClick={() => onDelete(entry.id)}
               >
-                Confirm
+                {t('buttons.confirm')}
               </button>
             </div>
           )}

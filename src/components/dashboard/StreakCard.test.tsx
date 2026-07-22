@@ -11,7 +11,7 @@ describe('StreakCard', () => {
       />,
     )
 
-    expect(screen.getByRole('status')).toHaveTextContent('Build consistency')
+    expect(screen.getByRole('status')).toHaveTextContent('完成第一次訓練')
   })
 
   it('shows streak metrics when history exists', () => {
@@ -23,7 +23,7 @@ describe('StreakCard', () => {
     )
 
     expect(screen.getByText('3')).toBeInTheDocument()
-    expect(screen.getByText('5 days')).toBeInTheDocument()
+    expect(screen.getByText('5 天')).toBeInTheDocument()
     expect(screen.getByText('12')).toBeInTheDocument()
   })
 })

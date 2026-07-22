@@ -1,13 +1,16 @@
-export const PREFERENCES_VERSION = 1 as const
+export const PREFERENCES_VERSION = 2 as const
 
 export type WeightUnit = 'metric' | 'imperial'
 
 export type ThemePreference = 'system'
 
+export type AppLanguage = 'zh-TW' | 'en'
+
 export type UserPreferences = {
   version: typeof PREFERENCES_VERSION
   weightUnit: WeightUnit
   theme: ThemePreference
+  language: AppLanguage
 }
 
 export type SettingsFeedbackType =

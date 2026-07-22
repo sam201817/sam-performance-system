@@ -1,3 +1,4 @@
+import { useTranslation } from '../../hooks/useTranslation'
 import type { WorkoutHistorySession } from '../../types/workoutHistory'
 import {
   formatDurationMinutes,
@@ -12,8 +13,9 @@ type HistoryCardProps = {
 }
 
 export function HistoryCard({ session, onOpen }: HistoryCardProps) {
+  const { t } = useTranslation()
   const relativeDate = formatRelativeWorkoutDate(session.completedAt)
-  const accessibleLabel = `${session.workoutName}, ${relativeDate}, ${formatDurationMinutes(session.durationMinutes)}, ${formatVolumeKg(session.totalVolume)}, Completed`
+  const accessibleLabel = `${session.workoutName}, ${relativeDate}, ${formatDurationMinutes(session.durationMinutes)}, ${formatVolumeKg(session.totalVolume)}, ${t('history.completed')}`
 
   return (
     <button
@@ -35,7 +37,7 @@ export function HistoryCard({ session, onOpen }: HistoryCardProps) {
         <span>{formatVolumeKg(session.totalVolume)}</span>
       </div>
 
-      <span className="history-card__status">Completed</span>
+      <span className="history-card__status">{t('history.completed')}</span>
     </button>
   )
 }

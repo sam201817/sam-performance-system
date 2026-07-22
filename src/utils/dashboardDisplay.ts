@@ -1,8 +1,21 @@
-export function formatLastUpdatedLabel(daysSinceUpdate: number | null): string {
+import { translate, type SupportedLanguage } from '../i18n'
+
+export function formatRelativeDate(
+  daysSinceUpdate: number | null,
+  language: SupportedLanguage,
+): string {
   if (daysSinceUpdate === null) return '—'
-  if (daysSinceUpdate === 0) return 'Today'
-  if (daysSinceUpdate === 1) return 'Yesterday'
-  return `${daysSinceUpdate} days ago`
+  if (daysSinceUpdate === 0) return translate(language, 'common.today')
+  if (daysSinceUpdate === 1) return translate(language, 'common.yesterday')
+  return translate(language, 'common.daysAgo', { count: daysSinceUpdate })
+}
+
+/** @deprecated Use formatRelativeDate instead. */
+export function formatLastUpdatedLabel(
+  daysSinceUpdate: number | null,
+  language: SupportedLanguage,
+): string {
+  return formatRelativeDate(daysSinceUpdate, language)
 }
 
 export function formatWeightTrendDisplay(

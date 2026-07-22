@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { useTranslation } from '../../hooks/useTranslation'
 import './ConfirmDialog.css'
 
 type ConfirmDialogProps = {
@@ -15,11 +16,12 @@ export function ConfirmDialog({
   title,
   description,
   confirmLabel,
-  cancelLabel = 'Cancel',
+  cancelLabel,
   tone = 'default',
   onConfirm,
   onCancel,
 }: ConfirmDialogProps) {
+  const { t } = useTranslation()
   const dialogRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -49,7 +51,7 @@ export function ConfirmDialog({
             className="confirm-dialog__button confirm-dialog__button--secondary"
             onClick={onCancel}
           >
-            {cancelLabel}
+            {cancelLabel ?? t('buttons.cancel')}
           </button>
           <button
             type="button"

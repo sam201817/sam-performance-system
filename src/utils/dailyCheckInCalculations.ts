@@ -1,3 +1,5 @@
+import type { SupportedLanguage } from '../i18n'
+import { translate } from '../i18n'
 import type {
   CheckInMetricField,
   DailyCheckInEntry,
@@ -27,18 +29,21 @@ export function calculateReadinessScore(entry: DailyCheckInEntry): number {
   return Math.round(average * 100)
 }
 
-export function getReadinessStatusLabel(score: number): string {
-  if (score >= 80) return 'Ready to train'
-  if (score >= 60) return 'Moderate readiness'
-  return 'Take it easy'
+export function getReadinessStatusLabel(score: number, language: SupportedLanguage): string {
+  if (score >= 80) return translate(language, 'readiness.readyToTrain')
+  if (score >= 60) return translate(language, 'readiness.moderateReadiness')
+  return translate(language, 'readiness.takeItEasy')
 }
 
-export function buildDailyCheckInSummary(entry: DailyCheckInEntry): DailyCheckInSummary {
+export function buildDailyCheckInSummary(
+  entry: DailyCheckInEntry,
+  language: SupportedLanguage,
+): DailyCheckInSummary {
   const score = calculateReadinessScore(entry)
 
   return {
     score,
-    statusLabel: getReadinessStatusLabel(score),
+    statusLabel: getReadinessStatusLabel(score, language),
     fatigue: entry.fatigue,
     sleepQuality: entry.sleepQuality,
     motivation: entry.motivation,

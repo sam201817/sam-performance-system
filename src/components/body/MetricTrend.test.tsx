@@ -30,10 +30,10 @@ describe('MetricTrend', () => {
       />,
     )
 
-    expect(screen.getByRole('img', { name: /Weight trend/i })).toBeInTheDocument()
-    expect(screen.getByRole('tab', { name: 'Weight' })).toHaveAttribute('aria-selected', 'true')
+    expect(screen.getByRole('img', { name: /體重 trend/i })).toBeInTheDocument()
+    expect(screen.getByRole('tab', { name: '體重' })).toHaveAttribute('aria-selected', 'true')
 
-    await user.click(screen.getByRole('tab', { name: 'Body Fat' }))
+    await user.click(screen.getByRole('tab', { name: '體脂' }))
     expect(onMetricChange).toHaveBeenCalledWith('bodyFatPercent')
   })
 

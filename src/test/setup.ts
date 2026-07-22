@@ -19,12 +19,14 @@ Object.defineProperty(window, 'matchMedia', {
 
 beforeEach(() => {
   localStorage.clear()
+  vi.stubGlobal('navigator', { language: 'zh-TW', languages: ['zh-TW'] })
 })
 
 afterEach(() => {
   cleanup()
   vi.clearAllTimers()
   vi.useRealTimers()
+  vi.unstubAllGlobals()
   for (const key of Object.values(SPS_STORAGE_KEYS)) {
     localStorage.removeItem(key)
   }

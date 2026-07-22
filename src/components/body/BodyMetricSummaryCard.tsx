@@ -1,8 +1,8 @@
+import { useTranslation } from '../../hooks/useTranslation'
 import type { BodyMetricField, BodyMetricSummary } from '../../types/bodyMetrics'
 import {
   formatChangeValue,
   formatMetricValue,
-  getMetricLabel,
 } from '../../utils/bodyMetricCalculations'
 import './BodyMetricSummaryCard.css'
 
@@ -34,19 +34,20 @@ function buildItems(summary: BodyMetricSummary): SummaryItem[] {
 }
 
 export function BodyMetricSummaryCard({ summary }: BodyMetricSummaryCardProps) {
+  const { t } = useTranslation()
   const items = buildItems(summary)
 
   return (
-    <section className="body-metric-summary-card" aria-label="Current body metrics">
+    <section className="body-metric-summary-card" aria-label={t('bodyComposition.currentMetrics')}>
       <div className="body-metric-summary-card__grid">
         {items.map(({ field, latest, change }) => (
           <div key={field} className="body-metric-summary-card__item">
-            <span className="body-metric-summary-card__label">{getMetricLabel(field)}</span>
+            <span className="body-metric-summary-card__label">{t(`metrics.${field}`)}</span>
             <strong className="body-metric-summary-card__value">
               {latest === null ? '—' : formatMetricValue(field, latest)}
             </strong>
             <span className="body-metric-summary-card__change">
-              {change === null ? 'No previous reading' : formatChangeValue(field, change)}
+              {change === null ? t('bodyComposition.noPreviousReading') : formatChangeValue(field, change)}
             </span>
           </div>
         ))}

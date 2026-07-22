@@ -17,8 +17,8 @@ describe('TrainingSummaryCard', () => {
       />,
     )
 
-    expect(screen.getByRole('heading', { name: 'This Week' })).toBeInTheDocument()
-    expect(screen.getByRole('status')).toHaveTextContent('Complete your first workout')
+    expect(screen.getByRole('heading', { name: '本週訓練' })).toBeInTheDocument()
+    expect(screen.getByRole('status')).toHaveTextContent('完成第一次訓練')
   })
 
   it('shows weekly metrics when history exists', () => {
@@ -36,9 +36,9 @@ describe('TrainingSummaryCard', () => {
     )
 
     expect(screen.getByText('2 / 3')).toBeInTheDocument()
-    expect(screen.getByRole('progressbar', { name: 'Weekly completion 67%' })).toBeInTheDocument()
+    expect(screen.getByRole('progressbar', { name: '完成率 67%' })).toBeInTheDocument()
     expect(screen.getByText('67%')).toBeInTheDocument()
     expect(screen.getByText('2,400 kg')).toBeInTheDocument()
-    expect(screen.getByText('50 min')).toBeInTheDocument()
+    expect(screen.getByText('50 分鐘')).toBeInTheDocument()
   })
 })

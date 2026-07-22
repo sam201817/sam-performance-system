@@ -1,3 +1,4 @@
+import { useTranslation } from '../../hooks/useTranslation'
 import type { PerformanceInsight } from '../../types/insights'
 import { DashboardSection } from './DashboardSection'
 import './PerformanceInsightsCard.css'
@@ -6,39 +7,34 @@ type PerformanceInsightsCardProps = {
   insights: PerformanceInsight[]
 }
 
-const SEVERITY_LABEL: Record<PerformanceInsight['severity'], string> = {
-  info: 'Info',
-  positive: 'Positive',
-  warning: 'Attention',
-  critical: 'Important',
-}
-
-function formatCategoryLabel(category: PerformanceInsight['category']): string {
+function getCategoryKey(category: PerformanceInsight['category']): string {
   switch (category) {
     case 'body-composition':
-      return 'Body'
+      return 'insights.category.bodyComposition'
     case 'training':
-      return 'Training'
+      return 'insights.category.training'
     case 'recovery':
-      return 'Recovery'
+      return 'insights.category.recovery'
     case 'consistency':
-      return 'Consistency'
+      return 'insights.category.consistency'
   }
 }
 
 export function PerformanceInsightsCard({ insights }: PerformanceInsightsCardProps) {
+  const { t } = useTranslation()
+
   if (insights.length === 0) {
     return (
-      <DashboardSection title="Performance Insights">
+      <DashboardSection title={t('insights.title')}>
         <p className="performance-insights-card__empty" role="status">
-          Keep logging workouts, check-ins, and body metrics to unlock personalized insights.
+          {t('insights.empty')}
         </p>
       </DashboardSection>
     )
   }
 
   return (
-    <DashboardSection title="Performance Insights">
+    <DashboardSection title={t('insights.title')}>
       <ul className="performance-insights-card__list">
         {insights.map((insight) => (
           <li key={insight.id}>
@@ -49,12 +45,12 @@ export function PerformanceInsightsCard({ insights }: PerformanceInsightsCardPro
               <div className="performance-insights-card__header">
                 <h3 className="performance-insights-card__title">{insight.title}</h3>
                 <span className="performance-insights-card__category">
-                  {formatCategoryLabel(insight.category)}
+                  {t(getCategoryKey(insight.category))}
                 </span>
               </div>
               <p className="performance-insights-card__description">{insight.description}</p>
               <span className="performance-insights-card__severity">
-                {SEVERITY_LABEL[insight.severity]}
+                {t(`insights.severity.${insight.severity}`)}
               </span>
             </article>
           </li>

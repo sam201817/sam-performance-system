@@ -13,9 +13,9 @@ describe('workout flow integration', () => {
     render(<App />)
     await completeDailyCheckIn(user)
 
-    expect(screen.getByRole('button', { name: 'Start Workout' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '開始訓練' })).toBeInTheDocument()
 
-    await user.click(screen.getByRole('button', { name: 'Start Workout' }))
+    await user.click(screen.getByRole('button', { name: '開始訓練' }))
 
     expect(screen.getByRole('heading', { name: 'Goblet Squat' })).toBeInTheDocument()
     expect(screen.getByText('1 / 7')).toBeInTheDocument()
@@ -32,10 +32,10 @@ describe('workout flow integration', () => {
     expect(within(restTimer).getByText('休息進行中')).toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: '返回首頁' }))
-    expect(screen.getByRole('button', { name: 'Resume Workout' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '繼續訓練' })).toBeInTheDocument()
     expect(loadWorkoutProgress(TODAY_WORKOUT)).not.toBeNull()
 
-    await user.click(screen.getByRole('button', { name: 'Resume Workout' }))
+    await user.click(screen.getByRole('button', { name: '繼續訓練' }))
     expect(screen.getByRole('heading', { name: 'Goblet Squat' })).toBeInTheDocument()
     expect(screen.getAllByLabelText('實際次數')[0]).toHaveValue('11')
     expect(screen.getByLabelText('已完成')).toBeInTheDocument()
@@ -66,13 +66,13 @@ describe('workout flow integration', () => {
     }
 
     expect(screen.getByRole('heading', { name: '訓練完成' })).toBeInTheDocument()
-    expect(screen.getByText(`今日 ${TODAY_WORKOUT.exercises.length} 個動作訓練已結束。`)).toBeInTheDocument()
+    expect(screen.getByText('今天表現很好。')).toBeInTheDocument()
 
     const stats = screen.getByRole('main')
-    expect(within(stats).getByText('完成組數')).toBeInTheDocument()
+    expect(within(stats).getByText('組數')).toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: '返回首頁' }))
-    expect(screen.getByRole('button', { name: 'Start Workout' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '開始訓練' })).toBeInTheDocument()
     expect(loadWorkoutProgress(TODAY_WORKOUT)).toBeNull()
   })
 

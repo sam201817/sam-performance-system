@@ -33,7 +33,7 @@ describe('BodyCompositionDashboardCard', () => {
       />,
     )
 
-    await user.click(screen.getByRole('button', { name: 'Add First Check-in' }))
+    await user.click(screen.getByRole('button', { name: '新增第一次量測' }))
     expect(onOpen).toHaveBeenCalledTimes(1)
   })
 
@@ -52,9 +52,9 @@ describe('BodyCompositionDashboardCard', () => {
       />,
     )
 
-    expect(screen.getByRole('status')).toHaveTextContent('Update check-in')
+    expect(screen.getByRole('status')).toHaveTextContent('更新量測')
     expect(screen.getByText('80 kg')).toBeInTheDocument()
-    expect(screen.getByText('8 days ago')).toBeInTheDocument()
+    expect(screen.getByText('8 天前')).toBeInTheDocument()
   })
 
   it('does not show reminder within 7 days', () => {
@@ -72,6 +72,6 @@ describe('BodyCompositionDashboardCard', () => {
       />,
     )
 
-    expect(screen.queryByText('Update check-in')).not.toBeInTheDocument()
+    expect(screen.queryByText('更新量測')).not.toBeInTheDocument()
   })
 })

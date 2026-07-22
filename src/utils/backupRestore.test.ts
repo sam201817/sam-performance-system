@@ -70,9 +70,10 @@ describe('backupRestore', () => {
       version: DAILY_CHECK_IN_VERSION,
     }]
     backup.data.preferences = {
-      version: 1,
+      version: 2,
       weightUnit: 'imperial',
       theme: 'system',
+      language: 'zh-TW',
     }
 
     const result = restoreSpsBackup(backup)

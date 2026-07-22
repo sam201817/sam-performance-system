@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from '../../hooks/useTranslation'
 import type { BodyMetricDraft, BodyMetricEntry } from '../../types/bodyMetrics'
 import {
   createEmptyBodyMetricDraft,
@@ -16,6 +17,7 @@ type BodyMetricFormProps = {
 }
 
 export function BodyMetricForm({ entry, title, onSave, onCancel }: BodyMetricFormProps) {
+  const { t } = useTranslation()
   const dialogRef = useRef<HTMLDivElement>(null)
   const [draft, setDraft] = useState<BodyMetricDraft>(
     entry ? entryToDraft(entry) : createEmptyBodyMetricDraft(),
@@ -58,29 +60,29 @@ export function BodyMetricForm({ entry, title, onSave, onCancel }: BodyMetricFor
 
         <div className="body-metric-form__fields">
           <MetricInput
-            label="Weight"
-            unit="kg"
+            label={t('metrics.weightKg')}
+            unit={t('common.kg')}
             value={draft.weightKg}
             error={errors.weightKg}
             onChange={(value) => updateDraft('weightKg', value)}
           />
           <MetricInput
-            label="Body fat"
-            unit="%"
+            label={t('metrics.bodyFatPercent')}
+            unit={t('common.percent')}
             value={draft.bodyFatPercent}
             error={errors.bodyFatPercent}
             onChange={(value) => updateDraft('bodyFatPercent', value)}
           />
           <MetricInput
-            label="Muscle mass"
-            unit="kg"
+            label={t('metrics.muscleMassKg')}
+            unit={t('common.kg')}
             value={draft.muscleMassKg}
             error={errors.muscleMassKg}
             onChange={(value) => updateDraft('muscleMassKg', value)}
           />
           <MetricInput
-            label="Waist"
-            unit="cm"
+            label={t('metrics.waistCm')}
+            unit={t('common.cm')}
             value={draft.waistCm}
             error={errors.waistCm}
             onChange={(value) => updateDraft('waistCm', value)}
@@ -88,7 +90,7 @@ export function BodyMetricForm({ entry, title, onSave, onCancel }: BodyMetricFor
 
           <div className="metric-input">
             <label className="metric-input__label" htmlFor="body-metric-notes">
-              Notes
+              {t('bodyComposition.notes')}
             </label>
             <textarea
               id="body-metric-notes"
@@ -118,14 +120,14 @@ export function BodyMetricForm({ entry, title, onSave, onCancel }: BodyMetricFor
             className="body-metric-form__button body-metric-form__button--secondary"
             onClick={onCancel}
           >
-            Cancel
+            {t('buttons.cancel')}
           </button>
           <button
             type="button"
             className="body-metric-form__button body-metric-form__button--primary sps-action-primary"
             onClick={handleSubmit}
           >
-            Save
+            {t('buttons.save')}
           </button>
         </div>
       </div>

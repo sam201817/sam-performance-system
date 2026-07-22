@@ -4,8 +4,15 @@ import { ConfirmDialog } from '../components/settings/ConfirmDialog'
 import { SettingsFeedbackBanner } from '../components/settings/SettingsFeedbackBanner'
 import { SettingsSection } from '../components/settings/SettingsSection'
 import { APP_METADATA } from '../data/appMetadata'
+import { useTranslation } from '../hooks/useTranslation'
+import { getLocaleArray } from '../i18n'
 import type { SpsBackupPayload } from '../types/backup'
-import type { SettingsFeedback, UserPreferences, WeightUnit } from '../types/settings'
+import type {
+  AppLanguage,
+  SettingsFeedback,
+  UserPreferences,
+  WeightUnit,
+} from '../types/settings'
 import type { NavTabHandler, NavTabId } from '../types/app'
 import { formatWeightUnitLabel } from '../utils/preferencesStorage'
 import './Settings.css'
@@ -43,11 +50,17 @@ export function Settings({
   onResetAllData,
   onDismissFeedback,
 }: SettingsProps) {
+  const { t, language } = useTranslation()
+  const privacyItems = getLocaleArray(language, 'settings.privacyItems')
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [resetStep, setResetStep] = useState<ResetStep>('none')
   const [restoreStep, setRestoreStep] = useState<RestoreStep>('none')
   const [pendingBackup, setPendingBackup] = useState<SpsBackupPayload | null>(null)
   const [isRestoring, setIsRestoring] = useState(false)
+
+  function handleLanguageChange(language: AppLanguage) {
+    onPreferencesChange({ ...preferences, language })
+  }
 
   function handleWeightUnitChange(unit: WeightUnit) {
     onPreferencesChange({
@@ -117,10 +130,10 @@ export function Settings({
       <main className="settings screen-shell">
         <header className="settings__header">
           <button type="button" className="settings__back" onClick={onBack}>
-            Back
+            {t('buttons.back')}
           </button>
-          <h1 className="settings__title">Settings</h1>
-          <p className="settings__subtitle">Preferences, backups, and local data controls.</p>
+          <h1 className="settings__title">{t('settings.title')}</h1>
+          <p className="settings__subtitle">{t('settings.subtitle')}</p>
         </header>
 
         {feedback ? (
@@ -128,13 +141,38 @@ export function Settings({
         ) : null}
 
         <SettingsSection
-          title="Preferences"
-          description="Display and measurement preferences for future updates."
+          title={t('settings.preferences')}
+          description={t('settings.preferencesHint')}
         >
           <div className="settings-row">
             <div className="settings-row__content">
-              <span className="settings-row__label">Units</span>
-              <span className="settings-row__hint">Stored for future unit conversion support.</span>
+              <span className="settings-row__label">{t('settings.language')}</span>
+              <span className="settings-row__hint">{t('settings.languageHint')}</span>
+            </div>
+            <div className="settings-row__control settings-row__control--segmented">
+              <button
+                type="button"
+                className={`settings-segment${preferences.language === 'zh-TW' ? ' settings-segment--active' : ''}`}
+                aria-pressed={preferences.language === 'zh-TW'}
+                onClick={() => handleLanguageChange('zh-TW')}
+              >
+                {t('settings.languageZhTW')}
+              </button>
+              <button
+                type="button"
+                className={`settings-segment${preferences.language === 'en' ? ' settings-segment--active' : ''}`}
+                aria-pressed={preferences.language === 'en'}
+                onClick={() => handleLanguageChange('en')}
+              >
+                {t('settings.languageEn')}
+              </button>
+            </div>
+          </div>
+
+          <div className="settings-row">
+            <div className="settings-row__content">
+              <span className="settings-row__label">{t('settings.units')}</span>
+              <span className="settings-row__hint">{t('settings.unitsHint')}</span>
             </div>
             <div className="settings-row__control settings-row__control--segmented">
               <button
@@ -143,7 +181,7 @@ export function Settings({
                 aria-pressed={preferences.weightUnit === 'metric'}
                 onClick={() => handleWeightUnitChange('metric')}
               >
-                Metric (kg)
+                {t('settings.unitsMetric')}
               </button>
               <button
                 type="button"
@@ -151,39 +189,38 @@ export function Settings({
                 aria-pressed={preferences.weightUnit === 'imperial'}
                 onClick={() => handleWeightUnitChange('imperial')}
               >
-                Imperial (lb)
+                {t('settings.unitsImperial')}
               </button>
             </div>
           </div>
 
           <div className="settings-row">
             <div className="settings-row__content">
-              <span className="settings-row__label">Theme</span>
-              <span className="settings-row__hint">Follows your device appearance.</span>
+              <span className="settings-row__label">{t('settings.theme')}</span>
+              <span className="settings-row__hint">{t('settings.themeHint')}</span>
             </div>
-            <span className="settings-row__value">System default</span>
+            <span className="settings-row__value">{t('settings.themeSystem')}</span>
           </div>
 
           <p className="settings__footnote">
-            Current units preference: {formatWeightUnitLabel(preferences.weightUnit)}.
+            {t('settings.unitsFootnote', {
+              label: formatWeightUnitLabel(preferences.weightUnit, language),
+            })}
           </p>
         </SettingsSection>
 
         <SettingsSection
-          title="Data Management"
-          description="Export, restore, or reset your SPS records stored in this browser."
+          title={t('settings.dataManagement')}
+          description={t('settings.dataManagementHint')}
         >
-          <p className="settings__info">
-            SPS data is stored locally in this browser using localStorage. Clearing browser
-            data for this site may remove your records.
-          </p>
+          <p className="settings__info">{t('settings.storageInfo')}</p>
 
           <button
             type="button"
             className="settings-action settings-action--primary sps-action-primary"
             onClick={handleExportClick}
           >
-            Export Full Backup
+            {t('settings.exportBackup')}
           </button>
 
           <button
@@ -191,7 +228,7 @@ export function Settings({
             className="settings-action"
             onClick={handleRestoreClick}
           >
-            Restore from Backup
+            {t('settings.restoreBackup')}
           </button>
           <input
             ref={fileInputRef}
@@ -208,26 +245,25 @@ export function Settings({
             className="settings-action settings-action--danger"
             onClick={handleResetClick}
           >
-            Reset All Data
+            {t('settings.resetAllData')}
           </button>
         </SettingsSection>
 
-        <SettingsSection title="Privacy">
+        <SettingsSection title={t('settings.privacy')}>
           <ul className="settings-list">
-            <li>Your SPS data stays on this device in local browser storage.</li>
-            <li>No account is required and no data is sent to a server.</li>
-            <li>Clearing browser data for this site may permanently remove your records.</li>
-            <li>Export backups regularly so you can recover your history if needed.</li>
+            {privacyItems.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
           </ul>
         </SettingsSection>
 
-        <SettingsSection title="About">
+        <SettingsSection title={t('settings.about')}>
           <div className="settings-about">
             <p className="settings-about__name">{APP_METADATA.name}</p>
             <p className="settings-about__short">{APP_METADATA.shortName}</p>
             <p className="settings-about__version">Version {APP_METADATA.version}</p>
             <p className="settings-about__description">{APP_METADATA.description}</p>
-            <p className="settings-about__badge">Local-first · No backend required</p>
+            <p className="settings-about__badge">{t('settings.localFirstBadge')}</p>
           </div>
         </SettingsSection>
       </main>
@@ -236,10 +272,13 @@ export function Settings({
 
       {restoreStep === 'confirm' && pendingBackup ? (
         <ConfirmDialog
-          title="Restore backup?"
-          description={`This will replace all current SPS data on this device with the backup exported on ${new Date(pendingBackup.exportedAt).toLocaleString()} (app version ${pendingBackup.appVersion}). Your existing local data will be overwritten.`}
-          confirmLabel={isRestoring ? 'Restoring…' : 'Restore Backup'}
-          cancelLabel="Cancel"
+          title={t('settings.restoreTitle')}
+          description={t('settings.restoreDescription', {
+            date: new Date(pendingBackup.exportedAt).toLocaleString(),
+            version: pendingBackup.appVersion,
+          })}
+          confirmLabel={isRestoring ? t('settings.restoring') : t('settings.restoreConfirm')}
+          cancelLabel={t('buttons.cancel')}
           tone="danger"
           onConfirm={() => {
             if (!isRestoring) void handleConfirmRestore()
@@ -250,10 +289,10 @@ export function Settings({
 
       {resetStep === 'first' ? (
         <ConfirmDialog
-          title="Reset all SPS data?"
-          description="This will permanently delete workout history, body composition records, daily check-ins, preferences, and in-progress workout data stored by SPS on this device. Unrelated browser storage will not be affected."
-          confirmLabel="Continue"
-          cancelLabel="Cancel"
+          title={t('settings.resetFirstTitle')}
+          description={t('settings.resetFirstDescription')}
+          confirmLabel={t('settings.resetContinue')}
+          cancelLabel={t('buttons.cancel')}
           tone="danger"
           onConfirm={handleResetFirstConfirm}
           onCancel={handleResetCancel}
@@ -262,10 +301,10 @@ export function Settings({
 
       {resetStep === 'final' ? (
         <ConfirmDialog
-          title="Final confirmation"
-          description="This action cannot be undone. All SPS-owned local data will be removed and the app will return to its first-use state."
-          confirmLabel="Yes, delete everything"
-          cancelLabel="Go back"
+          title={t('settings.resetFinalTitle')}
+          description={t('settings.resetFinalDescription')}
+          confirmLabel={t('settings.resetFinalConfirm')}
+          cancelLabel={t('settings.goBack')}
           tone="danger"
           onConfirm={handleResetFinalConfirm}
           onCancel={handleResetCancel}

@@ -30,8 +30,8 @@ describe('BodyGoalCard', () => {
       />,
     )
 
-    expect(screen.getByRole('heading', { name: 'Body Composition' })).toBeInTheDocument()
-    await user.click(screen.getByRole('button', { name: 'Add First Check-in' }))
+    expect(screen.getByRole('heading', { name: '身體組成' })).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: '新增第一次量測' }))
     expect(onOpen).toHaveBeenCalledTimes(1)
   })
 

@@ -1,8 +1,8 @@
+import { useTranslation } from '../../hooks/useTranslation'
 import type { BodyMetricField, MetricTrendData, TrendMetricId } from '../../types/bodyMetrics'
 import {
   formatChangeValue,
   formatMetricValue,
-  getMetricLabel,
 } from '../../utils/bodyMetricCalculations'
 import { MetricTrendChart } from './MetricTrendChart'
 import './MetricTrend.css'
@@ -25,7 +25,8 @@ function formatTrendValue(metric: BodyMetricField, value: number | null): string
 }
 
 export function MetricTrend({ selectedMetric, trend, onMetricChange }: MetricTrendProps) {
-  const label = getMetricLabel(selectedMetric)
+  const { t } = useTranslation()
+  const label = t(`metrics.${selectedMetric}`)
 
   return (
     <section className="metric-trend" aria-label="Body metric trend">
@@ -41,7 +42,7 @@ export function MetricTrend({ selectedMetric, trend, onMetricChange }: MetricTre
               aria-selected={selected}
               onClick={() => onMetricChange(metric)}
             >
-              {getMetricLabel(metric)}
+              {t(`metrics.${metric}`)}
             </button>
           )
         })}
@@ -49,25 +50,25 @@ export function MetricTrend({ selectedMetric, trend, onMetricChange }: MetricTre
 
       <div className="metric-trend__summary">
         <div>
-          <span className="metric-trend__label">Latest</span>
+          <span className="metric-trend__label">{t('bodyComposition.latest')}</span>
           <strong className="metric-trend__value">
             {formatTrendValue(selectedMetric, trend.latestValue)}
           </strong>
         </div>
         <div>
-          <span className="metric-trend__label">Change</span>
+          <span className="metric-trend__label">{t('bodyComposition.change')}</span>
           <strong className="metric-trend__value">
             {formatChangeValue(selectedMetric, trend.absoluteChange) ?? '—'}
           </strong>
         </div>
         <div>
-          <span className="metric-trend__label">Min</span>
+          <span className="metric-trend__label">{t('bodyComposition.min')}</span>
           <strong className="metric-trend__value">
             {formatTrendValue(selectedMetric, trend.minimum)}
           </strong>
         </div>
         <div>
-          <span className="metric-trend__label">Max</span>
+          <span className="metric-trend__label">{t('bodyComposition.max')}</span>
           <strong className="metric-trend__value">
             {formatTrendValue(selectedMetric, trend.maximum)}
           </strong>

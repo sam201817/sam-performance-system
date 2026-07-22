@@ -1,4 +1,5 @@
 import { Card } from '../Card'
+import { useTranslation } from '../../hooks/useTranslation'
 import type { StreakSummary } from '../../types/dashboard'
 import './StreakCard.css'
 
@@ -8,29 +9,33 @@ type StreakCardProps = {
 }
 
 export function StreakCard({ streak, hasWorkoutHistory }: StreakCardProps) {
+  const { t } = useTranslation()
+
   return (
-    <Card className="streak-card" delay={0.18} aria-label="Training streak">
-      <h2 className="streak-card__title">Streak</h2>
+    <Card className="streak-card" delay={0.18} aria-label={t('dashboard.streak')}>
+      <h2 className="streak-card__title">{t('dashboard.streak')}</h2>
 
       {!hasWorkoutHistory ? (
         <p className="streak-card__empty" role="status">
-          Build consistency one workout at a time.
+          {t('dashboard.onboarding')}
         </p>
       ) : (
         <div className="streak-card__layout">
           <div className="streak-card__hero">
-            <span className="streak-card__hero-label">Current streak</span>
+            <span className="streak-card__hero-label">{t('dashboard.currentStreak')}</span>
             <strong className="streak-card__hero-value">{streak.currentStreak}</strong>
-            <span className="streak-card__hero-unit">days</span>
+            <span className="streak-card__hero-unit">{t('dashboard.days')}</span>
           </div>
 
           <div className="streak-card__secondary">
             <div className="streak-card__metric">
-              <span className="streak-card__metric-label">Longest</span>
-              <strong className="streak-card__metric-value">{streak.longestStreak} days</strong>
+              <span className="streak-card__metric-label">{t('dashboard.longestStreak')}</span>
+              <strong className="streak-card__metric-value">
+                {streak.longestStreak} {t('dashboard.days')}
+              </strong>
             </div>
             <div className="streak-card__metric">
-              <span className="streak-card__metric-label">Total workouts</span>
+              <span className="streak-card__metric-label">{t('dashboard.totalWorkouts')}</span>
               <strong className="streak-card__metric-value">{streak.totalCompletedWorkouts}</strong>
             </div>
           </div>

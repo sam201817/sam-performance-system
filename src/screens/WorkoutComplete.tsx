@@ -1,8 +1,10 @@
 import { Card } from '../components/Card'
+import { useTranslation } from '../hooks/useTranslation'
 import type { WorkoutCompleteProps } from '../types/workout'
 import './WorkoutComplete.css'
 
 export function WorkoutComplete({ summary, onReturnHome }: WorkoutCompleteProps) {
+  const { t } = useTranslation()
   const {
     totalExercises,
     completedExercises,
@@ -34,38 +36,34 @@ export function WorkoutComplete({ summary, onReturnHome }: WorkoutCompleteProps)
           </svg>
         </div>
 
-        <h1 className="workout-complete__title">訓練完成</h1>
-        <p className="workout-complete__message">
-          今日 {totalExercises} 個動作訓練已結束。
-        </p>
+        <h1 className="workout-complete__title">{t('workout.completeTitle')}</h1>
+        <p className="workout-complete__message">{t('workout.completeSubtitle')}</p>
 
         <dl className="workout-complete__stats">
           <div className="workout-complete__stat">
-            <dt>完成動作</dt>
+            <dt>{t('history.exercises')}</dt>
             <dd>
               {completedExercises} / {totalExercises}
             </dd>
           </div>
           <div className="workout-complete__stat">
-            <dt>完成組數</dt>
+            <dt>{t('history.sets')}</dt>
             <dd>{totalCompletedSets}</dd>
           </div>
           {durationMinutes !== null && (
             <div className="workout-complete__stat">
-              <dt>訓練時間</dt>
-              <dd>{durationMinutes} 分鐘</dd>
+              <dt>{t('dashboard.duration')}</dt>
+              <dd>{t('workout.summaryDuration', { minutes: durationMinutes })}</dd>
             </div>
           )}
         </dl>
-
-        <p className="workout-complete__submessage">身體記得，明天繼續。</p>
 
         <button
           type="button"
           className="workout-complete__button sps-action-primary"
           onClick={onReturnHome}
         >
-          返回首頁
+          {t('workout.returnHome')}
         </button>
       </Card>
     </main>

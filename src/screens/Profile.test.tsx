@@ -18,12 +18,12 @@ describe('Profile screen', () => {
       />,
     )
 
-    expect(screen.getByRole('heading', { name: 'Profile' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: '我的' })).toBeInTheDocument()
 
-    await user.click(screen.getByRole('button', { name: /Body Composition/i }))
+    await user.click(screen.getByRole('button', { name: /身體組成/i }))
     expect(onOpenBodyComposition).toHaveBeenCalledTimes(1)
 
-    await user.click(screen.getByRole('button', { name: /Settings/i }))
+    await user.click(screen.getByRole('button', { name: /設定/i }))
     expect(onOpenSettings).toHaveBeenCalledTimes(1)
   })
 })

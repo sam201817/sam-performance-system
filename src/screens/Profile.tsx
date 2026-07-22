@@ -1,4 +1,5 @@
 import { BottomNav } from '../components/BottomNav'
+import { useTranslation } from '../hooks/useTranslation'
 import type { NavTabHandler, NavTabId } from '../types/app'
 import './Profile.css'
 
@@ -15,12 +16,14 @@ export function Profile({
   onOpenBodyComposition,
   onOpenSettings,
 }: ProfileProps) {
+  const { t } = useTranslation()
+
   return (
     <>
       <main className="profile screen-shell">
         <header className="profile__header">
-          <h1 className="profile__title">Profile</h1>
-          <p className="profile__subtitle">Manage your body data and app settings.</p>
+          <h1 className="profile__title">{t('profile.title')}</h1>
+          <p className="profile__subtitle">{t('profile.subtitle')}</p>
         </header>
 
         <div className="profile__links">
@@ -29,9 +32,9 @@ export function Profile({
             className="profile-link"
             onClick={onOpenBodyComposition}
           >
-            <span className="profile-link__title">Body Composition</span>
+            <span className="profile-link__title">{t('profile.bodyComposition')}</span>
             <span className="profile-link__description">
-              Track weight, body fat, muscle, and waist trends.
+              {t('profile.bodyCompositionDescription')}
             </span>
           </button>
 
@@ -40,9 +43,9 @@ export function Profile({
             className="profile-link"
             onClick={onOpenSettings}
           >
-            <span className="profile-link__title">Settings</span>
+            <span className="profile-link__title">{t('profile.settings')}</span>
             <span className="profile-link__description">
-              Preferences, backups, privacy, and data management.
+              {t('profile.settingsDescription')}
             </span>
           </button>
         </div>

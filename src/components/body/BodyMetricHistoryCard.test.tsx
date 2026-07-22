@@ -27,16 +27,16 @@ describe('BodyMetricHistoryCard', () => {
       />,
     )
 
-    expect(screen.getByText('Weight: 80 kg')).toBeInTheDocument()
+    expect(screen.getByText('體重: 80 kg')).toBeInTheDocument()
     expect(screen.getByText('Recovery week')).toBeInTheDocument()
 
-    await user.click(screen.getByRole('button', { name: 'Edit' }))
+    await user.click(screen.getByRole('button', { name: '編輯' }))
     expect(onEdit).toHaveBeenCalledWith('entry-1')
 
-    await user.click(screen.getByRole('button', { name: 'Delete' }))
-    expect(screen.getByRole('status')).toHaveTextContent('Delete this check-in?')
+    await user.click(screen.getByRole('button', { name: '刪除' }))
+    expect(screen.getByRole('status')).toHaveTextContent('刪除此筆量測？')
 
-    await user.click(screen.getByRole('button', { name: 'Confirm' }))
+    await user.click(screen.getByRole('button', { name: '確認' }))
     expect(onDelete).toHaveBeenCalledWith('entry-1')
   })
 })

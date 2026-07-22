@@ -11,7 +11,7 @@ describe('dashboard flow integration', () => {
     render(<App />)
     await completeDailyCheckIn(user)
 
-    await user.click(screen.getByRole('button', { name: 'Start Workout' }))
+    await user.click(screen.getByRole('button', { name: '開始訓練' }))
 
     for (let step = 0; step < 6; step += 1) {
       await user.click(screen.getByRole('button', { name: '下一個' }))
@@ -27,13 +27,13 @@ describe('dashboard flow integration', () => {
 
     await user.click(screen.getByRole('button', { name: '返回首頁' }))
 
-    expect(screen.getByRole('heading', { name: 'Last Workout' })).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: 'Quick Stats' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: '最近訓練' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: '快速概覽' })).toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: /全身基礎重建/i }))
     expect(screen.getByRole('heading', { level: 1, name: '全身基礎重建' })).toBeInTheDocument()
 
-    await user.click(screen.getByRole('button', { name: '返回訓練紀錄' }))
-    expect(screen.getByRole('button', { name: 'Start Workout' })).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: '訓練紀錄' }))
+    expect(screen.getByRole('button', { name: '開始訓練' })).toBeInTheDocument()
   })
 })

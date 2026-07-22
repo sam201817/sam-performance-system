@@ -26,7 +26,7 @@ export function createValidBackup(
         version: DAILY_CHECK_IN_VERSION,
         entries: [],
       },
-      preferences: createDefaultPreferences(),
+      preferences: { ...createDefaultPreferences(), language: 'zh-TW' },
       workoutProgress: null,
       workoutSummary: null,
     },

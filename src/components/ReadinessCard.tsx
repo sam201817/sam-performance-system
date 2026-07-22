@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react'
 import { Card } from './Card'
+import { useTranslation } from '../hooks/useTranslation'
 import type { DailyCheckInSummary } from '../types/dailyCheckIn'
 import { getMetricDisplayClass } from '../utils/dailyCheckInCalculations'
 import './ReadinessCard.css'
 
 const METRIC_ROWS = [
-  { key: 'sleepQuality' as const, label: 'Sleep' },
-  { key: 'motivation' as const, label: 'Motivation' },
-  { key: 'fatigue' as const, label: 'Fatigue' },
-  { key: 'muscleSoreness' as const, label: 'Soreness' },
+  { key: 'sleepQuality' as const, labelKey: 'readiness.sleep' },
+  { key: 'motivation' as const, labelKey: 'readiness.motivation' },
+  { key: 'fatigue' as const, labelKey: 'readiness.fatigue' },
+  { key: 'muscleSoreness' as const, labelKey: 'readiness.soreness' },
 ]
 
 const RING_RADIUS = 52
@@ -24,7 +25,14 @@ function getInitialProgress(score: number): number {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches ? score : 0
 }
 
+function getReadinessStatusKey(score: number): string {
+  if (score >= 80) return 'readiness.readyToTrain'
+  if (score >= 60) return 'readiness.moderateReadiness'
+  return 'readiness.takeItEasy'
+}
+
 export function ReadinessCard({ summary, onEditCheckIn }: ReadinessCardProps) {
+  const { t } = useTranslation()
   const [progress, setProgress] = useState(() => getInitialProgress(summary.score))
 
   useEffect(() => {
@@ -52,7 +60,7 @@ export function ReadinessCard({ summary, onEditCheckIn }: ReadinessCardProps) {
     RING_CIRCUMFERENCE - (progress / 100) * RING_CIRCUMFERENCE
 
   return (
-    <Card className="readiness-card" delay={0.08} aria-label="Daily readiness">
+    <Card className="readiness-card" delay={0.08} aria-label={t('readiness.title')}>
       <div className="readiness-card__top">
         <div className="readiness-card__ring-wrap">
           <svg
@@ -77,24 +85,24 @@ export function ReadinessCard({ summary, onEditCheckIn }: ReadinessCardProps) {
           </svg>
           <div className="readiness-card__ring-center">
             <span className="readiness-card__score">{progress}</span>
-            <span className="readiness-card__score-label">Readiness</span>
+            <span className="readiness-card__score-label">{t('readiness.title')}</span>
           </div>
         </div>
 
         <div className="readiness-card__info">
-          <h2 className="readiness-card__title">Today&apos;s Check-in</h2>
-          <span className="readiness-card__status">{summary.statusLabel}</span>
+          <h2 className="readiness-card__title">{t('readiness.todayCheckIn')}</h2>
+          <span className="readiness-card__status">{t(getReadinessStatusKey(summary.score))}</span>
           {summary.hasNote && (
-            <span className="readiness-card__note-indicator">Note saved</span>
+            <span className="readiness-card__note-indicator">{t('readiness.noteSaved')}</span>
           )}
         </div>
       </div>
 
       <ul className="readiness-card__metrics">
-        {METRIC_ROWS.map(({ key, label }) => (
+        {METRIC_ROWS.map(({ key, labelKey }) => (
           <li key={key}>
             <div className="readiness-card__metric">
-              <span className="readiness-card__metric-label">{label}</span>
+              <span className="readiness-card__metric-label">{t(labelKey)}</span>
               <span
                 className={`readiness-card__metric-value ${getMetricDisplayClass(key, summary[key])}`}
               >
@@ -110,7 +118,7 @@ export function ReadinessCard({ summary, onEditCheckIn }: ReadinessCardProps) {
         className="readiness-card__edit"
         onClick={onEditCheckIn}
       >
-        Update Check-in
+        {t('readiness.updateCheckIn')}
       </button>
     </Card>
   )

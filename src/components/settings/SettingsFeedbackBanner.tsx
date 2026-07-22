@@ -1,3 +1,4 @@
+import { useTranslation } from '../../hooks/useTranslation'
 import type { SettingsFeedback } from '../../types/settings'
 import './SettingsFeedbackBanner.css'
 
@@ -7,6 +8,7 @@ type SettingsFeedbackBannerProps = {
 }
 
 export function SettingsFeedbackBanner({ feedback, onDismiss }: SettingsFeedbackBannerProps) {
+  const { t } = useTranslation()
   const isError =
     feedback.type === 'restore-invalid' ||
     feedback.type === 'restore-unsupported' ||
@@ -22,10 +24,10 @@ export function SettingsFeedbackBanner({ feedback, onDismiss }: SettingsFeedback
       <button
         type="button"
         className="settings-feedback__dismiss"
-        aria-label="Dismiss message"
+        aria-label={t('common.dismissMessage')}
         onClick={onDismiss}
       >
-        Dismiss
+        {t('common.dismiss')}
       </button>
     </div>
   )

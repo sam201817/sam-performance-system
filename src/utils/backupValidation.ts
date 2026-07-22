@@ -3,6 +3,7 @@ import {
   type BackupValidationResult,
   type SpsBackupPayload,
 } from '../types/backup'
+import { DEFAULT_LANGUAGE, translate } from '../i18n'
 import { isDailyCheckInHistory } from './dailyCheckInStorage'
 import { isBodyMetricHistory } from './bodyMetricStorage'
 import { isUserPreferences } from './preferencesStorage'
@@ -13,11 +14,43 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null
 }
 
+export const BACKUP_VALIDATION_ERROR_KEYS = {
+  invalidJson: 'errors.invalidBackup',
+  notObject: 'errors.malformedBackup',
+  missingSchema: 'errors.missingSchema',
+  unsupportedSchema: 'errors.unsupportedSchema',
+  missingTimestamp: 'errors.missingTimestamp',
+  missingAppVersion: 'errors.missingAppVersion',
+  missingData: 'errors.missingData',
+  invalidWorkoutHistory: 'errors.invalidWorkoutHistory',
+  invalidBodyMetrics: 'errors.invalidBodyMetrics',
+  invalidDailyCheckIn: 'errors.invalidDailyCheckIn',
+  invalidPreferences: 'errors.invalidPreferences',
+  invalidWorkoutProgress: 'errors.invalidWorkoutProgress',
+  invalidWorkoutSummary: 'errors.invalidWorkoutSummary',
+} as const
+
+export const ERROR_MESSAGE_KEYS = {
+  'invalid-json': BACKUP_VALIDATION_ERROR_KEYS.invalidJson,
+  malformed: BACKUP_VALIDATION_ERROR_KEYS.notObject,
+  'unsupported-version': BACKUP_VALIDATION_ERROR_KEYS.unsupportedSchema,
+} as const satisfies Record<
+  Extract<BackupValidationResult, { valid: false }>['code'],
+  string
+>
+
+function backupError(
+  key: (typeof BACKUP_VALIDATION_ERROR_KEYS)[keyof typeof BACKUP_VALIDATION_ERROR_KEYS],
+  params?: Record<string, string | number>,
+): string {
+  return translate(DEFAULT_LANGUAGE, key, params)
+}
+
 export function validateBackupPayload(data: unknown): BackupValidationResult {
   if (!isRecord(data)) {
     return {
       valid: false,
-      error: 'Backup file is not a valid SPS backup object.',
+      error: backupError(BACKUP_VALIDATION_ERROR_KEYS.notObject),
       code: 'malformed',
     }
   }
@@ -26,7 +59,7 @@ export function validateBackupPayload(data: unknown): BackupValidationResult {
   if (typeof schemaVersion !== 'number') {
     return {
       valid: false,
-      error: 'Backup file is missing a schema version.',
+      error: backupError(BACKUP_VALIDATION_ERROR_KEYS.missingSchema),
       code: 'malformed',
     }
   }
@@ -34,7 +67,9 @@ export function validateBackupPayload(data: unknown): BackupValidationResult {
   if (schemaVersion !== BACKUP_SCHEMA_VERSION) {
     return {
       valid: false,
-      error: `Backup schema version ${String(schemaVersion)} is not supported.`,
+      error: backupError(BACKUP_VALIDATION_ERROR_KEYS.unsupportedSchema, {
+        version: String(schemaVersion),
+      }),
       code: 'unsupported-version',
     }
   }
@@ -42,7 +77,7 @@ export function validateBackupPayload(data: unknown): BackupValidationResult {
   if (typeof data.exportedAt !== 'string' || !Number.isFinite(Date.parse(data.exportedAt))) {
     return {
       valid: false,
-      error: 'Backup file is missing a valid export timestamp.',
+      error: backupError(BACKUP_VALIDATION_ERROR_KEYS.missingTimestamp),
       code: 'malformed',
     }
   }
@@ -50,7 +85,7 @@ export function validateBackupPayload(data: unknown): BackupValidationResult {
   if (typeof data.appVersion !== 'string' || data.appVersion.trim().length === 0) {
     return {
       valid: false,
-      error: 'Backup file is missing an app version.',
+      error: backupError(BACKUP_VALIDATION_ERROR_KEYS.missingAppVersion),
       code: 'malformed',
     }
   }
@@ -58,7 +93,7 @@ export function validateBackupPayload(data: unknown): BackupValidationResult {
   if (!isRecord(data.data)) {
     return {
       valid: false,
-      error: 'Backup file is missing its data section.',
+      error: backupError(BACKUP_VALIDATION_ERROR_KEYS.missingData),
       code: 'malformed',
     }
   }
@@ -68,7 +103,7 @@ export function validateBackupPayload(data: unknown): BackupValidationResult {
   if (!isWorkoutHistory(backupData.workoutHistory)) {
     return {
       valid: false,
-      error: 'Backup workout history data is invalid.',
+      error: backupError(BACKUP_VALIDATION_ERROR_KEYS.invalidWorkoutHistory),
       code: 'malformed',
     }
   }
@@ -76,7 +111,7 @@ export function validateBackupPayload(data: unknown): BackupValidationResult {
   if (!isBodyMetricHistory(backupData.bodyMetrics)) {
     return {
       valid: false,
-      error: 'Backup body composition data is invalid.',
+      error: backupError(BACKUP_VALIDATION_ERROR_KEYS.invalidBodyMetrics),
       code: 'malformed',
     }
   }
@@ -84,7 +119,7 @@ export function validateBackupPayload(data: unknown): BackupValidationResult {
   if (!isDailyCheckInHistory(backupData.dailyCheckIn)) {
     return {
       valid: false,
-      error: 'Backup daily check-in data is invalid.',
+      error: backupError(BACKUP_VALIDATION_ERROR_KEYS.invalidDailyCheckIn),
       code: 'malformed',
     }
   }
@@ -92,7 +127,7 @@ export function validateBackupPayload(data: unknown): BackupValidationResult {
   if (!isUserPreferences(backupData.preferences)) {
     return {
       valid: false,
-      error: 'Backup preferences data is invalid.',
+      error: backupError(BACKUP_VALIDATION_ERROR_KEYS.invalidPreferences),
       code: 'malformed',
     }
   }
@@ -103,7 +138,7 @@ export function validateBackupPayload(data: unknown): BackupValidationResult {
   ) {
     return {
       valid: false,
-      error: 'Backup workout progress data is invalid.',
+      error: backupError(BACKUP_VALIDATION_ERROR_KEYS.invalidWorkoutProgress),
       code: 'malformed',
     }
   }
@@ -114,7 +149,7 @@ export function validateBackupPayload(data: unknown): BackupValidationResult {
   ) {
     return {
       valid: false,
-      error: 'Backup workout summary data is invalid.',
+      error: backupError(BACKUP_VALIDATION_ERROR_KEYS.invalidWorkoutSummary),
       code: 'malformed',
     }
   }
@@ -132,7 +167,7 @@ export function parseBackupJson(text: string): BackupValidationResult {
   } catch {
     return {
       valid: false,
-      error: 'Backup file is not valid JSON.',
+      error: backupError(BACKUP_VALIDATION_ERROR_KEYS.invalidJson),
       code: 'invalid-json',
     }
   }

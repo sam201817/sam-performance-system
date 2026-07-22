@@ -21,14 +21,17 @@ const sampleEntry: DailyCheckInEntry = {
 describe('dailyCheckInCalculations', () => {
   it('calculates readiness from positive and inverted metrics', () => {
     expect(calculateReadinessScore(sampleEntry)).toBe(80)
-    expect(getReadinessStatusLabel(80)).toBe('Ready to train')
+    expect(getReadinessStatusLabel(80, 'en')).toBe('Ready to train')
   })
 
   it('builds a dashboard summary', () => {
-    const summary = buildDailyCheckInSummary({
-      ...sampleEntry,
-      notes: 'Good sleep',
-    })
+    const summary = buildDailyCheckInSummary(
+      {
+        ...sampleEntry,
+        notes: 'Good sleep',
+      },
+      'en',
+    )
 
     expect(summary.score).toBe(80)
     expect(summary.statusLabel).toBe('Ready to train')
@@ -37,7 +40,7 @@ describe('dailyCheckInCalculations', () => {
   })
 
   it('labels moderate and low readiness', () => {
-    expect(getReadinessStatusLabel(65)).toBe('Moderate readiness')
-    expect(getReadinessStatusLabel(40)).toBe('Take it easy')
+    expect(getReadinessStatusLabel(65, 'en')).toBe('Moderate readiness')
+    expect(getReadinessStatusLabel(40, 'en')).toBe('Take it easy')
   })
 })

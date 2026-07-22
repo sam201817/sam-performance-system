@@ -1,4 +1,5 @@
 import { DailyCheckInForm } from '../components/checkin/DailyCheckInForm'
+import { useTranslation } from '../hooks/useTranslation'
 import type { DailyCheckInEntry, DailyCheckInProps } from '../types/dailyCheckIn'
 import { findCheckInForDate } from '../utils/dailyCheckInStorage'
 import './DailyCheckIn.css'
@@ -6,6 +7,7 @@ import './DailyCheckIn.css'
 export type { DailyCheckInProps }
 
 export function DailyCheckIn({ history, allowCancel, onSaveEntry, onCancel }: DailyCheckInProps) {
+  const { t } = useTranslation()
   const todayEntry = findCheckInForDate(history)
   const isEditing = todayEntry !== null
 
@@ -16,17 +18,15 @@ export function DailyCheckIn({ history, allowCancel, onSaveEntry, onCancel }: Da
   return (
     <main className="daily-check-in screen-shell">
       <header className="daily-check-in__header">
-        <h1 className="daily-check-in__title">Daily Check-in</h1>
+        <h1 className="daily-check-in__title">{t('dailyCheckIn.title')}</h1>
         <p className="daily-check-in__subtitle">
-          {isEditing
-            ? 'Update how you feel today before continuing.'
-            : 'How are you feeling today? Complete your check-in to continue.'}
+          {isEditing ? t('dailyCheckIn.editSubtitle') : t('dailyCheckIn.subtitle')}
         </p>
       </header>
 
       <DailyCheckInForm
         entry={todayEntry}
-        submitLabel={isEditing ? 'Update Check-in' : 'Save & Continue'}
+        submitLabel={isEditing ? t('dailyCheckIn.updateCheckIn') : t('dailyCheckIn.saveContinue')}
         onSubmit={handleSubmit}
       />
 
@@ -36,7 +36,7 @@ export function DailyCheckIn({ history, allowCancel, onSaveEntry, onCancel }: Da
           className="daily-check-in__cancel"
           onClick={onCancel}
         >
-          Cancel
+          {t('buttons.cancel')}
         </button>
       )}
     </main>

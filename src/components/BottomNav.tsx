@@ -1,13 +1,9 @@
+import { useTranslation } from '../hooks/useTranslation'
 import { ENABLED_NAV_TABS, type NavTabId } from '../types/app'
 import type { BottomNavProps } from '../types/workout'
 import './BottomNav.css'
 
-const TABS: { id: NavTabId; label: string }[] = [
-  { id: 'home', label: '首頁' },
-  { id: 'workout', label: '訓練' },
-  { id: 'progress', label: '進度' },
-  { id: 'profile', label: '我的' },
-]
+const TABS: NavTabId[] = ['home', 'workout', 'progress', 'profile']
 
 function isTabEnabled(id: NavTabId): boolean {
   return ENABLED_NAV_TABS.includes(id)
@@ -87,15 +83,19 @@ function NavIcon({ id, active }: { id: NavTabId; active: boolean }) {
 }
 
 export function BottomNav({ activeTab, onNavigate }: BottomNavProps) {
+  const { t } = useTranslation()
+
   function handleTabClick(id: NavTabId) {
     if (!isTabEnabled(id)) return
     onNavigate(id)
   }
 
+  const tabs = TABS.map((id) => ({ id, labelKey: `nav.${id}` as const }))
+
   return (
-    <nav className="bottom-nav" aria-label="主要導覽">
+    <nav className="bottom-nav" aria-label={t('nav.main')}>
       <div className="bottom-nav__inner">
-        {TABS.map(({ id, label }) => {
+        {tabs.map(({ id, labelKey }) => {
           const enabled = isTabEnabled(id)
           const isActive = enabled && activeTab === id
 
@@ -110,7 +110,7 @@ export function BottomNav({ activeTab, onNavigate }: BottomNavProps) {
               onClick={() => handleTabClick(id)}
             >
               <NavIcon id={id} active={isActive} />
-              <span className="bottom-nav__label">{label}</span>
+              <span className="bottom-nav__label">{t(labelKey)}</span>
             </button>
           )
         })}

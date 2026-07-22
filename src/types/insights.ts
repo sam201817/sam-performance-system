@@ -53,6 +53,7 @@ export type PerformanceInsightsInput = {
   bodySummary: BodyMetricSummary
   checkInEntries: readonly DailyCheckInEntry[]
   todayCheckIn: DailyCheckInSummary | null
+  language?: import('../i18n').SupportedLanguage
   now?: Date
 }
 

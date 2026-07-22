@@ -6,8 +6,8 @@ describe('PerformanceInsightsCard', () => {
   it('shows empty state without insights', () => {
     render(<PerformanceInsightsCard insights={[]} />)
 
-    expect(screen.getByRole('heading', { name: 'Performance Insights' })).toBeInTheDocument()
-    expect(screen.getByRole('status')).toHaveTextContent('Keep logging workouts')
+    expect(screen.getByRole('heading', { name: '表現分析' })).toBeInTheDocument()
+    expect(screen.getByRole('status')).toHaveTextContent('完成訓練與每日狀態紀錄後')
   })
 
   it('renders insight cards with accessible labels', () => {
@@ -31,6 +31,6 @@ describe('PerformanceInsightsCard', () => {
     expect(
       screen.getByLabelText('3-day training streak. You have trained on consecutive days.'),
     ).toBeInTheDocument()
-    expect(screen.getByText('Positive')).toBeInTheDocument()
+    expect(screen.getByText('正向')).toBeInTheDocument()
   })
 })

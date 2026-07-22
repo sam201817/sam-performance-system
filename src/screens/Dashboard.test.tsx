@@ -54,13 +54,13 @@ describe('Dashboard', () => {
       />,
     )
 
-    expect(screen.getByRole('heading', { name: "Today's Check-in" })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: '今日狀態' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: TODAY_WORKOUT.title })).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: 'Body Composition' })).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: 'This Week' })).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: 'Last Workout' })).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: 'Streak' })).toBeInTheDocument()
-    expect(screen.queryByRole('heading', { name: 'Quick Stats' })).not.toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: '身體組成' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: '本週訓練' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: '最近訓練' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: '連續訓練' })).toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: '快速概覽' })).not.toBeInTheDocument()
   })
 
   it('starts workout from hero card', async () => {
@@ -86,7 +86,7 @@ describe('Dashboard', () => {
       />,
     )
 
-    await user.click(screen.getByRole('button', { name: 'Start Workout' }))
+    await user.click(screen.getByRole('button', { name: '開始訓練' }))
     expect(onStartWorkout).toHaveBeenCalledTimes(1)
   })
 })

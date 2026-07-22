@@ -23,12 +23,12 @@ describe('ReadinessCard', () => {
       />,
     )
 
-    expect(screen.getByRole('heading', { name: "Today's Check-in" })).toBeInTheDocument()
-    expect(screen.getByText('Ready to train')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: '今日狀態' })).toBeInTheDocument()
+    expect(screen.getByText('適合訓練')).toBeInTheDocument()
     expect(screen.getAllByText('4/5')).toHaveLength(2)
-    expect(screen.getByText('Note saved')).toBeInTheDocument()
+    expect(screen.getByText('已儲存備註')).toBeInTheDocument()
 
-    await user.click(screen.getByRole('button', { name: 'Update Check-in' }))
+    await user.click(screen.getByRole('button', { name: '更新狀態' }))
     expect(onEditCheckIn).toHaveBeenCalledTimes(1)
   })
 })

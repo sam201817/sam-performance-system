@@ -1,3 +1,4 @@
+import { useTranslation } from '../../hooks/useTranslation'
 import './AdvanceConfirm.css'
 
 type AdvanceConfirmProps = {
@@ -6,10 +7,12 @@ type AdvanceConfirmProps = {
 }
 
 export function AdvanceConfirm({ onConfirm, onCancel }: AdvanceConfirmProps) {
+  const { t } = useTranslation()
+
   return (
     <div className="advance-confirm" role="status">
       <p className="advance-confirm__message">
-        還有未完成的組數，確定要前往下一個動作嗎？
+        {t('workout.advanceConfirm')}
       </p>
       <div className="advance-confirm__actions">
         <button
@@ -17,14 +20,14 @@ export function AdvanceConfirm({ onConfirm, onCancel }: AdvanceConfirmProps) {
           className="advance-confirm__button advance-confirm__button--secondary"
           onClick={onCancel}
         >
-          取消
+          {t('workout.advanceCancel')}
         </button>
         <button
           type="button"
           className="advance-confirm__button advance-confirm__button--primary sps-action-primary"
           onClick={onConfirm}
         >
-          仍要繼續
+          {t('workout.advanceConfirmAction')}
         </button>
       </div>
     </div>

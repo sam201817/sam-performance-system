@@ -19,10 +19,10 @@ describe('HeroWorkoutCard', () => {
     )
 
     expect(screen.getByRole('heading', { name: TODAY_WORKOUT.title })).toBeInTheDocument()
-    expect(screen.getByText(/7 exercises/)).toBeInTheDocument()
-    expect(screen.getByRole('status')).toHaveTextContent('Start your first workout')
+    expect(screen.getByText(/7 個動作/)).toBeInTheDocument()
+    expect(screen.getByRole('status')).toHaveTextContent('完成第一次訓練')
 
-    await user.click(screen.getByRole('button', { name: 'Start Workout' }))
+    await user.click(screen.getByRole('button', { name: '開始訓練' }))
     expect(onStart).toHaveBeenCalledTimes(1)
   })
 
@@ -39,11 +39,11 @@ describe('HeroWorkoutCard', () => {
       />,
     )
 
-    expect(screen.getByRole('button', { name: 'Resume Workout' })).toBeInTheDocument()
-    expect(screen.getByText(/Workout in progress/)).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '繼續訓練' })).toBeInTheDocument()
+    expect(screen.getByText(/訓練進行中/)).toBeInTheDocument()
     expect(screen.queryByRole('status', { name: /Welcome to SPS/i })).not.toBeInTheDocument()
 
-    await user.click(screen.getByRole('button', { name: 'Resume Workout' }))
+    await user.click(screen.getByRole('button', { name: '繼續訓練' }))
     expect(onStart).toHaveBeenCalledTimes(1)
   })
 })

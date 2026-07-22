@@ -1,6 +1,12 @@
 import { describe, expect, it } from 'vitest'
+import { translate } from '../i18n'
 import { createValidBackup } from '../test/backupFixtures'
-import { parseBackupJson, validateBackupPayload } from './backupValidation'
+import {
+  BACKUP_VALIDATION_ERROR_KEYS,
+  ERROR_MESSAGE_KEYS,
+  parseBackupJson,
+  validateBackupPayload,
+} from './backupValidation'
 
 describe('backupValidation', () => {
   it('accepts a valid backup payload', () => {
@@ -14,7 +20,7 @@ describe('backupValidation', () => {
   it('rejects malformed JSON', () => {
     expect(parseBackupJson('{not-json')).toEqual({
       valid: false,
-      error: 'Backup file is not valid JSON.',
+      error: translate('zh-TW', ERROR_MESSAGE_KEYS['invalid-json']),
       code: 'invalid-json',
     })
   })
@@ -30,7 +36,9 @@ describe('backupValidation', () => {
     const backup = createValidBackup({ schemaVersion: 99 as never })
     expect(validateBackupPayload(backup)).toEqual({
       valid: false,
-      error: 'Backup schema version 99 is not supported.',
+      error: translate('zh-TW', BACKUP_VALIDATION_ERROR_KEYS.unsupportedSchema, {
+        version: '99',
+      }),
       code: 'unsupported-version',
     })
   })

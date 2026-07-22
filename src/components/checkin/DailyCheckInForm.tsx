@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from '../../hooks/useTranslation'
 import type { DailyCheckInDraft, DailyCheckInEntry } from '../../types/dailyCheckIn'
 import {
   createEmptyDailyCheckInDraft,
@@ -12,27 +13,27 @@ import './DailyCheckInForm.css'
 const METRIC_FIELDS = [
   {
     field: 'fatigue' as const,
-    label: 'Fatigue',
-    lowLabel: 'Fresh',
-    highLabel: 'Exhausted',
+    labelKey: 'dailyCheckIn.fatigue',
+    lowKey: 'dailyCheckIn.fatigueFresh',
+    highKey: 'dailyCheckIn.fatigueExhausted',
   },
   {
     field: 'sleepQuality' as const,
-    label: 'Sleep quality',
-    lowLabel: 'Poor',
-    highLabel: 'Excellent',
+    labelKey: 'dailyCheckIn.sleepQuality',
+    lowKey: 'dailyCheckIn.sleepPoor',
+    highKey: 'dailyCheckIn.sleepGreat',
   },
   {
     field: 'motivation' as const,
-    label: 'Motivation',
-    lowLabel: 'Low',
-    highLabel: 'High',
+    labelKey: 'dailyCheckIn.motivation',
+    lowKey: 'dailyCheckIn.motivationLow',
+    highKey: 'dailyCheckIn.motivationHigh',
   },
   {
     field: 'muscleSoreness' as const,
-    label: 'Muscle soreness',
-    lowLabel: 'None',
-    highLabel: 'Severe',
+    labelKey: 'dailyCheckIn.muscleSoreness',
+    lowKey: 'dailyCheckIn.sorenessNone',
+    highKey: 'dailyCheckIn.sorenessHigh',
   },
 ]
 
@@ -43,6 +44,7 @@ type DailyCheckInFormProps = {
 }
 
 export function DailyCheckInForm({ entry, submitLabel, onSubmit }: DailyCheckInFormProps) {
+  const { t } = useTranslation()
   const [draft, setDraft] = useState<DailyCheckInDraft>(
     entry ? entryToDraft(entry) : createEmptyDailyCheckInDraft(),
   )
@@ -76,13 +78,13 @@ export function DailyCheckInForm({ entry, submitLabel, onSubmit }: DailyCheckInF
       }}
     >
       <div className="daily-check-in-form__fields">
-        {METRIC_FIELDS.map(({ field, label, lowLabel, highLabel }) => (
+        {METRIC_FIELDS.map(({ field, labelKey, lowKey, highKey }) => (
           <CheckInScaleSelector
             key={field}
             id={`check-in-${field}`}
-            label={label}
-            lowLabel={lowLabel}
-            highLabel={highLabel}
+            label={t(labelKey)}
+            lowLabel={t(lowKey)}
+            highLabel={t(highKey)}
             value={draft[field]}
             error={errors[field]}
             onChange={(value) => updateMetric(field, value)}
@@ -91,7 +93,7 @@ export function DailyCheckInForm({ entry, submitLabel, onSubmit }: DailyCheckInF
 
         <div className="daily-check-in-form__notes">
           <label className="daily-check-in-form__notes-label" htmlFor="check-in-notes">
-            Notes <span className="daily-check-in-form__optional">(optional)</span>
+            {t('bodyComposition.notesOptional')}
           </label>
           <textarea
             id="check-in-notes"

@@ -1,3 +1,4 @@
+import { useTranslation } from '../../hooks/useTranslation'
 import './BackButton.css'
 
 type BackButtonProps = {
@@ -6,13 +7,15 @@ type BackButtonProps = {
   ariaLabel?: string
 }
 
-export function BackButton({ onClick, label = '返回', ariaLabel = '返回首頁' }: BackButtonProps) {
+export function BackButton({ onClick, label, ariaLabel }: BackButtonProps) {
+  const { t } = useTranslation()
+
   return (
     <button
       type="button"
       className="back-button"
       onClick={onClick}
-      aria-label={ariaLabel}
+      aria-label={ariaLabel ?? t('workout.backHome')}
     >
       <svg className="back-button__icon" viewBox="0 0 24 24" aria-hidden="true">
         <path
@@ -24,7 +27,7 @@ export function BackButton({ onClick, label = '返回', ariaLabel = '返回首�
           strokeLinejoin="round"
         />
       </svg>
-      {label}
+      {label ?? t('buttons.back')}
     </button>
   )
 }

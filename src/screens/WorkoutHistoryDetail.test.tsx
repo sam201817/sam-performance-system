@@ -36,9 +36,9 @@ describe('WorkoutHistoryDetail', () => {
     })
     const exerciseCard = exerciseHeading.closest('article')
     expect(exerciseCard).not.toBeNull()
-    expect(within(exerciseCard as HTMLElement).getByText('Completed')).toBeInTheDocument()
+    expect(within(exerciseCard as HTMLElement).getByText('已完成')).toBeInTheDocument()
 
-    await user.click(screen.getByRole('button', { name: '返回訓練紀錄' }))
+    await user.click(screen.getByRole('button', { name: '訓練紀錄' }))
     expect(onBack).toHaveBeenCalledTimes(1)
   })
 })

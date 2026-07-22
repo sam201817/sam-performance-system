@@ -1,3 +1,4 @@
+import { getLocaleTag, translate, type SupportedLanguage } from '../i18n'
 import type {
   BodyMetricEntry,
   BodyMetricField,
@@ -8,6 +9,13 @@ import type {
   TrendDirection,
   TrendMetricId,
 } from '../types/bodyMetrics'
+
+const METRIC_LABEL_KEYS: Record<BodyMetricField, string> = {
+  weightKg: 'metrics.weightKg',
+  bodyFatPercent: 'metrics.bodyFatPercent',
+  muscleMassKg: 'metrics.muscleMassKg',
+  waistCm: 'metrics.waistCm',
+}
 
 export function sortEntriesNewestFirst(
   entries: readonly BodyMetricEntry[],
@@ -32,20 +40,21 @@ export function getEntryDateKey(recordedAt: string): string | null {
 
 export function formatRelativeBodyDate(
   recordedAt: string,
+  language: SupportedLanguage,
   now: Date = new Date(),
 ): string {
   const date = new Date(recordedAt)
-  if (!Number.isFinite(date.getTime())) return 'Unknown'
+  if (!Number.isFinite(date.getTime())) return translate(language, 'common.unknown')
 
   const todayKey = getLocalDateKey(now)
   const entryKey = getLocalDateKey(date)
-  if (entryKey === todayKey) return 'Today'
+  if (entryKey === todayKey) return translate(language, 'common.today')
 
   const yesterday = new Date(now)
   yesterday.setDate(now.getDate() - 1)
-  if (entryKey === getLocalDateKey(yesterday)) return 'Yesterday'
+  if (entryKey === getLocalDateKey(yesterday)) return translate(language, 'common.yesterday')
 
-  return date.toLocaleDateString('en-US', {
+  return date.toLocaleDateString(getLocaleTag(language), {
     month: 'short',
     day: 'numeric',
     year: date.getFullYear() !== now.getFullYear() ? 'numeric' : undefined,
@@ -224,17 +233,8 @@ export function formatChangeValue(
   }
 }
 
-export function getMetricLabel(metric: BodyMetricField): string {
-  switch (metric) {
-    case 'weightKg':
-      return 'Weight'
-    case 'bodyFatPercent':
-      return 'Body Fat'
-    case 'muscleMassKg':
-      return 'Muscle'
-    case 'waistCm':
-      return 'Waist'
-  }
+export function getMetricLabel(metric: BodyMetricField, language: SupportedLanguage): string {
+  return translate(language, METRIC_LABEL_KEYS[metric])
 }
 
 export function hasBodyMetricEntries(history: BodyMetricHistory): boolean {

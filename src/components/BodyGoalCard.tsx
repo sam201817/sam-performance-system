@@ -1,4 +1,5 @@
 import { Card } from './Card'
+import { useTranslation } from '../hooks/useTranslation'
 import type { BodyCompositionCardProps } from '../types/workout'
 import {
   formatChangeValue,
@@ -12,39 +13,42 @@ export function BodyGoalCard({
   hasEntries,
   onOpenBodyComposition,
 }: BodyCompositionCardProps) {
+  const { t, language } = useTranslation()
+
   return (
     <Card className="body-goal-card" delay={0.15}>
-      <h2 className="body-goal-card__title">Body Composition</h2>
+      <h2 className="body-goal-card__title">{t('dashboard.bodyComposition')}</h2>
 
       {!hasEntries ? (
         <>
           <p className="body-goal-card__note">
-            Start tracking weight, body fat, muscle, and waist to see progress here.
+            {t('dashboard.noBodyData')}
           </p>
           <button
             type="button"
             className="body-goal-card__button sps-action-primary"
             onClick={onOpenBodyComposition}
           >
-            Add First Check-in
+            {t('dashboard.addFirstCheckIn')}
           </button>
         </>
       ) : (
         <>
           <div className="body-goal-card__stats body-goal-card__stats--compact">
             <div className="body-goal-card__stat">
-              <span className="body-goal-card__stat-label">Weight</span>
+              <span className="body-goal-card__stat-label">{t('metrics.weight')}</span>
               <span className="body-goal-card__stat-value">
                 {summary.latestWeightKg === null
                   ? '—'
                   : formatMetricValue('weightKg', summary.latestWeightKg)}
               </span>
               <span className="body-goal-card__stat-change">
-                {formatChangeValue('weightKg', summary.weightChangeKg) ?? 'No previous reading'}
+                {formatChangeValue('weightKg', summary.weightChangeKg) ??
+                  t('bodyComposition.noPreviousReading')}
               </span>
             </div>
             <div className="body-goal-card__stat">
-              <span className="body-goal-card__stat-label">Body Fat</span>
+              <span className="body-goal-card__stat-label">{t('metrics.bodyFat')}</span>
               <span className="body-goal-card__stat-value">
                 {summary.latestBodyFatPercent === null
                   ? '—'
@@ -52,10 +56,10 @@ export function BodyGoalCard({
               </span>
             </div>
             <div className="body-goal-card__stat">
-              <span className="body-goal-card__stat-label">Updated</span>
+              <span className="body-goal-card__stat-label">{t('dashboard.lastUpdated')}</span>
               <span className="body-goal-card__stat-value body-goal-card__stat-value--small">
                 {summary.lastUpdatedAt
-                  ? formatRelativeBodyDate(summary.lastUpdatedAt)
+                  ? formatRelativeBodyDate(summary.lastUpdatedAt, language)
                   : '—'}
               </span>
             </div>
@@ -66,7 +70,7 @@ export function BodyGoalCard({
             className="body-goal-card__button sps-action-primary"
             onClick={onOpenBodyComposition}
           >
-            Open Body Composition
+            {t('dashboard.openBodyComposition')}
           </button>
         </>
       )}

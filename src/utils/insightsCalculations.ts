@@ -1,3 +1,4 @@
+import { translate, type SupportedLanguage } from '../i18n'
 import type { BodyMetricSummary } from '../types/bodyMetrics'
 import type { CheckInMetricField, DailyCheckInEntry } from '../types/dailyCheckIn'
 import type { WorkoutHistorySession } from '../types/workoutHistory'
@@ -146,23 +147,33 @@ export function calculateRecoveryScoreTrend(
   }
 }
 
-export function formatWeeklyVolumeChange(comparison: WeeklyVolumeComparison): string {
-  if (comparison.direction === 'unknown') return 'No prior week data'
-  if (comparison.direction === 'flat') return 'Same as last week'
+export function formatWeeklyVolumeChange(
+  comparison: WeeklyVolumeComparison,
+  language: SupportedLanguage,
+): string {
+  if (comparison.direction === 'unknown') {
+    return translate(language, 'insights.volumeNoPrior')
+  }
+  if (comparison.direction === 'flat') {
+    return translate(language, 'insights.volumeSame')
+  }
 
-  const prefix = comparison.change > 0 ? '+' : ''
-  return `${prefix}${formatVolumeKg(Math.abs(comparison.change))} vs last week`
+  const prefix = comparison.change > 0 ? '+' : comparison.change < 0 ? '-' : ''
+  return translate(language, 'insights.volumeChange', {
+    change: `${prefix}${formatVolumeKg(Math.abs(comparison.change))}`,
+  })
 }
 
 export function describeMetricTrend(
   label: string,
   trend: TrendComparison,
   higherIsBetter: boolean,
+  language: SupportedLanguage,
 ): { severity: 'positive' | 'warning' | 'info'; description: string } {
   if (trend.direction === 'flat' || trend.direction === 'unknown') {
     return {
       severity: 'info',
-      description: `${label} has held steady recently.`,
+      description: translate(language, 'insights.trendSteady', { label }),
     }
   }
 
@@ -172,8 +183,8 @@ export function describeMetricTrend(
   return {
     severity: improved ? 'positive' : 'warning',
     description: improved
-      ? `${label} is trending in a good direction.`
-      : `${label} is trending in the wrong direction — adjust recovery or load.`,
+      ? translate(language, 'insights.trendGood', { label })
+      : translate(language, 'insights.trendBad', { label }),
   }
 }
 
@@ -184,14 +195,19 @@ export function hasMeaningfulBodyTrend(summary: BodyMetricSummary): boolean {
 export function formatBodyChange(
   metric: 'weight' | 'bodyFat',
   summary: BodyMetricSummary,
+  language: SupportedLanguage,
 ): string | null {
   if (metric === 'weight') {
     if (summary.weightChangeKg === null) return null
     const prefix = summary.weightChangeKg > 0 ? '+' : ''
-    return `${prefix}${summary.weightChangeKg} kg since last reading`
+    return translate(language, 'insights.bodyWeightChange', {
+      change: `${prefix}${summary.weightChangeKg}`,
+    })
   }
 
   if (summary.bodyFatChangePercent === null) return null
   const prefix = summary.bodyFatChangePercent > 0 ? '+' : ''
-  return `${prefix}${summary.bodyFatChangePercent}% since last reading`
+  return translate(language, 'insights.bodyFatChange', {
+    change: `${prefix}${summary.bodyFatChangePercent}`,
+  })
 }

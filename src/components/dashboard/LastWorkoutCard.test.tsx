@@ -7,8 +7,8 @@ describe('LastWorkoutCard', () => {
   it('shows empty state without history', () => {
     render(<LastWorkoutCard lastWorkout={null} onOpenSession={vi.fn()} />)
 
-    expect(screen.getByRole('heading', { name: 'Last Workout' })).toBeInTheDocument()
-    expect(screen.getByRole('status')).toHaveTextContent('Your most recent session')
+    expect(screen.getByRole('heading', { name: '最近訓練' })).toBeInTheDocument()
+    expect(screen.getByRole('status')).toHaveTextContent('尚無訓練紀錄')
   })
 
   it('opens history detail when selected', async () => {
@@ -32,8 +32,8 @@ describe('LastWorkoutCard', () => {
 
     await user.click(screen.getByRole('button', { name: /全身基礎重建/i }))
     expect(onOpenSession).toHaveBeenCalledWith('history-1')
-    expect(screen.getByText('Good')).toBeInTheDocument()
-    expect(screen.getByText('Volume')).toBeInTheDocument()
-    expect(screen.getByText('Avg RPE')).toBeInTheDocument()
+    expect(screen.getByText('良好')).toBeInTheDocument()
+    expect(screen.getByText('訓練量')).toBeInTheDocument()
+    expect(screen.getByText('平均 RPE')).toBeInTheDocument()
   })
 })

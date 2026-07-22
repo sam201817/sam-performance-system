@@ -11,6 +11,7 @@ import {
   INSIGHTS_TOP_MIN,
 } from '../types/insights'
 import type { WorkoutHistorySession } from '../types/workoutHistory'
+import { DEFAULT_LANGUAGE, translate, type SupportedLanguage } from '../i18n'
 import {
   calculateLongestStreak,
   WEEKLY_WORKOUT_TARGET,
@@ -46,6 +47,7 @@ function createInsight(
 function buildTrainingInsights(
   sessions: readonly WorkoutHistorySession[],
   now: Date,
+  language: SupportedLanguage,
 ): PerformanceInsight[] {
   const insights: PerformanceInsight[] = []
   const completedAtValues = sessions.map((session) => session.completedAt)
@@ -56,8 +58,8 @@ function buildTrainingInsights(
     if (currentStreak >= 3) {
       insights.push(createInsight({
         id: 'training-current-streak',
-        title: `${currentStreak}-day training streak`,
-        description: 'You have trained on consecutive days. Consistency builds results.',
+        title: translate(language, 'insights.trainingStreakTitle', { days: currentStreak }),
+        description: translate(language, 'insights.trainingStreakDescription'),
         category: 'training',
         severity: 'positive',
         icon: 'streak',
@@ -66,8 +68,8 @@ function buildTrainingInsights(
     } else if (currentStreak === 0 && sessions.length >= 2) {
       insights.push(createInsight({
         id: 'training-streak-paused',
-        title: 'Streak paused',
-        description: 'No workout logged yesterday. Today is a good day to restart momentum.',
+        title: translate(language, 'insights.streakPausedTitle'),
+        description: translate(language, 'insights.streakPausedDescription'),
         category: 'consistency',
         severity: 'warning',
         icon: 'streak',
@@ -78,11 +80,11 @@ function buildTrainingInsights(
     if (longestStreak >= 2) {
       insights.push(createInsight({
         id: 'training-longest-streak',
-        title: `Longest streak: ${longestStreak} days`,
+        title: translate(language, 'insights.longestStreakTitle', { days: longestStreak }),
         description:
           currentStreak === longestStreak
-            ? 'You are matching your best consistency run.'
-            : 'Your personal best shows you can stay consistent.',
+            ? translate(language, 'insights.longestStreakMatching')
+            : translate(language, 'insights.longestStreakBest'),
         category: 'consistency',
         severity: currentStreak === longestStreak ? 'positive' : 'info',
         icon: 'consistency',
@@ -94,8 +96,11 @@ function buildTrainingInsights(
     if (volumeComparison.previousWeekVolume > 0 || volumeComparison.currentWeekVolume > 0) {
       insights.push(createInsight({
         id: 'training-weekly-volume',
-        title: 'Weekly volume trend',
-        description: `${formatVolumeKg(volumeComparison.currentWeekVolume)} this week. ${formatWeeklyVolumeChange(volumeComparison)}.`,
+        title: translate(language, 'insights.weeklyVolumeTitle'),
+        description: translate(language, 'insights.weeklyVolumeDescription', {
+          current: formatVolumeKg(volumeComparison.currentWeekVolume),
+          change: formatWeeklyVolumeChange(volumeComparison, language),
+        }),
         category: 'training',
         severity:
           volumeComparison.direction === 'up'
@@ -115,8 +120,11 @@ function buildTrainingInsights(
     if (currentWeekCount >= WEEKLY_WORKOUT_TARGET) {
       insights.push(createInsight({
         id: 'training-weekly-target',
-        title: 'Weekly target reached',
-        description: `You completed ${currentWeekCount} of ${WEEKLY_WORKOUT_TARGET} target workouts this week.`,
+        title: translate(language, 'insights.weeklyTargetTitle'),
+        description: translate(language, 'insights.weeklyTargetDescription', {
+          count: currentWeekCount,
+          target: WEEKLY_WORKOUT_TARGET,
+        }),
         category: 'training',
         severity: 'positive',
         icon: 'target',
@@ -125,8 +133,11 @@ function buildTrainingInsights(
     } else if (sessions.length > 0) {
       insights.push(createInsight({
         id: 'training-weekly-progress',
-        title: 'Weekly training progress',
-        description: `${currentWeekCount} of ${WEEKLY_WORKOUT_TARGET} workouts done this week. Keep building volume steadily.`,
+        title: translate(language, 'insights.weeklyProgressTitle'),
+        description: translate(language, 'insights.weeklyProgressDescription', {
+          count: currentWeekCount,
+          target: WEEKLY_WORKOUT_TARGET,
+        }),
         category: 'training',
         severity: currentWeekCount === 0 ? 'warning' : 'info',
         icon: 'target',
@@ -141,16 +152,20 @@ function buildTrainingInsights(
 function buildBodyInsights(
   summary: BodyMetricSummary,
   daysSinceUpdate: number | null,
+  language: SupportedLanguage,
 ): PerformanceInsight[] {
   const insights: PerformanceInsight[] = []
 
-  const weightChange = formatBodyChange('weight', summary)
+  const weightChange = formatBodyChange('weight', summary, language)
   if (summary.latestWeightKg !== null && weightChange) {
     const improving = summary.weightChangeKg !== null && summary.weightChangeKg <= 0
     insights.push(createInsight({
       id: 'body-weight-trend',
-      title: 'Weight trend',
-      description: `Latest ${summary.latestWeightKg} kg. ${weightChange}.`,
+      title: translate(language, 'insights.weightTrendTitle'),
+      description: translate(language, 'insights.weightTrendDescription', {
+        value: summary.latestWeightKg,
+        change: weightChange,
+      }),
       category: 'body-composition',
       severity: improving ? 'positive' : summary.weightChangeKg === 0 ? 'info' : 'warning',
       icon: 'weight',
@@ -158,13 +173,16 @@ function buildBodyInsights(
     }))
   }
 
-  const bodyFatChange = formatBodyChange('bodyFat', summary)
+  const bodyFatChange = formatBodyChange('bodyFat', summary, language)
   if (summary.latestBodyFatPercent !== null && bodyFatChange) {
     const improving = summary.bodyFatChangePercent !== null && summary.bodyFatChangePercent <= 0
     insights.push(createInsight({
       id: 'body-fat-trend',
-      title: 'Body fat trend',
-      description: `Latest ${summary.latestBodyFatPercent}%. ${bodyFatChange}.`,
+      title: translate(language, 'insights.bodyFatTrendTitle'),
+      description: translate(language, 'insights.bodyFatTrendDescription', {
+        value: summary.latestBodyFatPercent,
+        change: bodyFatChange,
+      }),
       category: 'body-composition',
       severity: improving ? 'positive' : summary.bodyFatChangePercent === 0 ? 'info' : 'warning',
       icon: 'body-fat',
@@ -175,8 +193,10 @@ function buildBodyInsights(
   if (daysSinceUpdate !== null && daysSinceUpdate > 7) {
     insights.push(createInsight({
       id: 'body-check-in-stale',
-      title: 'Body check-in overdue',
-      description: `Last body update was ${daysSinceUpdate} days ago. Fresh data improves insight accuracy.`,
+      title: translate(language, 'insights.bodyStaleTitle'),
+      description: translate(language, 'insights.bodyStaleDescription', {
+        days: daysSinceUpdate,
+      }),
       category: 'body-composition',
       severity: 'warning',
       icon: 'weight',
@@ -190,14 +210,19 @@ function buildBodyInsights(
 function buildRecoveryInsights(
   entries: readonly DailyCheckInEntry[],
   todayCheckIn: DailyCheckInSummary | null,
+  language: SupportedLanguage,
 ): PerformanceInsight[] {
   const insights: PerformanceInsight[] = []
 
   if (todayCheckIn) {
     insights.push(createInsight({
       id: 'recovery-readiness-today',
-      title: `Readiness: ${todayCheckIn.score}`,
-      description: `${todayCheckIn.statusLabel}. Sleep ${todayCheckIn.sleepQuality}/5, fatigue ${todayCheckIn.fatigue}/5.`,
+      title: translate(language, 'insights.readinessTitle', { score: todayCheckIn.score }),
+      description: translate(language, 'insights.readinessDescription', {
+        status: todayCheckIn.statusLabel,
+        sleep: todayCheckIn.sleepQuality,
+        fatigue: todayCheckIn.fatigue,
+      }),
       category: 'recovery',
       severity:
         todayCheckIn.score >= 80
@@ -212,8 +237,8 @@ function buildRecoveryInsights(
     if (todayCheckIn.fatigue >= 4) {
       insights.push(createInsight({
         id: 'recovery-high-fatigue',
-        title: 'Elevated fatigue today',
-        description: 'Fatigue is high. Prioritize quality reps and recovery before pushing intensity.',
+        title: translate(language, 'insights.highFatigueTitle'),
+        description: translate(language, 'insights.highFatigueDescription'),
         category: 'recovery',
         severity: 'critical',
         icon: 'fatigue',
@@ -224,8 +249,8 @@ function buildRecoveryInsights(
     if (todayCheckIn.muscleSoreness >= 4) {
       insights.push(createInsight({
         id: 'recovery-high-soreness',
-        title: 'High muscle soreness',
-        description: 'Soreness is elevated. Consider lighter loads or mobility-focused work.',
+        title: translate(language, 'insights.highSorenessTitle'),
+        description: translate(language, 'insights.highSorenessDescription'),
         category: 'recovery',
         severity: 'warning',
         icon: 'soreness',
@@ -236,26 +261,31 @@ function buildRecoveryInsights(
 
   const metricTrends: Array<{
     id: string
-    label: string
+    labelKey: string
     field: 'sleepQuality' | 'fatigue' | 'motivation' | 'muscleSoreness'
     icon: PerformanceInsight['icon']
     higherIsBetter: boolean
   }> = [
-    { id: 'recovery-sleep-trend', label: 'Sleep quality', field: 'sleepQuality', icon: 'sleep', higherIsBetter: true },
-    { id: 'recovery-fatigue-trend', label: 'Fatigue', field: 'fatigue', icon: 'fatigue', higherIsBetter: false },
-    { id: 'recovery-motivation-trend', label: 'Motivation', field: 'motivation', icon: 'motivation', higherIsBetter: true },
-    { id: 'recovery-soreness-trend', label: 'Muscle soreness', field: 'muscleSoreness', icon: 'soreness', higherIsBetter: false },
+    { id: 'recovery-sleep-trend', labelKey: 'insights.sleepQuality', field: 'sleepQuality', icon: 'sleep', higherIsBetter: true },
+    { id: 'recovery-fatigue-trend', labelKey: 'insights.fatigue', field: 'fatigue', icon: 'fatigue', higherIsBetter: false },
+    { id: 'recovery-motivation-trend', labelKey: 'insights.motivation', field: 'motivation', icon: 'motivation', higherIsBetter: true },
+    { id: 'recovery-soreness-trend', labelKey: 'insights.muscleSoreness', field: 'muscleSoreness', icon: 'soreness', higherIsBetter: false },
   ]
 
   for (const trendConfig of metricTrends) {
     const trend = calculateCheckInMetricTrend(entries, trendConfig.field)
     if (!trend) continue
 
-    const narrative = describeMetricTrend(trendConfig.label, trend, trendConfig.higherIsBetter)
+    const label = translate(language, trendConfig.labelKey)
+    const narrative = describeMetricTrend(label, trend, trendConfig.higherIsBetter, language)
     insights.push(createInsight({
       id: trendConfig.id,
-      title: `${trendConfig.label} trend`,
-      description: `${narrative.description} Recent avg ${trend.recentAverage}/5 vs ${trend.previousAverage}/5.`,
+      title: translate(language, 'insights.metricTrendTitle', { label }),
+      description: translate(language, 'insights.metricTrendDescription', {
+        narrative: narrative.description,
+        recent: trend.recentAverage,
+        previous: trend.previousAverage,
+      }),
       category: 'recovery',
       severity: narrative.severity,
       icon: trendConfig.icon,
@@ -265,11 +295,16 @@ function buildRecoveryInsights(
 
   const recoveryTrend = calculateRecoveryScoreTrend(entries)
   if (recoveryTrend) {
-    const narrative = describeMetricTrend('Recovery score', recoveryTrend, true)
+    const recoveryLabel = translate(language, 'insights.recoveryScore')
+    const narrative = describeMetricTrend(recoveryLabel, recoveryTrend, true, language)
     insights.push(createInsight({
       id: 'recovery-score-trend',
-      title: 'Recovery trend',
-      description: `${narrative.description} Recent avg ${recoveryTrend.recentAverage} vs ${recoveryTrend.previousAverage}.`,
+      title: translate(language, 'insights.recoveryTrendTitle'),
+      description: translate(language, 'insights.recoveryTrendDescription', {
+        narrative: narrative.description,
+        recent: recoveryTrend.recentAverage,
+        previous: recoveryTrend.previousAverage,
+      }),
       category: 'recovery',
       severity: narrative.severity,
       icon: 'recovery',
@@ -283,6 +318,7 @@ function buildRecoveryInsights(
 function buildConsistencyInsights(
   sessions: readonly WorkoutHistorySession[],
   now: Date,
+  language: SupportedLanguage,
 ): PerformanceInsight[] {
   if (sessions.length === 0) return []
 
@@ -306,8 +342,11 @@ function buildConsistencyInsights(
   return [
     createInsight({
       id: 'consistency-workout-rate',
-      title: 'Workout consistency',
-      description: `${last28Days.length} workouts in the last 28 days across ${uniqueWeeks || 0} active weeks.`,
+      title: translate(language, 'insights.consistencyTitle'),
+      description: translate(language, 'insights.consistencyDescription', {
+        workouts: last28Days.length,
+        weeks: uniqueWeeks || 0,
+      }),
       category: 'consistency',
       severity: last28Days.length >= WEEKLY_WORKOUT_TARGET * 3 ? 'positive' : 'info',
       icon: 'consistency',
@@ -356,6 +395,7 @@ export function buildPerformanceInsights(
   input: PerformanceInsightsInput,
 ): PerformanceInsightsSnapshot {
   const now = input.now ?? new Date()
+  const language = input.language ?? DEFAULT_LANGUAGE
   const daysSinceBodyUpdate =
     input.bodySummary.lastUpdatedAt === null
       ? null
@@ -368,10 +408,10 @@ export function buildPerformanceInsights(
         )
 
   const insights = [
-    ...buildTrainingInsights(input.sessions, now),
-    ...buildBodyInsights(input.bodySummary, daysSinceBodyUpdate),
-    ...buildRecoveryInsights(input.checkInEntries, input.todayCheckIn),
-    ...buildConsistencyInsights(input.sessions, now),
+    ...buildTrainingInsights(input.sessions, now, language),
+    ...buildBodyInsights(input.bodySummary, daysSinceBodyUpdate, language),
+    ...buildRecoveryInsights(input.checkInEntries, input.todayCheckIn, language),
+    ...buildConsistencyInsights(input.sessions, now, language),
   ]
 
   const topInsights = selectTopInsights(insights)

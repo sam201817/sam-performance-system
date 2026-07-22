@@ -19,11 +19,11 @@ describe('BodyMetricForm', () => {
     )
 
     expect(screen.getByRole('dialog')).toBeInTheDocument()
-    expect(screen.getByLabelText(/Weight/i)).toBeInTheDocument()
-    expect(screen.getByLabelText(/Body fat/i)).toBeInTheDocument()
+    expect(screen.getByLabelText(/體重/i)).toBeInTheDocument()
+    expect(screen.getByLabelText(/體脂/i)).toBeInTheDocument()
 
-    await user.type(screen.getByLabelText(/Weight/i), '82.5')
-    await user.click(screen.getByRole('button', { name: 'Save' }))
+    await user.type(screen.getByLabelText(/體重/i), '82.5')
+    await user.click(screen.getByRole('button', { name: '儲存' }))
 
     expect(onSave).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -45,8 +45,8 @@ describe('BodyMetricForm', () => {
       />,
     )
 
-    await user.type(screen.getByLabelText(/Weight/i), '400')
-    await user.click(screen.getByRole('button', { name: 'Save' }))
+    await user.type(screen.getByLabelText(/體重/i), '400')
+    await user.click(screen.getByRole('button', { name: '儲存' }))
 
     expect(screen.getByRole('alert')).toHaveTextContent(/Must be greater than 20/)
   })
@@ -64,7 +64,7 @@ describe('BodyMetricForm', () => {
       />,
     )
 
-    await user.click(screen.getByRole('button', { name: 'Cancel' }))
+    await user.click(screen.getByRole('button', { name: '取消' }))
     expect(onCancel).toHaveBeenCalledTimes(1)
   })
 })

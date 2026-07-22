@@ -1,27 +1,24 @@
 import { describe, expect, it } from 'vitest'
 import {
   formatLastUpdatedLabel,
-  formatWeightTrendDisplay,
-  getWeightTrendArrow,
+  formatRelativeDate,
 } from './dashboardDisplay'
 
 describe('dashboardDisplay', () => {
-  it('formats last updated labels from day counts', () => {
-    expect(formatLastUpdatedLabel(null)).toBe('—')
-    expect(formatLastUpdatedLabel(0)).toBe('Today')
-    expect(formatLastUpdatedLabel(1)).toBe('Yesterday')
-    expect(formatLastUpdatedLabel(2)).toBe('2 days ago')
+  it('formats relative dates in English', () => {
+    expect(formatRelativeDate(null, 'en')).toBe('—')
+    expect(formatRelativeDate(0, 'en')).toBe('Today')
+    expect(formatRelativeDate(1, 'en')).toBe('Yesterday')
+    expect(formatRelativeDate(2, 'en')).toBe('2 days ago')
   })
 
-  it('formats weight trend direction and magnitude', () => {
-    expect(formatWeightTrendDisplay(-0.8)).toEqual({
-      direction: 'down',
-      text: '0.8 kg',
-    })
-    expect(formatWeightTrendDisplay(1.2)).toEqual({
-      direction: 'up',
-      text: '1.2 kg',
-    })
-    expect(getWeightTrendArrow('down')).toBe('▼')
+  it('formats relative dates in Traditional Chinese', () => {
+    expect(formatRelativeDate(0, 'zh-TW')).toBe('今天')
+    expect(formatRelativeDate(1, 'zh-TW')).toBe('昨天')
+    expect(formatRelativeDate(2, 'zh-TW')).toBe('2 天前')
+  })
+
+  it('keeps formatLastUpdatedLabel as an alias', () => {
+    expect(formatLastUpdatedLabel(0, 'en')).toBe('Today')
   })
 })

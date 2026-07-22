@@ -1,4 +1,5 @@
 import { Card } from '../Card'
+import { useTranslation } from '../../hooks/useTranslation'
 import type { BodyCompositionCardProps } from '../../types/workout'
 import {
   formatLastUpdatedLabel,
@@ -18,16 +19,17 @@ export function BodyCompositionDashboardCard({
   daysSinceUpdate,
   onOpenBodyComposition,
 }: BodyCompositionDashboardCardProps) {
+  const { t, language } = useTranslation()
   const showReminder = daysSinceUpdate !== null && daysSinceUpdate > 7
   const weightTrend = formatWeightTrendDisplay(summary.weightChangeKg)
 
   return (
-    <Card className="body-dashboard-card" delay={0.12} aria-label="Body Composition">
+    <Card className="body-dashboard-card" delay={0.12} aria-label={t('dashboard.bodyComposition')}>
       <div className="body-dashboard-card__header">
-        <h2 className="body-dashboard-card__title">Body Composition</h2>
+        <h2 className="body-dashboard-card__title">{t('dashboard.bodyComposition')}</h2>
         {showReminder && (
           <span className="body-dashboard-card__badge" role="status">
-            Update check-in
+            {t('dashboard.updateCheckIn')}
           </span>
         )}
       </div>
@@ -35,14 +37,14 @@ export function BodyCompositionDashboardCard({
       {!hasEntries ? (
         <>
           <p className="body-dashboard-card__empty" role="status">
-            Track weight and body fat to see how your body is changing.
+            {t('dashboard.noBodyData')}
           </p>
           <button
             type="button"
             className="body-dashboard-card__button sps-action-primary"
             onClick={onOpenBodyComposition}
           >
-            Add First Check-in
+            {t('dashboard.addFirstCheckIn')}
           </button>
         </>
       ) : (
@@ -63,20 +65,20 @@ export function BodyCompositionDashboardCard({
                 </span>
               ) : (
                 <span className="body-dashboard-card__trend body-dashboard-card__trend--flat">
-                  No previous reading
+                  {t('bodyComposition.noPreviousReading')}
                 </span>
               )}
 
               <div className="body-dashboard-card__updated">
-                <span className="body-dashboard-card__updated-label">Last updated</span>
+                <span className="body-dashboard-card__updated-label">{t('dashboard.lastUpdated')}</span>
                 <span className="body-dashboard-card__updated-value">
-                  {formatLastUpdatedLabel(daysSinceUpdate)}
+                  {formatLastUpdatedLabel(daysSinceUpdate, language)}
                 </span>
               </div>
             </div>
 
             <div className="body-dashboard-card__secondary">
-              <span className="body-dashboard-card__metric-label">Body fat</span>
+              <span className="body-dashboard-card__metric-label">{t('dashboard.bodyFat')}</span>
               <strong className="body-dashboard-card__metric-value">
                 {summary.latestBodyFatPercent === null
                   ? '—'
@@ -90,7 +92,7 @@ export function BodyCompositionDashboardCard({
             className="body-dashboard-card__button body-dashboard-card__button--secondary"
             onClick={onOpenBodyComposition}
           >
-            Open Body Composition
+            {t('dashboard.openBodyComposition')}
           </button>
         </>
       )}

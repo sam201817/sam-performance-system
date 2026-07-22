@@ -11,12 +11,12 @@ describe('daily check-in integration', () => {
 
     render(<App />)
 
-    expect(screen.getByRole('heading', { name: 'Daily Check-in' })).toBeInTheDocument()
-    expect(screen.queryByRole('button', { name: 'Start Workout' })).not.toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: '每日狀態' })).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: '開始訓練' })).not.toBeInTheDocument()
 
     await completeDailyCheckIn(user)
 
-    expect(screen.getByRole('button', { name: 'Start Workout' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '開始訓練' })).toBeInTheDocument()
     expect(findCheckInForDate(loadDailyCheckInHistory())).not.toBeNull()
   })
 
@@ -26,12 +26,12 @@ describe('daily check-in integration', () => {
     render(<App />)
     await completeDailyCheckIn(user)
 
-    await user.click(screen.getByRole('button', { name: 'Update Check-in' }))
-    expect(screen.getByRole('heading', { name: 'Daily Check-in' })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Cancel' })).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: '更新狀態' }))
+    expect(screen.getByRole('heading', { name: '每日狀態' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '取消' })).toBeInTheDocument()
 
-    await user.click(screen.getByRole('button', { name: 'Cancel' }))
-    expect(screen.getByRole('heading', { name: "Today's Check-in" })).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: '取消' }))
+    expect(screen.getByRole('heading', { name: '今日狀態' })).toBeInTheDocument()
   })
 
   it('updates the same-day check-in without creating duplicates', async () => {
@@ -40,9 +40,9 @@ describe('daily check-in integration', () => {
     render(<App />)
     await completeDailyCheckIn(user)
 
-    await user.click(screen.getByRole('button', { name: 'Update Check-in' }))
-    await user.click(screen.getByRole('button', { name: 'Motivation 5' }))
-    await user.click(screen.getByRole('button', { name: 'Update Check-in' }))
+    await user.click(screen.getByRole('button', { name: '更新狀態' }))
+    await user.click(screen.getByRole('button', { name: '動機 5' }))
+    await user.click(screen.getByRole('button', { name: '更新狀態' }))
 
     expect(loadDailyCheckInHistory().entries).toHaveLength(1)
     expect(loadDailyCheckInHistory().entries[0].motivation).toBe(5)

@@ -1,4 +1,5 @@
 import { Card } from '../Card'
+import { useTranslation } from '../../hooks/useTranslation'
 import type { WeeklyTrainingSummary } from '../../types/dashboard'
 import { formatVolumeKg } from '../../utils/workoutHistoryCalculations'
 import './TrainingSummaryCard.css'
@@ -9,12 +10,14 @@ type TrainingSummaryCardProps = {
 }
 
 export function TrainingSummaryCard({ summary, hasWorkoutHistory }: TrainingSummaryCardProps) {
+  const { t } = useTranslation()
+
   if (!hasWorkoutHistory) {
     return (
-      <Card className="training-summary-card" delay={0.14} aria-label="This Week">
-        <h2 className="training-summary-card__title">This Week</h2>
+      <Card className="training-summary-card" delay={0.14} aria-label={t('dashboard.thisWeek')}>
+        <h2 className="training-summary-card__title">{t('dashboard.thisWeek')}</h2>
         <p className="training-summary-card__empty" role="status">
-          Complete your first workout to start tracking weekly progress.
+          {t('dashboard.onboarding')}
         </p>
       </Card>
     )
@@ -23,13 +26,13 @@ export function TrainingSummaryCard({ summary, hasWorkoutHistory }: TrainingSumm
   const averageDuration =
     summary.averageDurationMinutes === null
       ? '—'
-      : `${summary.averageDurationMinutes} min`
+      : `${summary.averageDurationMinutes} ${t('dashboard.min')}`
 
   const progressPercent = Math.min(100, Math.max(0, summary.completionPercent))
 
   return (
-    <Card className="training-summary-card" delay={0.14} aria-label="This Week">
-      <h2 className="training-summary-card__title">This Week</h2>
+    <Card className="training-summary-card" delay={0.14} aria-label={t('dashboard.thisWeek')}>
+      <h2 className="training-summary-card__title">{t('dashboard.thisWeek')}</h2>
 
       <div
         className="training-summary-card__progress"
@@ -37,7 +40,7 @@ export function TrainingSummaryCard({ summary, hasWorkoutHistory }: TrainingSumm
         aria-valuenow={progressPercent}
         aria-valuemin={0}
         aria-valuemax={100}
-        aria-label={`Weekly completion ${progressPercent}%`}
+        aria-label={`${t('dashboard.completion')} ${progressPercent}%`}
       >
         <div className="training-summary-card__progress-track">
           <div
@@ -50,19 +53,19 @@ export function TrainingSummaryCard({ summary, hasWorkoutHistory }: TrainingSumm
 
       <div className="training-summary-card__grid">
         <div className="training-summary-card__stat">
-          <span className="training-summary-card__label">Workouts</span>
+          <span className="training-summary-card__label">{t('dashboard.workouts')}</span>
           <strong className="training-summary-card__value">
             {summary.completedWorkouts} / {summary.targetWorkouts}
           </strong>
         </div>
         <div className="training-summary-card__stat">
-          <span className="training-summary-card__label">Volume</span>
+          <span className="training-summary-card__label">{t('dashboard.volume')}</span>
           <strong className="training-summary-card__value">
             {formatVolumeKg(summary.totalVolume)}
           </strong>
         </div>
         <div className="training-summary-card__stat">
-          <span className="training-summary-card__label">Avg duration</span>
+          <span className="training-summary-card__label">{t('dashboard.avgDuration')}</span>
           <strong className="training-summary-card__value">{averageDuration}</strong>
         </div>
       </div>

@@ -1,3 +1,4 @@
+import { useTranslation } from '../../hooks/useTranslation'
 import type { ExerciseHistory } from '../../types/workoutHistory'
 import { formatVolumeKg } from '../../utils/workoutHistoryCalculations'
 import './ExerciseHistoryCard.css'
@@ -11,6 +12,8 @@ function formatRpe(value: number | null): string {
 }
 
 export function ExerciseHistoryCard({ exercise }: ExerciseHistoryCardProps) {
+  const { t } = useTranslation()
+
   return (
     <article className="exercise-history-card" aria-labelledby={`exercise-${exercise.exerciseId}`}>
       <header className="exercise-history-card__header">
@@ -25,13 +28,15 @@ export function ExerciseHistoryCard({ exercise }: ExerciseHistoryCardProps) {
       <ul className="exercise-history-card__sets">
         {exercise.sets.map((set) => (
           <li key={set.setNumber} className="exercise-history-card__set">
-            <span className="exercise-history-card__set-label">Set {set.setNumber}</span>
+            <span className="exercise-history-card__set-label">
+              {t('history.setNumber', { number: set.setNumber })}
+            </span>
             <span>{set.weight}</span>
             <span>{set.reps}</span>
             <span>RPE {formatRpe(set.rpe)}</span>
             <span>{set.volume === null ? '—' : formatVolumeKg(set.volume)}</span>
             <span className="exercise-history-card__set-status">
-              {set.completed ? 'Completed' : 'Incomplete'}
+              {set.completed ? t('history.setCompleted') : t('history.setIncomplete')}
             </span>
           </li>
         ))}

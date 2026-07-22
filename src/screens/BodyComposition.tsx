@@ -4,6 +4,7 @@ import { BodyMetricForm } from '../components/body/BodyMetricForm'
 import { BodyMetricHistoryCard } from '../components/body/BodyMetricHistoryCard'
 import { BodyMetricSummaryCard } from '../components/body/BodyMetricSummaryCard'
 import { MetricTrend } from '../components/body/MetricTrend'
+import { useTranslation } from '../hooks/useTranslation'
 import type { BodyCompositionProps } from '../types/workout'
 import { buildBodyMetricSummary, buildMetricTrendData } from '../utils/bodyMetricCalculations'
 import { findEntryForDate } from '../utils/bodyMetricStorage'
@@ -16,6 +17,7 @@ export function BodyComposition({
   onSaveEntry,
   onDeleteEntry,
 }: BodyCompositionProps) {
+  const { t } = useTranslation()
   const [selectedMetric, setSelectedMetric] = useState<
     'weightKg' | 'bodyFatPercent' | 'muscleMassKg' | 'waistCm'
   >('weightKg')
@@ -36,15 +38,15 @@ export function BodyComposition({
 
   function openTodayForm() {
     if (todayEntry) {
-      setFormState({ entryId: todayEntry.id, title: 'Update Today Check-in' })
+      setFormState({ entryId: todayEntry.id, title: t('bodyComposition.updateCheckIn') })
       return
     }
 
-    setFormState({ entryId: null, title: 'New Body Check-in' })
+    setFormState({ entryId: null, title: t('bodyComposition.newCheckIn') })
   }
 
   function openEditForm(entryId: string) {
-    setFormState({ entryId, title: 'Edit Check-in' })
+    setFormState({ entryId, title: t('bodyComposition.editCheckIn') })
   }
 
   function closeForm() {
@@ -66,15 +68,13 @@ export function BodyComposition({
     <>
       <main className="body-composition screen-shell">
         <header className="body-composition__header">
-          <h1 className="body-composition__title">Body Composition</h1>
-          <p className="body-composition__subtitle">
-            Track weight, body fat, muscle, and waist over time.
-          </p>
+          <h1 className="body-composition__title">{t('bodyComposition.title')}</h1>
+          <p className="body-composition__subtitle">{t('bodyComposition.subtitle')}</p>
         </header>
 
         {history.entries.length === 0 ? (
           <p className="body-composition__empty" role="status">
-            No body check-ins yet. Add your first measurement to start building trends.
+            {t('bodyComposition.empty')}
           </p>
         ) : (
           <BodyMetricSummaryCard summary={summary} />
@@ -85,7 +85,7 @@ export function BodyComposition({
           className="body-composition__primary sps-action-primary"
           onClick={openTodayForm}
         >
-          {todayEntry ? 'Update Today' : 'Add Check-in Today'}
+          {todayEntry ? t('bodyComposition.updateToday') : t('bodyComposition.addToday')}
         </button>
 
         <MetricTrend
@@ -94,11 +94,11 @@ export function BodyComposition({
           onMetricChange={setSelectedMetric}
         />
 
-        <section className="body-composition__history" aria-label="Recent check-ins">
-          <h2 className="body-composition__section-title">Recent Check-ins</h2>
+        <section className="body-composition__history" aria-label={t('bodyComposition.recentCheckIns')}>
+          <h2 className="body-composition__section-title">{t('bodyComposition.recentCheckIns')}</h2>
           {history.entries.length === 0 ? (
             <p className="body-composition__empty" role="status">
-              Your recent check-ins will appear here.
+              {t('bodyComposition.empty')}
             </p>
           ) : (
             <div className="body-composition__history-list">

@@ -9,12 +9,15 @@ import { Workout } from './screens/Workout'
 import { WorkoutComplete } from './screens/WorkoutComplete'
 import { WorkoutHistoryDetail } from './screens/WorkoutHistoryDetail'
 import { TODAY_WORKOUT } from './data/todayWorkout'
+import { I18nProvider } from './i18n/I18nProvider'
+import { translate } from './i18n'
+import { persistLanguage } from './i18n/languageStorage'
 import type { SpsBackupPayload } from './types/backup'
 import type { BodyMetricEntry, BodyMetricHistory } from './types/bodyMetrics'
 import type { DailyCheckInEntry, DailyCheckInHistory } from './types/dailyCheckIn'
 import type { SettingsFeedback, UserPreferences } from './types/settings'
 import { downloadBackup } from './utils/backupData'
-import { parseBackupJson } from './utils/backupValidation'
+import { ERROR_MESSAGE_KEYS, parseBackupJson } from './utils/backupValidation'
 import { restoreSpsBackup } from './utils/backupRestore'
 import { buildBodyMetricSummary } from './utils/bodyMetricCalculations'
 import { buildDailyCheckInSummary } from './utils/dailyCheckInCalculations'
@@ -110,8 +113,8 @@ function App() {
     [checkInHistory],
   )
   const checkInSummary = useMemo(
-    () => (todayCheckIn ? buildDailyCheckInSummary(todayCheckIn) : null),
-    [todayCheckIn],
+    () => (todayCheckIn ? buildDailyCheckInSummary(todayCheckIn, preferences.language) : null),
+    [todayCheckIn, preferences.language],
   )
   const performanceInsights = useMemo(
     () =>
@@ -120,8 +123,9 @@ function App() {
         bodySummary,
         checkInEntries: checkInHistory.entries,
         todayCheckIn: checkInSummary,
+        language: preferences.language,
       }),
-    [history.sessions, bodySummary, checkInHistory.entries, checkInSummary],
+    [history.sessions, bodySummary, checkInHistory.entries, checkInSummary, preferences.language],
   )
   const selectedHistorySession = selectedHistorySessionId
     ? history.sessions.find((session) => session.id === selectedHistorySessionId) ?? null
@@ -284,36 +288,40 @@ function App() {
   const handlePreferencesChange = useCallback((nextPreferences: UserPreferences) => {
     savePreferences(nextPreferences)
     setPreferences(nextPreferences)
+    persistLanguage(nextPreferences.language)
   }, [])
 
   const handleExportBackup = useCallback(() => {
     const filename = downloadBackup()
     setSettingsFeedback({
       type: 'backup-exported',
-      message: `Backup exported as ${filename}.`,
+      message: translate(preferences.language, 'messages.backupComplete', { filename }),
     })
-  }, [])
+  }, [preferences.language])
 
   const handleValidateRestoreFile = useCallback(async (file: File) => {
     const text = await file.text()
     const parsed = parseBackupJson(text)
     if (!parsed.valid) {
+      const errorKey = ERROR_MESSAGE_KEYS[parsed.code] ?? 'errors.malformedBackup'
       setSettingsFeedback({
         type: parsed.code === 'unsupported-version' ? 'restore-unsupported' : 'restore-invalid',
-        message: parsed.error,
+        message: translate(preferences.language, errorKey),
       })
       return { valid: false as const }
     }
 
     return { valid: true as const, backup: parsed.backup }
-  }, [])
+  }, [preferences.language])
 
   const handleConfirmRestore = useCallback(async (backup: SpsBackupPayload) => {
     const result = restoreSpsBackup(backup)
     if (!result.success) {
+      const errorKey = ERROR_MESSAGE_KEYS[result.code as keyof typeof ERROR_MESSAGE_KEYS]
+        ?? 'errors.restoreFailed'
       setSettingsFeedback({
         type: result.code === 'unsupported-version' ? 'restore-unsupported' : 'restore-invalid',
-        message: result.error,
+        message: translate(preferences.language, errorKey),
       })
       return
     }
@@ -322,9 +330,9 @@ function App() {
     setCheckInAllowCancel(false)
     setSettingsFeedback({
       type: 'restore-success',
-      message: 'Backup restored successfully. Your local SPS data has been replaced.',
+      message: translate(preferences.language, 'messages.restoreComplete'),
     })
-  }, [refreshAllAppState])
+  }, [preferences.language, refreshAllAppState])
 
   const handleResetAllData = useCallback(() => {
     resetAllSpsData()
@@ -332,10 +340,10 @@ function App() {
     setCheckInAllowCancel(false)
     setSettingsFeedback({
       type: 'reset-success',
-      message: 'All SPS data has been reset. The app is back to its first-use state.',
+      message: translate(preferences.language, 'messages.resetComplete'),
     })
     setScreen('daily-check-in')
-  }, [refreshAllAppState])
+  }, [preferences.language, refreshAllAppState])
 
   const handleCancelCheckIn = useCallback(() => {
     setCheckInAllowCancel(false)
@@ -368,9 +376,10 @@ function App() {
   const activeTab = getActiveNavTab(screen)
 
   return (
-    <div className="app-shell">
-      <div className="app-shell__glow" aria-hidden="true" />
-      <div className="app">
+    <I18nProvider language={preferences.language}>
+      <div className="app-shell">
+        <div className="app-shell__glow" aria-hidden="true" />
+        <div className="app">
         {screen === 'daily-check-in' && (
           <DailyCheckIn
             history={checkInHistory}
@@ -455,8 +464,9 @@ function App() {
             onDismissFeedback={() => setSettingsFeedback(null)}
           />
         )}
+        </div>
       </div>
-    </div>
+    </I18nProvider>
   )
 }
 

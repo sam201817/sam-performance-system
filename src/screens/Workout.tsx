@@ -1,6 +1,7 @@
 import { useId, useState } from 'react'
 import { SESSION_LABEL } from '../constants/workout'
 import { useRestTimer } from '../hooks/useRestTimer'
+import { useTranslation } from '../hooks/useTranslation'
 import { BackButton } from '../components/ui/BackButton'
 import { ExerciseProgress } from '../components/workout/ExerciseProgress'
 import { SetTracker } from '../components/workout/SetTracker'
@@ -24,6 +25,7 @@ export function Workout({
   onBack,
   onFinish,
 }: WorkoutProps) {
+  const { t } = useTranslation()
   const { title, exercises } = session
   const total = exercises.length
   const index = clampExerciseIndex(progress.currentExerciseIndex, total)
@@ -37,7 +39,7 @@ export function Workout({
     return (
       <main className="workout-screen screen-shell">
         <BackButton onClick={onBack} />
-        <p className="workout-screen__empty">目前沒有可用的訓練動作。</p>
+        <p className="workout-screen__empty">{t('workout.noExercises')}</p>
       </main>
     )
   }

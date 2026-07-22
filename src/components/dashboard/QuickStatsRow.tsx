@@ -1,3 +1,4 @@
+import { useTranslation } from '../../hooks/useTranslation'
 import type { QuickStatsSummary } from '../../types/dashboard'
 import { formatMetricValue } from '../../utils/bodyMetricCalculations'
 import { formatQuickStatVolume } from '../../utils/dashboardCalculations'
@@ -11,6 +12,8 @@ type QuickStatsRowProps = {
 }
 
 export function QuickStatsRow({ stats, hasWorkoutHistory }: QuickStatsRowProps) {
+  const { t } = useTranslation()
+
   if (!hasWorkoutHistory) {
     return null
   }
@@ -18,16 +21,16 @@ export function QuickStatsRow({ stats, hasWorkoutHistory }: QuickStatsRowProps) 
   const averageDuration =
     stats.averageWorkoutDurationMinutes === null
       ? '—'
-      : `${stats.averageWorkoutDurationMinutes} min`
+      : `${stats.averageWorkoutDurationMinutes} ${t('dashboard.min')}`
 
   return (
-    <DashboardSection title="Quick Stats">
+    <DashboardSection title={t('dashboard.quickStats')}>
       <div className="quick-stats-row">
-        <QuickMetricTile label="Total workouts" value={String(stats.totalWorkouts)} />
-        <QuickMetricTile label="Total volume" value={formatQuickStatVolume(stats.totalVolume)} />
-        <QuickMetricTile label="Avg duration" value={averageDuration} />
+        <QuickMetricTile label={t('dashboard.totalWorkouts')} value={String(stats.totalWorkouts)} />
+        <QuickMetricTile label={t('dashboard.totalVolume')} value={formatQuickStatVolume(stats.totalVolume)} />
+        <QuickMetricTile label={t('dashboard.avgDuration')} value={averageDuration} />
         <QuickMetricTile
-          label="Latest body fat"
+          label={t('dashboard.latestBodyFat')}
           value={
             stats.latestBodyFatPercent === null
               ? '—'
@@ -35,7 +38,7 @@ export function QuickStatsRow({ stats, hasWorkoutHistory }: QuickStatsRowProps) 
           }
         />
         <QuickMetricTile
-          label="Latest weight"
+          label={t('dashboard.latestWeight')}
           value={
             stats.latestWeightKg === null
               ? '—'

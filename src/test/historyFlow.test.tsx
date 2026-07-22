@@ -12,7 +12,7 @@ describe('workout history integration', () => {
     render(<App />)
     await completeDailyCheckIn(user)
 
-    await user.click(screen.getByRole('button', { name: 'Start Workout' }))
+    await user.click(screen.getByRole('button', { name: '開始訓練' }))
 
     for (let step = 0; step < 6; step += 1) {
       await user.click(screen.getByRole('button', { name: '下一個' }))
@@ -32,8 +32,8 @@ describe('workout history integration', () => {
     await user.click(screen.getByRole('button', { name: '返回首頁' }))
     await user.click(screen.getByRole('button', { name: '進度' }))
 
-    expect(screen.getByRole('heading', { name: 'Workout History' })).toBeInTheDocument()
-    expect(screen.getByText('Total Workouts')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: '訓練紀錄' })).toBeInTheDocument()
+    expect(screen.getByText('總訓練次數')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: /全身基礎重建/i })).toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: /全身基礎重建/i }))

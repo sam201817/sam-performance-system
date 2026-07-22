@@ -1,3 +1,4 @@
+import { useTranslation } from '../../hooks/useTranslation'
 import type { SetLog } from '../../types/workoutProgress'
 import { RpeSelector } from './RpeSelector'
 import './SetRow.css'
@@ -10,6 +11,7 @@ type SetRowProps = {
 }
 
 export function SetRow({ set, inputIdPrefix, onChange, onComplete }: SetRowProps) {
+  const { t } = useTranslation()
   const repsId = `${inputIdPrefix}-reps`
   const weightId = `${inputIdPrefix}-weight`
 
@@ -22,10 +24,10 @@ export function SetRow({ set, inputIdPrefix, onChange, onComplete }: SetRowProps
   return (
     <div className={`set-row${set.completed ? ' set-row--completed' : ''}`}>
       <div className="set-row__header">
-        <span className="set-row__number">Set {set.setNumber}</span>
+        <span className="set-row__number">{t('workout.setNumber', { number: set.setNumber })}</span>
         {set.completed && (
-          <span className="set-row__status" aria-label="已完成">
-            已完成
+          <span className="set-row__status" aria-label={t('workout.setCompleted')}>
+            {t('workout.setCompleted')}
           </span>
         )}
       </div>
@@ -33,7 +35,7 @@ export function SetRow({ set, inputIdPrefix, onChange, onComplete }: SetRowProps
       <div className="set-row__fields">
         <div className="set-row__field">
           <label className="set-row__label" htmlFor={repsId}>
-            實際次數
+            {t('workout.actualReps')}
           </label>
           <input
             id={repsId}
@@ -47,7 +49,7 @@ export function SetRow({ set, inputIdPrefix, onChange, onComplete }: SetRowProps
 
         <div className="set-row__field">
           <label className="set-row__label" htmlFor={weightId}>
-            重量
+            {t('workout.weight')}
           </label>
           <input
             id={weightId}
@@ -72,7 +74,7 @@ export function SetRow({ set, inputIdPrefix, onChange, onComplete }: SetRowProps
         aria-pressed={set.completed}
         onClick={toggleComplete}
       >
-        {set.completed ? '取消完成' : '完成組數'}
+        {set.completed ? t('workout.setUncomplete') : t('workout.setComplete')}
       </button>
     </div>
   )

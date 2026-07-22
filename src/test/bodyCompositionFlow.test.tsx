@@ -13,14 +13,14 @@ describe('body composition integration', () => {
     await completeDailyCheckIn(user)
 
     await user.click(screen.getByRole('button', { name: '我的' }))
-    await user.click(screen.getByRole('button', { name: /Body Composition/i }))
-    expect(screen.getByRole('heading', { name: 'Body Composition' })).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: /身體組成/i }))
+    expect(screen.getByRole('heading', { name: '身體組成' })).toBeInTheDocument()
 
-    await user.click(screen.getByRole('button', { name: 'Add Check-in Today' }))
+    await user.click(screen.getByRole('button', { name: '新增今日量測' }))
     const dialog = screen.getByRole('dialog')
-    await user.type(within(dialog).getByLabelText(/Weight/i), '82')
-    await user.type(within(dialog).getByLabelText(/Body fat/i), '18')
-    await user.click(within(dialog).getByRole('button', { name: 'Save' }))
+    await user.type(within(dialog).getByLabelText(/體重/i), '82')
+    await user.type(within(dialog).getByLabelText(/體脂/i), '18')
+    await user.click(within(dialog).getByRole('button', { name: '儲存' }))
 
     expect(loadBodyMetricHistory().entries).toHaveLength(1)
 
@@ -36,24 +36,24 @@ describe('body composition integration', () => {
     await completeDailyCheckIn(user)
 
     await user.click(screen.getByRole('button', { name: '我的' }))
-    await user.click(screen.getByRole('button', { name: /Body Composition/i }))
-    await user.click(screen.getByRole('button', { name: 'Add Check-in Today' }))
+    await user.click(screen.getByRole('button', { name: /身體組成/i }))
+    await user.click(screen.getByRole('button', { name: '新增今日量測' }))
 
     let dialog = screen.getByRole('dialog')
-    await user.type(within(dialog).getByLabelText(/Weight/i), '82')
-    await user.click(within(dialog).getByRole('button', { name: 'Save' }))
+    await user.type(within(dialog).getByLabelText(/體重/i), '82')
+    await user.click(within(dialog).getByRole('button', { name: '儲存' }))
 
-    await user.click(screen.getByRole('button', { name: 'Update Today' }))
+    await user.click(screen.getByRole('button', { name: '更新今日量測' }))
     dialog = screen.getByRole('dialog')
-    await user.clear(within(dialog).getByLabelText(/Weight/i))
-    await user.type(within(dialog).getByLabelText(/Weight/i), '81')
-    await user.click(within(dialog).getByRole('button', { name: 'Save' }))
+    await user.clear(within(dialog).getByLabelText(/體重/i))
+    await user.type(within(dialog).getByLabelText(/體重/i), '81')
+    await user.click(within(dialog).getByRole('button', { name: '儲存' }))
 
     expect(loadBodyMetricHistory().entries).toHaveLength(1)
     expect(loadBodyMetricHistory().entries[0].weightKg).toBe(81)
 
-    await user.click(screen.getByRole('button', { name: 'Delete' }))
-    await user.click(screen.getByRole('button', { name: 'Confirm' }))
+    await user.click(screen.getByRole('button', { name: '刪除' }))
+    await user.click(screen.getByRole('button', { name: '確認' }))
 
     expect(loadBodyMetricHistory().entries).toHaveLength(0)
   })
