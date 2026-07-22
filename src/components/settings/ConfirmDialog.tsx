@@ -26,7 +26,16 @@ export function ConfirmDialog({
 
   useEffect(() => {
     dialogRef.current?.focus()
-  }, [])
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === 'Escape') {
+        onCancel()
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [onCancel])
 
   return (
     <div className="confirm-dialog-overlay">

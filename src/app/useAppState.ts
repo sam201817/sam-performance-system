@@ -184,6 +184,14 @@ export function useAppState() {
   }, [refreshBodyHistory])
 
   const handleStartWorkout = useCallback(() => {
+    const latestCheckInHistory = loadDailyCheckInHistory()
+    if (!hasTodayCheckIn(latestCheckInHistory)) {
+      setCheckInHistory(latestCheckInHistory)
+      setCheckInAllowCancel(false)
+      setScreen('daily-check-in')
+      return
+    }
+
     if (progress && progress.completedAt === null) {
       openWorkoutScreen()
       return
@@ -334,8 +342,9 @@ export function useAppState() {
         type: 'restore-success',
         message: translate(preferences.language, 'messages.restoreComplete'),
       })
+      goToHome()
     },
-    [preferences.language, refreshAllAppState],
+    [goToHome, preferences.language, refreshAllAppState],
   )
 
   const handleResetAllData = useCallback(() => {

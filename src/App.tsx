@@ -28,11 +28,13 @@ function App() {
               onCancel={app.handleCancelCheckIn}
             />
           )}
-          {app.screen === 'dashboard' && app.checkInSummary && (
+          {app.screen === 'dashboard' && (
+            app.checkInSummary ? (
             <Dashboard
               session={TODAY_WORKOUT}
               workoutStatus={app.workoutStatus}
               onStartWorkout={app.handleStartWorkout}
+              onOpenProfile={app.openProfile}
               activeTab={app.activeTab}
               onNavigate={app.handleNavigate}
               overview={app.dashboardOverview}
@@ -44,6 +46,14 @@ function App() {
               onEditCheckIn={app.openDailyCheckInForEdit}
               insights={app.performanceInsights.topInsights}
             />
+            ) : (
+              <DailyCheckIn
+                history={app.checkInHistory}
+                allowCancel={false}
+                onSaveEntry={app.handleSaveCheckInEntry}
+                onCancel={app.handleCancelCheckIn}
+              />
+            )
           )}
           {app.screen === 'workout' && app.progress && (
             <Workout

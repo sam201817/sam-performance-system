@@ -11,10 +11,10 @@ type GreetingProps = {
 }
 
 export function Greeting({ now = new Date() }: GreetingProps) {
-  const { language } = useTranslation()
+  const { t, language } = useTranslation()
 
   return (
-    <section className="greeting" aria-label="Dashboard greeting">
+    <section className="greeting" aria-label={t('common.dashboardGreeting')}>
       <h1 className="greeting__title">{getGreetingTitle(now, language)}</h1>
       <p className="greeting__date">{formatDashboardDate(now, language)}</p>
       <p className="greeting__subtitle">{getDailyMessage(now, language)}</p>

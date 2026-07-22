@@ -21,7 +21,12 @@ export function ExerciseHistoryCard({ exercise }: ExerciseHistoryCardProps) {
           {exercise.exerciseName}
         </h2>
         <p className="exercise-history-card__summary">
-          {exercise.completedSets}/{exercise.totalSets} sets · {formatVolumeKg(exercise.totalVolume)} · RPE {formatRpe(exercise.averageRpe)}
+          {t('history.exerciseSummary', {
+            completed: exercise.completedSets,
+            total: exercise.totalSets,
+            volume: formatVolumeKg(exercise.totalVolume),
+            rpe: formatRpe(exercise.averageRpe),
+          })}
         </p>
       </header>
 
@@ -33,7 +38,7 @@ export function ExerciseHistoryCard({ exercise }: ExerciseHistoryCardProps) {
             </span>
             <span>{set.weight}</span>
             <span>{set.reps}</span>
-            <span>RPE {formatRpe(set.rpe)}</span>
+            <span>{t('history.rpeLabel', { value: formatRpe(set.rpe) })}</span>
             <span>{set.volume === null ? '—' : formatVolumeKg(set.volume)}</span>
             <span className="exercise-history-card__set-status">
               {set.completed ? t('history.setCompleted') : t('history.setIncomplete')}

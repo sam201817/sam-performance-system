@@ -3,7 +3,11 @@ import userEvent from '@testing-library/user-event'
 import { describe, expect, it } from 'vitest'
 import App from '../App'
 import { completeDailyCheckIn } from './checkInHelpers'
-import { findCheckInForDate, loadDailyCheckInHistory } from '../utils/dailyCheckInStorage'
+import {
+  findCheckInForDate,
+  loadDailyCheckInHistory,
+  saveDailyCheckInHistory,
+} from '../utils/dailyCheckInStorage'
 
 describe('daily check-in integration', () => {
   it('gates the dashboard until today check-in is completed', async () => {
@@ -46,5 +50,20 @@ describe('daily check-in integration', () => {
 
     expect(loadDailyCheckInHistory().entries).toHaveLength(1)
     expect(loadDailyCheckInHistory().entries[0].motivation).toBe(5)
+  })
+
+  it('requires daily check-in before starting a workout from bottom nav', async () => {
+    const user = userEvent.setup()
+
+    render(<App />)
+    await completeDailyCheckIn(user)
+
+    const history = loadDailyCheckInHistory()
+    saveDailyCheckInHistory({ version: history.version, entries: [] })
+
+    await user.click(screen.getByRole('button', { name: '訓練' }))
+
+    expect(screen.getByRole('heading', { name: '每日狀態' })).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: '完成訓練' })).not.toBeInTheDocument()
   })
 })

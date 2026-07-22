@@ -1,75 +1,116 @@
-# React + TypeScript + Vite
+# Sam Performance System (SPS)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A local-first performance app for daily readiness check-ins, structured workouts, body composition tracking, and training insights. All data stays in your browser — no account, no server, no cloud sync.
 
-Currently, two official plugins are available:
+**Version:** 1.0.1
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Overview
 
-## React Compiler
+SPS helps you train consistently by connecting how you feel each day with what you do in the gym. Complete a short daily check-in, follow guided workout sessions, review your history, and track body metrics over time — entirely offline on your device.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Features
 
-## Expanding the ESLint configuration
+- **Daily Check-in** — Log fatigue, sleep, motivation, and soreness before training
+- **Workout Flow** — Exercise-by-exercise logging with sets, RPE, and rest timer
+- **Workout History** — Session list, statistics, and per-exercise detail views
+- **Dashboard** — Readiness summary, quick stats, streaks, and performance insights
+- **Body Composition** — Weight, body fat, muscle mass, and waist trends
+- **Settings** — Language (English / Traditional Chinese), backup export, restore, and data reset
+- **Localization** — Full UI support for `en` and `zh-TW`
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Screens
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+| Screen | Description |
+|--------|-------------|
+| Daily Check-in | Mandatory readiness gate (first use each day) |
+| Dashboard | Home hub with workout hero, readiness, insights, and summary cards |
+| Workout | Active session logging |
+| Workout Complete | Post-session summary |
+| History | Aggregate stats and session list |
+| History Detail | Per-exercise breakdown for a session |
+| Body Composition | Metrics entry, trends, and history |
+| Profile | Navigation hub for body composition and settings |
+| Settings | Preferences, backup/restore, privacy, and about |
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Technology Stack
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+| Layer | Choice |
+|-------|--------|
+| UI | React 19 + TypeScript |
+| Build | Vite 8 |
+| Styling | Plain CSS with design tokens (no Tailwind / component library) |
+| Storage | `localStorage` (versioned JSON schemas) |
+| Tests | Vitest + Testing Library |
+| Lint | ESLint |
 
+## Local-First Philosophy
+
+SPS is designed to work without a backend:
+
+- All records are stored in the browser's `localStorage`
+- Export a JSON backup at any time from Settings
+- Restore backups when switching devices or recovering data
+- No authentication, analytics, or third-party data sharing
+
+Clear your browser data for this site and your SPS records may be removed — export backups regularly.
+
+## Development Setup
+
+### Prerequisites
+
+- Node.js 20+
+- npm
+
+### Install and run
+
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Open the URL shown in the terminal (typically `http://localhost:5173`).
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Production build
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run build
+npm run preview
+```
+
+## Testing
+
+```bash
+npm run lint          # ESLint
+npm run test:run      # Vitest (single run)
+npm run test          # Vitest (watch mode)
+npm run test:coverage # Coverage report
+```
+
+Integration flow tests cover check-in, workout, history, dashboard, body composition, and settings journeys.
+
+## Folder Structure
 
 ```
+src/
+├── app/           Application state (useAppState)
+├── components/    UI by domain (ui/, dashboard/, workout/, body/, …)
+├── constants/     Storage keys and shared constants
+├── data/          Static workout and app metadata
+├── hooks/         React hooks
+├── i18n/          Localization provider
+├── locales/       Translation strings (en, zh-TW)
+├── screens/       Full-page views
+├── styles/        Shared CSS utilities
+├── theme/         Design tokens
+├── types/         TypeScript types
+├── utils/         Storage, calculations, validation
+└── test/          Integration tests and fixtures
+
+docs/              Architecture and coding guidelines
+```
+
+See `docs/` for detailed architecture, component guidelines, folder conventions, and coding standards.
+
+## License
+
+This project is **private** and not licensed for public distribution. All rights reserved.

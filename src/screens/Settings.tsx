@@ -11,10 +11,8 @@ import type {
   AppLanguage,
   SettingsFeedback,
   UserPreferences,
-  WeightUnit,
 } from '../types/settings'
 import type { NavTabHandler, NavTabId } from '../types/app'
-import { formatWeightUnitLabel } from '../utils/preferencesStorage'
 import './Settings.css'
 
 export type SettingsProps = {
@@ -72,13 +70,6 @@ export function Settings({
 
   function handleLanguageChange(language: AppLanguage) {
     onPreferencesChange({ ...preferences, language })
-  }
-
-  function handleWeightUnitChange(unit: WeightUnit) {
-    onPreferencesChange({
-      ...preferences,
-      weightUnit: unit,
-    })
   }
 
   function handleExportClick() {
@@ -188,41 +179,18 @@ export function Settings({
           <div className="settings-row">
             <div className="settings-row__content">
               <span className="settings-row__label">{t('settings.units')}</span>
-              <span className="settings-row__hint">{t('settings.unitsHint')}</span>
+              <span className="settings-row__hint">{t('settings.unitsInfoHint')}</span>
             </div>
-            <div className="settings-row__control settings-row__control--segmented sps-segment-group">
-              <button
-                type="button"
-                className={`sps-segment${preferences.weightUnit === 'metric' ? ' sps-segment--active' : ''}`}
-                aria-pressed={preferences.weightUnit === 'metric'}
-                onClick={() => handleWeightUnitChange('metric')}
-              >
-                {t('settings.unitsMetric')}
-              </button>
-              <button
-                type="button"
-                className={`sps-segment${preferences.weightUnit === 'imperial' ? ' sps-segment--active' : ''}`}
-                aria-pressed={preferences.weightUnit === 'imperial'}
-                onClick={() => handleWeightUnitChange('imperial')}
-              >
-                {t('settings.unitsImperial')}
-              </button>
-            </div>
+            <span className="settings-row__value">{t('settings.unitsMetricOnly')}</span>
           </div>
 
           <div className="settings-row">
             <div className="settings-row__content">
               <span className="settings-row__label">{t('settings.theme')}</span>
-              <span className="settings-row__hint">{t('settings.themeHint')}</span>
+              <span className="settings-row__hint">{t('settings.themeInfoHint')}</span>
             </div>
             <span className="settings-row__value">{t('settings.themeSystem')}</span>
           </div>
-
-          <p className="settings__footnote">
-            {t('settings.unitsFootnote', {
-              label: formatWeightUnitLabel(preferences.weightUnit, language),
-            })}
-          </p>
         </SettingsSection>
 
         <SettingsSection
@@ -277,7 +245,9 @@ export function Settings({
           <div className="settings-about">
             <p className="settings-about__name">{APP_METADATA.name}</p>
             <p className="settings-about__short">{APP_METADATA.shortName}</p>
-            <p className="settings-about__version">Version {APP_METADATA.version}</p>
+            <p className="settings-about__version">
+              {t('settings.versionLabel', { version: APP_METADATA.version })}
+            </p>
             <p className="settings-about__description">{APP_METADATA.description}</p>
             <p className="settings-about__badge">{t('settings.localFirstBadge')}</p>
           </div>

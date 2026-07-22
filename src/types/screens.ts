@@ -13,6 +13,7 @@ export type DashboardProps = {
   session: WorkoutSession
   workoutStatus: WorkoutStatus
   onStartWorkout: () => void
+  onOpenProfile: () => void
   activeTab: NavTabId
   onNavigate: NavTabHandler
   overview: DashboardOverview

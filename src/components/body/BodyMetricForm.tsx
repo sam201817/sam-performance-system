@@ -26,7 +26,16 @@ export function BodyMetricForm({ entry, title, onSave, onCancel }: BodyMetricFor
 
   useEffect(() => {
     dialogRef.current?.focus()
-  }, [])
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === 'Escape') {
+        onCancel()
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [onCancel])
 
   function updateDraft(field: keyof BodyMetricDraft, value: string) {
     setDraft((current) => ({ ...current, [field]: value }))

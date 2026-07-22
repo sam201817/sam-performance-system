@@ -37,7 +37,14 @@ describe('Settings screen', () => {
 
     expect(screen.getByRole('heading', { name: '設定' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: '偏好設定' })).toBeInTheDocument()
-    expect(screen.getByText(/Version 1\.0\.1/)).toBeInTheDocument()
+    expect(screen.getByText(/版本 1\.0\.1/)).toBeInTheDocument()
+  })
+
+  it('shows measurement and appearance as informational rows', () => {
+    renderSettings('zh-TW')
+
+    expect(screen.getByText('公制 (kg、cm)')).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: '英制 (lb)' })).not.toBeInTheDocument()
   })
 
   it('renders settings sections in English', () => {
@@ -45,21 +52,7 @@ describe('Settings screen', () => {
 
     expect(screen.getByRole('heading', { name: 'Settings' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Preferences' })).toBeInTheDocument()
-  })
-
-  it('updates units preference', async () => {
-    const user = userEvent.setup()
-    const onPreferencesChange = vi.fn()
-
-    renderSettings('zh-TW', { onPreferencesChange })
-
-    await user.click(screen.getByRole('button', { name: '英制 (lb)' }))
-    expect(onPreferencesChange).toHaveBeenCalledWith({
-      version: 2,
-      weightUnit: 'imperial',
-      theme: 'system',
-      language: 'zh-TW',
-    })
+    expect(screen.getByText(/Version 1\.0\.1/)).toBeInTheDocument()
   })
 
   it('updates language preference', async () => {

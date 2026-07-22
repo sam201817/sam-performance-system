@@ -16,6 +16,7 @@ export function Dashboard({
   session,
   workoutStatus,
   onStartWorkout,
+  onOpenProfile,
   activeTab,
   onNavigate,
   overview,
@@ -31,7 +32,7 @@ export function Dashboard({
     <>
       <main className="app__main dashboard">
         <div className="app__top">
-          <BrandHeader />
+          <BrandHeader onOpenProfile={onOpenProfile} />
           <Greeting />
         </div>
 

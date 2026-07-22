@@ -29,8 +29,12 @@ export function MetricTrend({ selectedMetric, trend, onMetricChange }: MetricTre
   const label = t(`metrics.${selectedMetric}`)
 
   return (
-    <section className="metric-trend" aria-label="Body metric trend">
-      <div className="metric-trend__selector" role="tablist" aria-label="Metric selector">
+    <section className="metric-trend" aria-label={t('bodyComposition.trendLabel')}>
+      <div
+        className="metric-trend__selector"
+        role="tablist"
+        aria-label={t('bodyComposition.metricSelector')}
+      >
         {METRIC_OPTIONS.map((metric) => {
           const selected = metric === selectedMetric
           return (

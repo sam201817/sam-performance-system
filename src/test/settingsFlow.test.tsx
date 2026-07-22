@@ -62,10 +62,12 @@ describe('settings flow', () => {
     await user.click(screen.getByRole('button', { name: '還原備份' }))
 
     await waitFor(() => {
-      expect(screen.getByRole('status')).toHaveTextContent(/備份還原成功/i)
+      expect(screen.getByRole('heading', { name: '每日狀態' })).toBeInTheDocument()
     })
 
-    await user.click(screen.getByRole('button', { name: '返回' }))
+    await completeDailyCheckIn(user)
+
+    await user.click(screen.getByRole('button', { name: '我的' }))
     await user.click(screen.getByRole('button', { name: /身體組成/i }))
     expect(screen.getByText('體重: 75 kg')).toBeInTheDocument()
   })

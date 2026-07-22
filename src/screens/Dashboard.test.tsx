@@ -26,6 +26,7 @@ describe('Dashboard', () => {
         session={TODAY_WORKOUT}
         workoutStatus="idle"
         onStartWorkout={vi.fn()}
+        onOpenProfile={vi.fn()}
         activeTab="home"
         onNavigate={vi.fn()}
         overview={overview}
@@ -58,6 +59,7 @@ describe('Dashboard', () => {
         session={TODAY_WORKOUT}
         workoutStatus="idle"
         onStartWorkout={onStartWorkout}
+        onOpenProfile={vi.fn()}
         activeTab="home"
         onNavigate={vi.fn()}
         overview={overview}
@@ -73,5 +75,33 @@ describe('Dashboard', () => {
 
     await user.click(screen.getByRole('button', { name: '開始訓練' }))
     expect(onStartWorkout).toHaveBeenCalledTimes(1)
+  })
+
+  it('opens profile from brand header button', async () => {
+    const user = userEvent.setup()
+    const onOpenProfile = vi.fn()
+    const overview = buildDashboardOverview([], emptyBodyMetricSummary)
+
+    render(
+      <Dashboard
+        session={TODAY_WORKOUT}
+        workoutStatus="idle"
+        onStartWorkout={vi.fn()}
+        onOpenProfile={onOpenProfile}
+        activeTab="home"
+        onNavigate={vi.fn()}
+        overview={overview}
+        bodySummary={emptyBodyMetricSummary}
+        hasBodyEntries={false}
+        onOpenBodyComposition={vi.fn()}
+        onOpenHistorySession={vi.fn()}
+        checkInSummary={checkInSummary}
+        onEditCheckIn={vi.fn()}
+        insights={[]}
+      />,
+    )
+
+    await user.click(screen.getByRole('button', { name: '開啟個人頁面' }))
+    expect(onOpenProfile).toHaveBeenCalledTimes(1)
   })
 })

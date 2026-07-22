@@ -107,16 +107,9 @@ export function BodyComposition({
           onMetricChange={setSelectedMetric}
         />
 
-        <section className="body-composition__history" aria-label={t('bodyComposition.recentCheckIns')}>
-          <h2 className="body-composition__section-title sps-title">{t('bodyComposition.recentCheckIns')}</h2>
-          {history.entries.length === 0 ? (
-            <EmptyState
-              icon="body"
-              title={t('emptyStates.bodyTitle')}
-              description={t('emptyStates.bodyDescription')}
-              compact
-            />
-          ) : (
+        {history.entries.length > 0 ? (
+          <section className="body-composition__history" aria-label={t('bodyComposition.recentCheckIns')}>
+            <h2 className="body-composition__section-title sps-title">{t('bodyComposition.recentCheckIns')}</h2>
             <div className="body-composition__history-list">
               {history.entries.map((entry) => (
                 <BodyMetricHistoryCard
@@ -127,8 +120,8 @@ export function BodyComposition({
                 />
               ))}
             </div>
-          )}
-        </section>
+          </section>
+        ) : null}
       </main>
 
       <BottomNav activeTab={activeTab} onNavigate={onNavigate} />
