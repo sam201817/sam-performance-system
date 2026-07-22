@@ -1,0 +1,58 @@
+.metric-trend {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.metric-trend__selector {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-xs);
+}
+
+.metric-trend__tab {
+  padding: 10px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.metric-trend__tab--active {
+  color: var(--text);
+  border-color: rgba(184, 217, 38, 0.35);
+  background: var(--accent-dim);
+}
+
+.metric-trend__summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-sm);
+}
+
+.metric-trend__label {
+  display: block;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.metric-trend__value {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (min-width: 520px) {
+  .metric-trend__selector {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .metric-trend__summary {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}

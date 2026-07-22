@@ -13,6 +13,9 @@ export function Dashboard({
   onStartWorkout,
   activeTab,
   onNavigate,
+  bodySummary,
+  hasBodyEntries,
+  onOpenBodyComposition,
 }: DashboardProps) {
   return (
     <>
@@ -29,7 +32,11 @@ export function Dashboard({
             workoutStatus={workoutStatus}
             onStartWorkout={onStartWorkout}
           />
-          <BodyGoalCard />
+          <BodyGoalCard
+            summary={bodySummary}
+            hasEntries={hasBodyEntries}
+            onOpenBodyComposition={onOpenBodyComposition}
+          />
           <WeeklyConsistency />
         </div>
       </main>

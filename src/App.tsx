@@ -1,10 +1,20 @@
 import { useCallback, useMemo, useState } from 'react'
+import { BodyComposition } from './screens/BodyComposition'
 import { Dashboard } from './screens/Dashboard'
 import { History } from './screens/History'
 import { Workout } from './screens/Workout'
 import { WorkoutComplete } from './screens/WorkoutComplete'
 import { WorkoutHistoryDetail } from './screens/WorkoutHistoryDetail'
 import { TODAY_WORKOUT } from './data/todayWorkout'
+import type { BodyMetricEntry, BodyMetricHistory } from './types/bodyMetrics'
+import { buildBodyMetricSummary } from './utils/bodyMetricCalculations'
+import {
+  addBodyMetricEntry,
+  deleteBodyMetricEntry,
+  loadBodyMetricHistory,
+  saveBodyMetricHistory,
+  updateBodyMetricEntry,
+} from './utils/bodyMetricStorage'
 import {
   buildWorkoutSummary,
   createWorkoutProgress,
@@ -41,6 +51,9 @@ function App() {
     loadWorkoutSummary(),
   )
   const [history, setHistory] = useState(() => loadHistory())
+  const [bodyHistory, setBodyHistory] = useState<BodyMetricHistory>(() =>
+    loadBodyMetricHistory(),
+  )
   const [selectedHistorySessionId, setSelectedHistorySessionId] = useState<string | null>(null)
 
   const workoutStatus = deriveWorkoutStatus(progress)
@@ -48,12 +61,25 @@ function App() {
     () => buildHistoryStatistics(history.sessions),
     [history.sessions],
   )
+  const bodySummary = useMemo(
+    () => buildBodyMetricSummary(bodyHistory.entries),
+    [bodyHistory.entries],
+  )
   const selectedHistorySession = selectedHistorySessionId
     ? history.sessions.find((session) => session.id === selectedHistorySessionId) ?? null
     : null
 
   const refreshHistory = useCallback(() => {
     setHistory(loadHistory())
+  }, [])
+
+  const refreshBodyHistory = useCallback(() => {
+    setBodyHistory(loadBodyMetricHistory())
+  }, [])
+
+  const persistBodyHistory = useCallback((nextHistory: BodyMetricHistory) => {
+    saveBodyMetricHistory(nextHistory)
+    setBodyHistory(nextHistory)
   }, [])
 
   const handleProgressChange = useCallback((next: WorkoutProgress) => {
@@ -64,6 +90,11 @@ function App() {
   const openWorkoutScreen = useCallback(() => {
     setScreen('workout')
   }, [])
+
+  const openBodyComposition = useCallback(() => {
+    refreshBodyHistory()
+    setScreen('body-composition')
+  }, [refreshBodyHistory])
 
   const handleStartWorkout = useCallback(() => {
     if (progress && progress.completedAt === null) {
@@ -114,6 +145,20 @@ function App() {
     setScreen('history-detail')
   }, [])
 
+  const handleSaveBodyEntry = useCallback((
+    values: Omit<BodyMetricEntry, 'id' | 'version'>,
+    entryId: string | null,
+  ) => {
+    const nextHistory = entryId
+      ? updateBodyMetricEntry(bodyHistory, entryId, values)
+      : addBodyMetricEntry(bodyHistory, values)
+    persistBodyHistory(nextHistory)
+  }, [bodyHistory, persistBodyHistory])
+
+  const handleDeleteBodyEntry = useCallback((entryId: string) => {
+    persistBodyHistory(deleteBodyMetricEntry(bodyHistory, entryId))
+  }, [bodyHistory, persistBodyHistory])
+
   const handleNavigate = useCallback<NavTabHandler>((tab: NavTabId) => {
     if (tab === 'home') {
       setSelectedHistorySessionId(null)
@@ -130,8 +175,13 @@ function App() {
       refreshHistory()
       setSelectedHistorySessionId(null)
       setScreen('history')
+      return
     }
-  }, [handleStartWorkout, refreshHistory])
+
+    if (tab === 'profile') {
+      openBodyComposition()
+    }
+  }, [handleStartWorkout, openBodyComposition, refreshHistory])
 
   const activeTab = getActiveNavTab(screen)
 
@@ -146,6 +196,9 @@ function App() {
             onStartWorkout={handleStartWorkout}
             activeTab={activeTab}
             onNavigate={handleNavigate}
+            bodySummary={bodySummary}
+            hasBodyEntries={bodyHistory.entries.length > 0}
+            onOpenBodyComposition={openBodyComposition}
           />
         )}
         {screen === 'workout' && progress && (
@@ -173,6 +226,15 @@ function App() {
           <WorkoutHistoryDetail
             session={selectedHistorySession}
             onBack={() => setScreen('history')}
+          />
+        )}
+        {screen === 'body-composition' && (
+          <BodyComposition
+            history={bodyHistory}
+            activeTab={activeTab}
+            onNavigate={handleNavigate}
+            onSaveEntry={handleSaveBodyEntry}
+            onDeleteEntry={handleDeleteBodyEntry}
           />
         )}
       </div>

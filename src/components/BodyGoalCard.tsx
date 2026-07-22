@@ -1,52 +1,75 @@
 import { Card } from './Card'
+import type { BodyCompositionCardProps } from '../types/workout'
+import {
+  formatChangeValue,
+  formatMetricValue,
+  formatRelativeBodyDate,
+} from '../utils/bodyMetricCalculations'
 import './BodyGoalCard.css'
 
-const CURRENT_WEIGHT = 106
-const GOAL_WEIGHT = 90
-const REMAINING = CURRENT_WEIGHT - GOAL_WEIGHT
-
-export function BodyGoalCard() {
+export function BodyGoalCard({
+  summary,
+  hasEntries,
+  onOpenBodyComposition,
+}: BodyCompositionCardProps) {
   return (
     <Card className="body-goal-card" delay={0.15}>
-      <h2 className="body-goal-card__title">身體目標</h2>
+      <h2 className="body-goal-card__title">Body Composition</h2>
 
-      <div className="body-goal-card__direction" aria-hidden="true">
-        <div className="body-goal-card__endpoint body-goal-card__endpoint--current">
-          <span className="body-goal-card__dot" />
-          <span className="body-goal-card__endpoint-label">106</span>
-        </div>
-        <div className="body-goal-card__line">
-          <span className="body-goal-card__line-track" />
-          <span className="body-goal-card__line-arrow">→</span>
-        </div>
-        <div className="body-goal-card__endpoint body-goal-card__endpoint--goal">
-          <span className="body-goal-card__dot body-goal-card__dot--goal" />
-          <span className="body-goal-card__endpoint-label">90</span>
-        </div>
-      </div>
+      {!hasEntries ? (
+        <>
+          <p className="body-goal-card__note">
+            Start tracking weight, body fat, muscle, and waist to see progress here.
+          </p>
+          <button
+            type="button"
+            className="body-goal-card__button sps-action-primary"
+            onClick={onOpenBodyComposition}
+          >
+            Add First Check-in
+          </button>
+        </>
+      ) : (
+        <>
+          <div className="body-goal-card__stats body-goal-card__stats--compact">
+            <div className="body-goal-card__stat">
+              <span className="body-goal-card__stat-label">Weight</span>
+              <span className="body-goal-card__stat-value">
+                {summary.latestWeightKg === null
+                  ? '—'
+                  : formatMetricValue('weightKg', summary.latestWeightKg)}
+              </span>
+              <span className="body-goal-card__stat-change">
+                {formatChangeValue('weightKg', summary.weightChangeKg) ?? 'No previous reading'}
+              </span>
+            </div>
+            <div className="body-goal-card__stat">
+              <span className="body-goal-card__stat-label">Body Fat</span>
+              <span className="body-goal-card__stat-value">
+                {summary.latestBodyFatPercent === null
+                  ? '—'
+                  : formatMetricValue('bodyFatPercent', summary.latestBodyFatPercent)}
+              </span>
+            </div>
+            <div className="body-goal-card__stat">
+              <span className="body-goal-card__stat-label">Updated</span>
+              <span className="body-goal-card__stat-value body-goal-card__stat-value--small">
+                {summary.lastUpdatedAt
+                  ? formatRelativeBodyDate(summary.lastUpdatedAt)
+                  : '—'}
+              </span>
+            </div>
+          </div>
 
-      <div className="body-goal-card__stats">
-        <div className="body-goal-card__stat">
-          <span className="body-goal-card__stat-label">目前</span>
-          <span className="body-goal-card__stat-value">
-            {CURRENT_WEIGHT} <span className="body-goal-card__unit">kg</span>
-          </span>
-        </div>
-        <div className="body-goal-card__stat">
-          <span className="body-goal-card__stat-label">目標</span>
-          <span className="body-goal-card__stat-value">
-            {GOAL_WEIGHT} <span className="body-goal-card__unit">kg</span>
-          </span>
-        </div>
-        <div className="body-goal-card__stat body-goal-card__stat--remaining">
-          <span className="body-goal-card__stat-label">還有</span>
-          <span className="body-goal-card__stat-value body-goal-card__stat-value--accent">
-            {REMAINING} <span className="body-goal-card__unit">kg</span>
-          </span>
-        </div>
-      </div>
-
-      <p className="body-goal-card__note">先保住力量，再穩定下降。</p>
+          <button
+            type="button"
+            className="body-goal-card__button sps-action-primary"
+            onClick={onOpenBodyComposition}
+          >
+            Open Body Composition
+          </button>
+        </>
+      )}
     </Card>
   )
 }

@@ -22,10 +22,9 @@ describe('BottomNav', () => {
     expect(onNavigate).toHaveBeenCalledWith('progress')
 
     const profileTab = screen.getByRole('button', { name: '我的' })
-    expect(profileTab).toBeDisabled()
-    expect(profileTab).toHaveAttribute('aria-disabled', 'true')
-
+    expect(profileTab).toBeEnabled()
     await user.click(profileTab)
-    expect(onNavigate).toHaveBeenCalledTimes(3)
+    expect(onNavigate).toHaveBeenCalledWith('profile')
+    expect(onNavigate).toHaveBeenCalledTimes(4)
   })
 })

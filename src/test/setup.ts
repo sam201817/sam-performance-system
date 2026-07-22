@@ -5,6 +5,7 @@ import { afterEach, beforeEach, vi } from 'vitest'
 const PROGRESS_KEY = 'sps.workout-progress.v1'
 const SUMMARY_KEY = 'sps.workout-summary.v1'
 const HISTORY_KEY = 'sps.workout-history.v1'
+const BODY_METRICS_KEY = 'sps.body-metrics.v1'
 
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
@@ -31,4 +32,5 @@ afterEach(() => {
   localStorage.removeItem(PROGRESS_KEY)
   localStorage.removeItem(SUMMARY_KEY)
   localStorage.removeItem(HISTORY_KEY)
+  localStorage.removeItem(BODY_METRICS_KEY)
 })

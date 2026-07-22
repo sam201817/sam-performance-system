@@ -1,0 +1,39 @@
+.metric-trend-chart {
+  width: 100%;
+  min-height: 140px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.02);
+  overflow: hidden;
+}
+
+.metric-trend-chart__svg {
+  display: block;
+  width: 100%;
+  height: 140px;
+}
+
+.metric-trend-chart__line {
+  stroke: var(--accent);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.metric-trend-chart__point {
+  fill: var(--accent);
+}
+
+.metric-trend-chart--empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-md);
+}
+
+.metric-trend-chart__empty {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+  text-align: center;
+}

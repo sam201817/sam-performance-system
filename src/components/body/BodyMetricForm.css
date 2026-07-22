@@ -1,0 +1,86 @@
+.body-metric-form-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: var(--space-md);
+  background: rgba(0, 0, 0, 0.65);
+}
+
+.body-metric-form {
+  width: min(100%, var(--app-max-width));
+  max-height: calc(100vh - var(--space-xl));
+  overflow-y: auto;
+  padding: var(--space-lg);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  background: rgba(22, 22, 22, 0.98);
+  border: 1px solid var(--border);
+}
+
+.body-metric-form__title {
+  margin: 0 0 var(--space-md);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.body-metric-form__fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.body-metric-form__notes {
+  width: 100%;
+  min-height: 96px;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text);
+  font-size: 14px;
+  resize: vertical;
+}
+
+.body-metric-form__form-error {
+  margin: 0;
+  font-size: 13px;
+  color: #ff9f9f;
+}
+
+.body-metric-form__actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-sm);
+  margin-top: var(--space-lg);
+}
+
+.body-metric-form__button {
+  padding: 14px var(--space-md);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.body-metric-form__button--secondary {
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-secondary);
+}
+
+.body-metric-form__button--primary {
+  border-color: transparent;
+}
+
+@media (min-width: 520px) {
+  .body-metric-form-overlay {
+    align-items: center;
+  }
+
+  .body-metric-form {
+    border-radius: var(--radius-lg);
+  }
+}

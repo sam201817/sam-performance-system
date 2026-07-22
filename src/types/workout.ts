@@ -1,11 +1,13 @@
 import type { NavigationHandler, NavTabHandler, NavTabId } from './app'
 import type { Exercise, WorkoutSession } from '../data/todayWorkout'
+import type { BodyMetricEntry, BodyMetricHistory, BodyMetricSummary } from './bodyMetrics'
 import type { WorkoutProgress, WorkoutStatus, WorkoutSummary } from './workoutProgress'
 import type { HistoryStatistics, WorkoutHistorySession } from './workoutHistory'
 
 export type { Exercise, WorkoutSession }
 export type { WorkoutProgress, WorkoutStatus, WorkoutSummary }
 export type { HistoryStatistics, WorkoutHistorySession }
+export type { BodyMetricEntry, BodyMetricHistory, BodyMetricSummary }
 
 export type DashboardProps = {
   session: WorkoutSession
@@ -13,6 +15,9 @@ export type DashboardProps = {
   onStartWorkout: () => void
   activeTab: NavTabId
   onNavigate: NavTabHandler
+  bodySummary: BodyMetricSummary
+  hasBodyEntries: boolean
+  onOpenBodyComposition: () => void
 }
 
 export type WorkoutProps = {
@@ -67,4 +72,21 @@ export type HistoryProps = {
 export type WorkoutHistoryDetailProps = {
   session: WorkoutHistorySession
   onBack: NavigationHandler
+}
+
+export type BodyCompositionCardProps = {
+  summary: BodyMetricSummary
+  hasEntries: boolean
+  onOpenBodyComposition: () => void
+}
+
+export type BodyCompositionProps = {
+  history: BodyMetricHistory
+  activeTab: NavTabId
+  onNavigate: NavTabHandler
+  onSaveEntry: (
+    values: Omit<BodyMetricEntry, 'id' | 'version'>,
+    entryId: string | null,
+  ) => void
+  onDeleteEntry: (entryId: string) => void
 }

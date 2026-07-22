@@ -115,8 +115,26 @@
 }
 
 .body-goal-card__note {
-  margin: 0;
+  margin: 0 0 var(--space-md);
   font-size: 13px;
   color: var(--text-muted);
   line-height: 1.5;
+}
+
+.body-goal-card__button {
+  width: 100%;
+  padding: 15px var(--space-lg);
+}
+
+.body-goal-card__stats--compact {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.body-goal-card__stat-change {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.body-goal-card__stat-value--small {
+  font-size: 15px;
 }
