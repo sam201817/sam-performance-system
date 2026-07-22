@@ -1,12 +1,19 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { Dashboard } from './screens/Dashboard'
+import { History } from './screens/History'
 import { Workout } from './screens/Workout'
 import { WorkoutComplete } from './screens/WorkoutComplete'
+import { WorkoutHistoryDetail } from './screens/WorkoutHistoryDetail'
 import { TODAY_WORKOUT } from './data/todayWorkout'
 import {
   buildWorkoutSummary,
   createWorkoutProgress,
 } from './utils/workoutProgressFactory'
+import {
+  buildHistoryStatistics,
+  ensureHistorySessionSaved,
+} from './utils/workoutHistoryFactory'
+import { loadHistory } from './utils/workoutHistoryStorage'
 import {
   clearWorkoutProgress,
   clearWorkoutSummary,
@@ -33,8 +40,21 @@ function App() {
   const [summary, setSummary] = useState<WorkoutSummary | null>(() =>
     loadWorkoutSummary(),
   )
+  const [history, setHistory] = useState(() => loadHistory())
+  const [selectedHistorySessionId, setSelectedHistorySessionId] = useState<string | null>(null)
 
   const workoutStatus = deriveWorkoutStatus(progress)
+  const historyStatistics = useMemo(
+    () => buildHistoryStatistics(history.sessions),
+    [history.sessions],
+  )
+  const selectedHistorySession = selectedHistorySessionId
+    ? history.sessions.find((session) => session.id === selectedHistorySessionId) ?? null
+    : null
+
+  const refreshHistory = useCallback(() => {
+    setHistory(loadHistory())
+  }, [])
 
   const handleProgressChange = useCallback((next: WorkoutProgress) => {
     setProgress(next)
@@ -50,6 +70,9 @@ function App() {
       openWorkoutScreen()
       return
     }
+
+    clearWorkoutSummary()
+    setSummary(null)
 
     const freshProgress = createWorkoutProgress(TODAY_WORKOUT)
     setProgress(freshProgress)
@@ -68,25 +91,47 @@ function App() {
       ...finalProgress,
       completedAt: new Date().toISOString(),
     }
-    const nextSummary = buildWorkoutSummary(completedProgress, TODAY_WORKOUT)
+    const historySessionId = ensureHistorySessionSaved(
+      completedProgress,
+      TODAY_WORKOUT,
+      summary?.historySessionId,
+    )
+    const nextSummary: WorkoutSummary = {
+      ...buildWorkoutSummary(completedProgress, TODAY_WORKOUT),
+      historySessionId,
+    }
 
     saveWorkoutSummary(nextSummary)
     clearWorkoutProgress()
     setProgress(null)
     setSummary(nextSummary)
+    refreshHistory()
     setScreen('complete')
+  }, [refreshHistory, summary?.historySessionId])
+
+  const handleOpenHistorySession = useCallback((sessionId: string) => {
+    setSelectedHistorySessionId(sessionId)
+    setScreen('history-detail')
   }, [])
 
   const handleNavigate = useCallback<NavTabHandler>((tab: NavTabId) => {
     if (tab === 'home') {
+      setSelectedHistorySessionId(null)
       setScreen('dashboard')
       return
     }
 
     if (tab === 'workout') {
       handleStartWorkout()
+      return
     }
-  }, [handleStartWorkout])
+
+    if (tab === 'progress') {
+      refreshHistory()
+      setSelectedHistorySessionId(null)
+      setScreen('history')
+    }
+  }, [handleStartWorkout, refreshHistory])
 
   const activeTab = getActiveNavTab(screen)
 
@@ -114,6 +159,21 @@ function App() {
         )}
         {screen === 'complete' && summary && (
           <WorkoutComplete summary={summary} onReturnHome={returnHome} />
+        )}
+        {screen === 'history' && (
+          <History
+            sessions={history.sessions}
+            statistics={historyStatistics}
+            activeTab={activeTab}
+            onNavigate={handleNavigate}
+            onOpenSession={handleOpenHistorySession}
+          />
+        )}
+        {screen === 'history-detail' && selectedHistorySession && (
+          <WorkoutHistoryDetail
+            session={selectedHistorySession}
+            onBack={() => setScreen('history')}
+          />
         )}
       </div>
     </div>

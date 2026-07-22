@@ -17,10 +17,15 @@ describe('BottomNav', () => {
     expect(onNavigate).toHaveBeenCalledWith('workout')
 
     const progressTab = screen.getByRole('button', { name: '進度' })
-    expect(progressTab).toBeDisabled()
-    expect(progressTab).toHaveAttribute('aria-disabled', 'true')
-
+    expect(progressTab).toBeEnabled()
     await user.click(progressTab)
-    expect(onNavigate).toHaveBeenCalledTimes(2)
+    expect(onNavigate).toHaveBeenCalledWith('progress')
+
+    const profileTab = screen.getByRole('button', { name: '我的' })
+    expect(profileTab).toBeDisabled()
+    expect(profileTab).toHaveAttribute('aria-disabled', 'true')
+
+    await user.click(profileTab)
+    expect(onNavigate).toHaveBeenCalledTimes(3)
   })
 })

@@ -1,9 +1,11 @@
 import type { NavigationHandler, NavTabHandler, NavTabId } from './app'
 import type { Exercise, WorkoutSession } from '../data/todayWorkout'
 import type { WorkoutProgress, WorkoutStatus, WorkoutSummary } from './workoutProgress'
+import type { HistoryStatistics, WorkoutHistorySession } from './workoutHistory'
 
 export type { Exercise, WorkoutSession }
 export type { WorkoutProgress, WorkoutStatus, WorkoutSummary }
+export type { HistoryStatistics, WorkoutHistorySession }
 
 export type DashboardProps = {
   session: WorkoutSession
@@ -52,4 +54,17 @@ export type ExerciseProgressProps = {
 
 export type ExerciseDetailProps = {
   exercise: Exercise
+}
+
+export type HistoryProps = {
+  sessions: WorkoutHistorySession[]
+  statistics: HistoryStatistics
+  activeTab: NavTabId
+  onNavigate: NavTabHandler
+  onOpenSession: (sessionId: string) => void
+}
+
+export type WorkoutHistoryDetailProps = {
+  session: WorkoutHistorySession
+  onBack: NavigationHandler
 }

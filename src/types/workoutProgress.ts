@@ -28,6 +28,7 @@ export type WorkoutSummary = {
   completedExercises: number
   totalCompletedSets: number
   durationMinutes: number | null
+  historySessionId?: string | null
 }
 
 export type AdvanceAction = 'next' | 'finish'

@@ -1,4 +1,4 @@
-export type AppScreen = 'dashboard' | 'workout' | 'complete'
+export type AppScreen = 'dashboard' | 'workout' | 'complete' | 'history' | 'history-detail'
 
 export type NavigationHandler = () => void
 
@@ -6,8 +6,10 @@ export type NavTabId = 'home' | 'workout' | 'progress' | 'profile'
 
 export type NavTabHandler = (tab: NavTabId) => void
 
-export const ENABLED_NAV_TABS: NavTabId[] = ['home', 'workout']
+export const ENABLED_NAV_TABS: NavTabId[] = ['home', 'workout', 'progress']
 
 export function getActiveNavTab(screen: AppScreen): NavTabId {
-  return screen === 'workout' ? 'workout' : 'home'
+  if (screen === 'workout') return 'workout'
+  if (screen === 'history' || screen === 'history-detail') return 'progress'
+  return 'home'
 }

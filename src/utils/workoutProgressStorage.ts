@@ -49,7 +49,10 @@ function isWorkoutSummary(value: unknown): value is WorkoutSummary {
     typeof value.totalExercises === 'number' &&
     typeof value.completedExercises === 'number' &&
     typeof value.totalCompletedSets === 'number' &&
-    (value.durationMinutes === null || typeof value.durationMinutes === 'number')
+    (value.durationMinutes === null || typeof value.durationMinutes === 'number') &&
+    (value.historySessionId === undefined ||
+      value.historySessionId === null ||
+      typeof value.historySessionId === 'string')
   )
 }
 

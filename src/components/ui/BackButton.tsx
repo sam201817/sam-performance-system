@@ -3,15 +3,16 @@ import './BackButton.css'
 type BackButtonProps = {
   onClick: () => void
   label?: string
+  ariaLabel?: string
 }
 
-export function BackButton({ onClick, label = '返回' }: BackButtonProps) {
+export function BackButton({ onClick, label = '返回', ariaLabel = '返回首頁' }: BackButtonProps) {
   return (
     <button
       type="button"
       className="back-button"
       onClick={onClick}
-      aria-label="返回首頁"
+      aria-label={ariaLabel}
     >
       <svg className="back-button__icon" viewBox="0 0 24 24" aria-hidden="true">
         <path
